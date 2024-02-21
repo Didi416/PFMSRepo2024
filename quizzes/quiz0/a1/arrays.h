@@ -12,6 +12,13 @@ struct Stats{
 // function to populate array with random numbers
 void populateWithRandomNumbers(double x[], unsigned int& array_size, unsigned int num_elements);
 
+/**
+ * @brief Function that will assign elements of array to vector
+ * @param x array
+ * @param arraySize size of array x
+ * @param myVec vector to be returned
+ */
+void assignArrayToVector(double x[] ,unsigned int arraySize ,std::vector<double> &myVec );
 
 /**
  * @brief Function that removes elements of vector greater than the limit (value)
