@@ -11,10 +11,10 @@ using namespace std;
 
 
 TEST (ClassTest, FunctionalityObject) {
-    Sample sample(5.0);
+    Sample sample(-3.0);
+    EXPECT_EQ(sample.readValue(), -3.0);
+    sample.setValue(5.0);
     EXPECT_EQ(sample.readValue(), 5.0);
-    sample.setValue(-5.0);
-    EXPECT_EQ(sample.readValue(), -5.0);
 }
 
 

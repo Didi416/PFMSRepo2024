@@ -8,6 +8,12 @@ public:
 
     void setValue (double value); //! Assigns value to the private member value_
     double readValue (void); //! returns the value of private member value_
+
+    Sample(double value){
+        value_ = value;
+    std::cout << "Initial value set is: " << value_ << std::endl;
+    }
+
 private:
-    double value_;
+    double value_; 
 };
