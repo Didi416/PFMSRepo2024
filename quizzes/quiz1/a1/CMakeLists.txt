@@ -6,6 +6,9 @@ project (quiz1_a1)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+set(BUILD_TESTS ON) #Enable all unit tests to be compiled by default
+set(MARKING_TESTS OFF) #When marking tests are deposited after deadline (you will be notified via teams) you will be able to turn this ON
+
 # To add executables provide the executable name followed by a list of source files
 # There must be exactly one function called main in each executable
 add_executable(quiz1_a1 main.cpp person.cpp processing.cpp)
@@ -24,4 +27,9 @@ add_executable(quiz1_a1 main.cpp person.cpp processing.cpp)
 # finally, tests can be run from build directory (for this example ./test/utest
 if(BUILD_TESTS)
     add_subdirectory(test)
+endif()
+
+# Marking tests are deposited after deadline (you will be notified via teams), this directory does not estisr
+if(MARKING_TESTS)
+    add_subdirectory(marking)
 endif()
