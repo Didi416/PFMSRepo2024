@@ -10,6 +10,8 @@ public:
     //    You will need to add the declaration of this member function in the [header of Person class](./a1/person.h) as
     //    well as implement this function in the [implementation file of Person class](./a1/person.cpp).
 
+  Person(std::string name, unsigned int age, bool vacc);
+
   /**
    * @brief Function that obtains name
    * @return name of person
@@ -17,13 +19,13 @@ public:
   std::string getName(void);
 
   /**
-   * @brief Function that retruns the age
+   * @brief Function that returns the age
    * @return age in years
    */
   unsigned int getAge(void);
 
   /**
-   * @brief Function that retruns vaccinated status
+   * @brief Function that returns vaccinated status
    * @return vaccinated status
    */
   bool getVaccinatedStatus(void);
@@ -45,5 +47,6 @@ private:
   bool vaccinated_;  //!< vaccinated status (true - has been given vaccine, false - not vaccinated)
 };
 
+// bool operator<(const Person &age1, const Person &age2);
 
 #endif // PERSON_H

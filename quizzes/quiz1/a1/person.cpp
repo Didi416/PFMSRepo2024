@@ -5,6 +5,11 @@
 //    You will need to add the declaration of this member function in the [header of Person class](./a1/person.h) as
 //    well as implement this function in the [implementation file of Person class](./a1/person.cpp).
 
+Person::Person(std::string name, unsigned int age, bool vacc){
+  name_ = name;
+  age_ = age;
+  vaccinated_ = vacc;
+}
 
 std::string Person::getName(void) {
   return name_;
@@ -26,5 +31,13 @@ bool Person::getVaccinatedStatus(void) {
 //
 // When a person is given a vaccine, their `vaccinated` status should change.
 bool Person::vaccinate(){
-
+  if(!vaccinated_){
+    vaccinated_ = true;
+    return true; // can be vaccinated
+  }
+  return false; // cannot be vaccinated (already vaccinated)
 }
+
+// bool operator<(Person &person1, Person &person2){
+//     return person1.getAge()<person2.getAge();
+// }

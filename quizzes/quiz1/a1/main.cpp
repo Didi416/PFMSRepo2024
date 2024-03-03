@@ -19,10 +19,15 @@ int main (void) {
     //! John, 82 year old male, unvaccinated
     //! Karen, 42 year old female, vaccinated
 
-    //! std::vector<Person> crowd;
+    std::vector<Person> crowd;
+    crowd.push_back(Person("Alice",32,true));
+    crowd.push_back(Person("Bob",62,false));
+    crowd.push_back(Person("Carol",72,true));
+    crowd.push_back(Person("John",82,false));
+    crowd.push_back(Person("Karen",42,true));
 
     //! Call
-    //! std::vector<Person> oldest = oldestPerson(crowd);
+    std::vector<Person> oldest = oldestPerson(crowd);
 
     //! TASK 4
     //!
