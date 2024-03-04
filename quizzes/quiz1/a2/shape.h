@@ -13,7 +13,7 @@ class Shape
 {
 public:
     Shape();
-    /**
+    /** 
      * @brief Function that sets centre of shape
      * @param x in [m]
      * @param y in [m]
@@ -24,6 +24,7 @@ public:
      * @return description
      */
     std::string getDescription();
+    virtual double getArea() = 0;
 
 //    TASK: 
 //    Correct the missing access specifiers of base class [shape](./b2/shape.h) so that the immplementaion of the

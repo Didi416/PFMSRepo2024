@@ -37,7 +37,3 @@ bool Person::vaccinate(){
   }
   return false; // cannot be vaccinated (already vaccinated)
 }
-
-// bool operator<(Person &person1, Person &person2){
-//     return person1.getAge()<person2.getAge();
-// }

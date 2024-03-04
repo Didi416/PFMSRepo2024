@@ -47,6 +47,4 @@ private:
   bool vaccinated_;  //!< vaccinated status (true - has been given vaccine, false - not vaccinated)
 };
 
-// bool operator<(const Person &age1, const Person &age2);
-
 #endif // PERSON_H
