@@ -63,7 +63,22 @@ TEST (AnalysisTest, zeroTopZeroRace) {
 
 }
 
+TEST (AnalysisTest, sortByOdometry) {
+    std::vector<CarInterface*> cars;
+    cars.push_back(new Car("merc", "c180",1,1.45,1.77,143,0.29,1200));
+    cars.push_back(new Car("bugatti", "veyron",2,1.19,2.00,1200,0.35,2200));
+    cars.push_back(new Car("toyota", "yaris",3,1.19,1.87,420,0.30,1190));
 
+    std::shared_ptr<Analysis> analysisPtr(new Analysis(cars));
+
+    std::vector<unsigned int> order = analysisPtr->sortByOdometry();
+
+    ASSERT_EQ(order.size(),cars.size());
+    EXPECT_EQ(order.at(0),7);
+    EXPECT_EQ(order.at(1),23);
+    EXPECT_EQ(order.at(2),44);
+
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
