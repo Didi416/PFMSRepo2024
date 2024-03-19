@@ -12,7 +12,9 @@ find_package(pipes)
 
 # Executables
 add_executable(control_ackerman control_ackerman.cpp)
+add_executable(control_skidsteer command_skidsteer.cpp)
 
 # Link the library
 target_link_libraries(control_ackerman pfmsconnector audi)
+target_link_libraries(control_skidsteer pfmsconnector)
 
