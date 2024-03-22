@@ -87,7 +87,12 @@ protected:
   pfms::PlatformType platformType_;
   pfms::geometry_msgs::Point goal_;
   pfms::nav_msgs::Odometry currentOdo_;
+  double distanceToCurrentGoal_;
+  double timetoCurrentGoal_;
+  double totalDistance_;
+  double totalTime_;
   
+  std::shared_ptr<PfmsConnector> pfmsConnectorPtr_;
 };
 
 #endif // CONTROLLER_H

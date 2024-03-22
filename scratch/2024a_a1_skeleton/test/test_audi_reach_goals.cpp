@@ -52,12 +52,12 @@ TEST(AckermanExTest, ReachGoals) {
 
     //We set the goal for the PfmsHog (Which will be used to check if the goal is reached or not)
     pfmsHogPtr->setGoal(pt1);
-
+    std::cout<<"Goal set to Pfms Hog"<<std::endl;
     //This now triggers the Ackerman to reach the goal and "blocks" until the goal is reached
     bool reached = controllers.at(0)->reachGoal();
-
     //We now check that the goal has been reached (the reachGoal function returns when te goal is reached)
     ASSERT_TRUE(reached);
+    std::cout<<"Goal Reached"<<std::endl;
 
     //We now check that the goal has been reached using the PfmsHog
     std::vector<double> distances;

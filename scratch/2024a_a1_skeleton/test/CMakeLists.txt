@@ -12,7 +12,7 @@ aux_source_directory(.. SRC_LIST)
 list(REMOVE_ITEM SRC_LIST "../main.cpp" "../mission.cpp")
 message ( STATUS "Compiling student with following files  ${SRC_LIST}" )
 add_library(example SHARED ${SRC_LIST})
-target_link_libraries(example pfmsconnector)
+target_link_libraries(example pfmsconnector audi)
 
 add_dependencies(example pipes::pfmsconnector)
 link_directories(/usr/local/lib)

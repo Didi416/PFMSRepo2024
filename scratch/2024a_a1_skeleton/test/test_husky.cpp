@@ -46,75 +46,75 @@ TEST_F(SkidSteerTest, Simple) {
 }
 
 
-// TEST_F(SkidSteerTest, Simple2) {
+TEST_F(SkidSteerTest, Simple2) {
 
-//     //Starting point for vehicle
-//     Odometry odo = populateOdo(0,2,0);
-//     pfmsHogPtr_->teleport(odo);
+    //Starting point for vehicle
+    Odometry odo = populateOdo(0,2,0);
+    pfmsHogPtr_->teleport(odo);
 
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new SkidSteer());
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new SkidSteer());
 
-//     pfms::geometry_msgs::Point pt{0,-6.5};
+    pfms::geometry_msgs::Point pt{0,-6.5};
 
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_TRUE(reachable);
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_TRUE(reachable);
 
-//     double dist = controllers.at(0)->distanceToGoal();
-//     double t = controllers.at(0)->timeToGoal();
+    double dist = controllers.at(0)->distanceToGoal();
+    double t = controllers.at(0)->timeToGoal();
 
-//     std::cout << "SkidSteer: can reach goal " <<
-//                          dist << "[m] " << t << "[s]" << std::endl;
+    std::cout << "SkidSteer: can reach goal " <<
+                         dist << "[m] " << t << "[s]" << std::endl;
 
-//     EXPECT_NEAR(dist,8.499,0.2);
-//     EXPECT_NEAR(t,10.07,0.2);
+    EXPECT_NEAR(dist,8.499,0.2);
+    EXPECT_NEAR(t,10.07,0.2);
 
-// }
+}
 
-// TEST_F(SkidSteerTest, Simple3) {
+TEST_F(SkidSteerTest, Simple3) {
 
-//     //Starting point for vehicle
-//     Odometry odo = populateOdo(0,-6,-M_PI/2);
-//     pfmsHogPtr_->teleport(odo);
+    //Starting point for vehicle
+    Odometry odo = populateOdo(0,-6,-M_PI/2);
+    pfmsHogPtr_->teleport(odo);
 
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new SkidSteer());
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new SkidSteer());
 
-//     pfms::geometry_msgs::Point pt {0,-5};
+    pfms::geometry_msgs::Point pt {0,-5};
 
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_TRUE(reachable);
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_TRUE(reachable);
 
-//     double dist = controllers.at(0)->distanceToGoal();
-//     double t = controllers.at(0)->timeToGoal();
+    double dist = controllers.at(0)->distanceToGoal();
+    double t = controllers.at(0)->timeToGoal();
 
-//     std::cout << "SkidSteer: can reach goal " <<
-//                          dist << "[m] " << t << "[s]" << std::endl;
+    std::cout << "SkidSteer: can reach goal " <<
+                         dist << "[m] " << t << "[s]" << std::endl;
 
-//     EXPECT_NEAR(dist,1.00,0.2);
-//     EXPECT_NEAR(t,4.1414,0.2);    
-// }
+    EXPECT_NEAR(dist,1.00,0.2);
+    EXPECT_NEAR(t,4.1414,0.2);    
+}
 
 
-// TEST_F(SkidSteerTest, Simple4) {
+TEST_F(SkidSteerTest, Simple4) {
 
-//     Odometry odo = populateOdo(0.225,-5.306,127.825*M_PI/180);
-//     pfmsHogPtr_->teleport(odo);
+    Odometry odo = populateOdo(0.225,-5.306,127.825*M_PI/180);
+    pfmsHogPtr_->teleport(odo);
 
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new SkidSteer());
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new SkidSteer());
 
-//     pfms::geometry_msgs::Point pt {1,4};
+    pfms::geometry_msgs::Point pt {1,4};
 
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_TRUE(reachable);
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_TRUE(reachable);
 
-//     double dist = controllers.at(0)->distanceToGoal();
-//     double t = controllers.at(0)->timeToGoal();
+    double dist = controllers.at(0)->distanceToGoal();
+    double t = controllers.at(0)->timeToGoal();
 
-//     ASSERT_NEAR(dist,9.33806,0.2);
-//     ASSERT_NEAR(t,10.0813,0.2);
-// }
+    ASSERT_NEAR(dist,9.33806,0.2);
+    ASSERT_NEAR(t,10.0813,0.2);
+}
 
 
 int main(int argc, char **argv) {

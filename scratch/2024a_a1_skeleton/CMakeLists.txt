@@ -12,7 +12,7 @@ find_package(pipes REQUIRED)
 
 # CMake will create your library, add the cpp files needed
 add_library(controller controller.cpp ackerman.cpp skidsteer.cpp)
-target_link_libraries(controller pfmsconnector)
+target_link_libraries(controller pfmsconnector audi)
 
 # CMake will create the cell library that you will need 
 add_library(mission mission.cpp)

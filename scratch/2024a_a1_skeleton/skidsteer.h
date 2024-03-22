@@ -28,7 +28,7 @@ public:
   */
   bool reachGoal(void);
 
-  void drive(unsigned long i, double turnLR, double moveFB, std::shared_ptr<PfmsConnector> pfmsConnectorPtr);
+  void drive(unsigned long i, double turnLR, double moveFB);
 
   /**
   returns current odometry information

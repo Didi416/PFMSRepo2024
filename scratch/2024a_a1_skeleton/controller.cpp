@@ -7,23 +7,23 @@ Controller::Controller(){
 
 }
 
+Controller::~Controller(){
+
+}
+
 bool Controller::setGoal(pfms::geometry_msgs::Point goal){ //Updates variables associated with timeToGoal and distanceToGoal functions
     goal_ = goal;
-    double distance = 0;
-    double time = 0;
     pfms::nav_msgs::Odometry estimatedGoalPose;
-
     currentOdo_ = getOdometry();
-    pfms::nav_msgs::Odometry origin = currentOdo_;
-    // std::cout<<"Initial Odo Readings: "<<std::endl;
-    // std::cout<<currentOdo_.position.x<<std::endl;
-    // std::cout<<currentOdo_.position.y<<std::endl;
-    // std::cout<<currentOdo_.yaw<<std::endl;
-    if (!checkOriginToDestination(origin, goal_, distance, time, estimatedGoalPose)){
-        return false;
+    std::cout<<"Current Odo Readings: "<<std::endl;
+    std::cout<<currentOdo_.position.x<<std::endl;
+    std::cout<<currentOdo_.position.y<<std::endl;
+    std::cout<<currentOdo_.yaw<<std::endl;
+    if (checkOriginToDestination(currentOdo_, goal_, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose)){
+        return true;
     }
     else{
-        return true;
+        return false;
     }
 }
 
@@ -33,15 +33,13 @@ pfms::PlatformType Controller::getPlatformType(void){
 }
 
 double Controller::distanceTravelled(void){
-    double totalDistance = 0;
-
-    return totalDistance;
+    totalDistance_ += distanceToGoal();
+    return totalDistance_;
 }
 
 double Controller::timeInMotion(void){
-    double totalTime = 0;
-
-    return totalTime;
+    totalTime_ += timeToGoal();
+    return totalTime_;
 }
 
 bool Controller::setTolerance(double tolerance){

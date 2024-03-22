@@ -28,88 +28,53 @@ int main(int argc, char *argv[]) {
     // else{
     //     atof(argv[2]);
     // }
-
-    double x=10.0;
-    double y=5.0;
-
+    // double x=10.0;
+    // double y=5.0;
     // double brake = 0.0;
     // double steering = 0.0;
     // double throttle = 0.1;
 
-    int repeats = 100;
+    unsigned long repeats = 1;
     double brake = 0.0;
-    double steering = 0.0;
+    double steering = 10.0;
     double throttle = 0.2;
-    //! Created a pointer to a Pipe 
+    // //! Created a pointer to a Pipe 
     std::shared_ptr<PfmsConnector> pfmsConnectorPtr = std::make_shared<PfmsConnector>();
     pfms::nav_msgs::Odometry odo; // We will use this to store odometry
     pfms::PlatformType type = pfms::PlatformType::ACKERMAN;
 
-    //! Our goal is here to keep driving the Ackerman platform towards the goal, stopping at the goal withon a tolerance
-    //! We will use the odometry to check if we are close to the goal
-    //! We will use the Ackerman command to drive the platform
-    //! We will use the pfmsconnector to send commands and receive odometry data
+    // throttle = 0.2;
+    // brake = 0;
+    // steering = 0;
+    // int state = 0;
+    bool finished = false;
+    while (!finished){
+        pfmsConnectorPtr->read(odo,type);
 
-    // This creates a command for the Ackerman platform (refer pfms_types.h for more details)
-    // unsigned int i=0;
-    // Ackerman cmd {
-    //             i++, // This is the sequence number (refer to pfms_types.h)
-    //             brake,
-    //             steering,
-    //             throttle,
-    //             };
+        pfms::commands::Ackerman cmd {repeats,brake,steering,throttle};
+        // std::cout<<"Steering: "<<steering_<<" Throttle: "<<throttle_<<std::endl;
 
-    // // This sends the command to the platform
-    // pfmsConnectorPtr->send(cmd);
-    // //! This slows down the loop to 100Hz
-    // std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-    // //! This reads odometry from the platform
-    // bool OK  =  pfmsConnectorPtr->read(odo,type);
-
-    // if(OK){
-    //     std::cout << 
-    //         odo.time << " " <<
-    //         odo.position.x << " " <<
-    //         odo.position.y << " " <<
-    //         odo.yaw << " " <<
-    //         odo.linear.x << " " <<
-    //         odo.linear.y << std::endl;
-    // }
-    unsigned long i = 0;
-    /* produce messages */
-    for(i = 0; i < repeats; i ++) {        
-        Ackerman cmd {
-                    i,
-                    brake,
-                    steering,
-                    throttle,
-                 };
         pfmsConnectorPtr->send(cmd);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-        bool OK  =  pfmsConnectorPtr->read(odo,type);
+        pfmsConnectorPtr->read(odo,type);
+        repeats++;
 
-        if(OK){
-            std::cout << 
-                i << " PosX " <<
-                // odo.time << " " <<
-                odo.position.x << " PosY " <<
-                odo.position.y << " Yaw " <<
-                odo.yaw << " " << std::endl;
-                // odo.linear.x << " " <<
-                // odo.linear.y << std::endl;
+        // currentOdo_ = odo;
+        if (repeats == 100){
+            finished = true;
         }
-        std::this_thread::sleep_for (std::chrono::milliseconds(10));        
+        // std::cout<<"Current Odo Readings: "<<std::endl;
+        // std::cout<<currentOdo_.position.x<<std::endl;
+        // std::cout<<currentOdo_.position.y<<std::endl;
+        // std::cout<<currentOdo_.yaw<<std::endl;
     }
 
-
-
     //! We can also send a goal to be visualised on rviz with the following command
-    unsigned int j=0;
-    pfms::geometry_msgs::Point pt{x,y};
-    pfms::geometry_msgs::Goal goal{j++,pt};
-    pfmsConnectorPtr->send(goal);
+    // unsigned int j=0;
+    // pfms::geometry_msgs::Point pt{x,y};
+    // pfms::geometry_msgs::Goal goal{j++,pt};
+    // pfmsConnectorPtr->send(goal);
 
     //! Finally we can show use of Audi Library
     Audi audi;

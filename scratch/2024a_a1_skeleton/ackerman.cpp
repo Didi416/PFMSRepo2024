@@ -2,6 +2,7 @@
 #include <chrono>   // Includes the system clock
 #include <algorithm> //Can use algorithms on STL containers
 #include <iostream>
+#include "audi.h"
 
 Ackerman::Ackerman(){
     platformType_ = pfms::PlatformType::ACKERMAN;
@@ -10,99 +11,92 @@ Ackerman::Ackerman(){
     MAX_STEER_ANGLE = (M_PI * LOCK_TO_LOCK_REVS / STEERING_RATIO); //radians
     WHEELBASE = 2.65; //m
     MAX_BRAKE_TORQUE = 8000.0; //Nm
-    DEFAULT_THROTTLE = 2.91; //m/s
+    DEFAULT_THROTTLE = 0.1; //m/s
+    i_ = 1;
+    brake_ = 0.0;
+    steering_ = 0.0;
+    throttle_ = 0.0;
+    pfmsConnectorPtr_ = std::make_shared<PfmsConnector>();
 }
 
 bool Ackerman::checkOriginToDestination(pfms::nav_msgs::Odometry origin, pfms::geometry_msgs::Point goal, double& distance, double& time, pfms::nav_msgs::Odometry& estimatedGoalPose){
-    double oldX;
-    double oldY;
-    double r;
-    double angleD;
-    double timeStep = 0.05;
-    double currentVelocity = DEFAULT_THROTTLE;
-    pfms::nav_msgs::Odometry originPos = origin;
-    double originalDistance = hypot(originPos.position.x - goal.x, originPos.position.y - goal.y);
-    std::cout<<"OG x pos: "<<originPos.position.x<<std::endl;
-    std::cout<<"Stored x pos: "<<currentOdo_.position.x<<std::endl;
-    std::cout<<"OG y pos: "<<originPos.position.y<<std::endl;
-    std::cout<<"Stored y pos: "<<currentOdo_.position.y<<std::endl;
-    while (true){
-        double angleToGoal = atan2(goal.y - originPos.position.y, goal.x - originPos.position.x);
-        // double steeringAngle = std::min(MAX_STEER_ANGLE, std::max(-MAX_STEER_ANGLE, angleToGoal - originPos.yaw));
-        // std::cout<<"Odo readings"<<std::endl;
-        // getOdometry();
-        
-        //Updates position and heading using differential drive kinematics
-        oldX = originPos.position.x;
-        oldY = originPos.position.y;
-        originPos.yaw += (currentVelocity/WHEELBASE)*tan(angleToGoal) * timeStep;
-        originPos.position.x += currentVelocity * cos(originPos.yaw) * timeStep;
-        originPos.position.y += currentVelocity * sin(originPos.yaw) * timeStep;
-        std::cout<<hypot(originPos.position.x - goal.x, originPos.position.y - goal.y)<<std::endl;
-
-        r = sqrt(pow(originPos.position.x - oldX, 2) + pow (originPos.position.y - oldY, 2));
-        angleD = atan2(originPos.position.y - oldY, originPos.position.x - oldX);
-        distance += r * std::abs(angleD);
-        std::cout<<"Distance is: "<<distance<<std::endl;
-
-        if (hypot(originPos.position.x - goal.x, originPos.position.y - goal.y)<0.1 || std::abs(angleToGoal - originPos.yaw)<0.1){
-            return true; //return true if goal is reached or current trajectory (angle) is headed for the goal.
-        }
-        else if (hypot(originPos.position.x - goal.x, originPos.position.y - goal.y) > originalDistance){
-            return false; //returns false if trajectory is moving away from goal, goal cannot be reached
-        }
+    Audi audi;
+    if (audi.checkOriginToDestination(origin, goal, distance, time, estimatedGoalPose)){
+        distanceToCurrentGoal_ = distance;
+        timetoCurrentGoal_ = time;
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
-double Ackerman::distanceToGoal(void){
-    //distance = radius * theta (assume half circle so 180 deg/pi rad)
-    double distanceToGo = 0;
-    double radius = 0;
-    double theta = M_PI;
-    
-    return distanceToGo;
+double Ackerman::distanceToGoal(void){    
+    return distanceToCurrentGoal_;
 }
 
 double Ackerman::timeToGoal(void){
-    double timeLeft = 0;
-    //using time = distance to go divided by current speed (iterating for loop as both values consistently change)
-    return timeLeft;
+    return timetoCurrentGoal_;
 }
 
 bool Ackerman::reachGoal(void){
-    
-    return true;
+    //Initialise conditions for new reach goal command
+    unsigned long repeats = 1;
+    throttle_ = 0.1;
+    int state = 1;
+    //compute steering using Audi library and store the value in steering_ (private data member)
+    double distance;
+    Audi audi;
+    audi.computeSteering(currentOdo_, goal_, steering_, distance);
+    //Display goal point in gazebo sim (rviz)
+    unsigned int j=0;
+    pfms::geometry_msgs::Goal goal{j++,goal_};
+    pfmsConnectorPtr_->send(goal);
+    while (true){
+        pfmsConnectorPtr_->read(currentOdo_,platformType_);
+
+        pfms::commands::Ackerman cmd {repeats,brake_,steering_,throttle_};
+        std::cout<<"Brake: "<<brake_<<" Steering: "<<steering_<<" Throttle: "<<throttle_<<std::endl;
+
+        pfmsConnectorPtr_->send(cmd);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+        pfmsConnectorPtr_->read(currentOdo_,platformType_);
+        distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+        std::cout<<"Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
+        
+        switch (state){
+            case 0:
+                std::cout<<"Finished"<<std::endl;
+                brake_ = 0.0;
+                steering_ = 0.0;
+                throttle_ = 0.0;
+                return true;
+            case 1: //start driving, until distance to goal is less than 1m, then switch to apply brakes
+                repeats++;
+                if (distanceToCurrentGoal_ < 1.0){
+                    state = 2;
+                }
+                break;
+            case 2: //apply brakes until stopped at goal
+                throttle_ = 0;
+                brake_ = 3000;
+                if (distanceToCurrentGoal_ < 0.5){
+                    state = 0;
+                }
+                break;
+        }
+        
+        if (distanceToCurrentGoal_ >= 0.5){
+            repeats++;
+        }
+
+        
+    }
 }
 
 pfms::nav_msgs::Odometry Ackerman::getOdometry(void){
-    pfms::nav_msgs::Odometry odo;
-    std::shared_ptr<PfmsConnector> pfmsConnectorPtr = std::make_shared<PfmsConnector>();
-    pfmsConnectorPtr->read(odo,getPlatformType());
+    pfmsConnectorPtr_->read(currentOdo_,platformType_);
 
-    pfms::commands::Ackerman cmd {
-        i_,
-        brake_,
-        steering_,
-        throttle_,
-    };
-
-    pfmsConnectorPtr->send(cmd);
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-    bool OK  =  pfmsConnectorPtr->read(odo,platformType_);
-
-    if(OK){
-        std::cout << 
-            i_ << " " <<
-            odo.time << " " <<
-            odo.position.x << " " <<
-            odo.position.y << " " <<
-            odo.yaw << " " <<
-            odo.linear.x << " " <<
-            odo.linear.y << std::endl;
-    }
-
-    currentOdo_ = odo;
-
-    return odo;
+    return currentOdo_;
 }

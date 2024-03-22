@@ -24,6 +24,7 @@ public:
   */
   double timeToGoal(void);
 
+
   /**
   Reach reach goal - execute control to reach goal, blocking call until goal reached or abandoned
   @return goal reached (true - goal reached, false - goal abandoned : not reached)
@@ -37,6 +38,7 @@ public:
   pfms::nav_msgs::Odometry getOdometry(void);
 
 private:
+  // Audi audi;
   double STEERING_RATIO;
   double LOCK_TO_LOCK_REVS;
   double MAX_STEER_ANGLE;
@@ -44,13 +46,12 @@ private:
   double MAX_BRAKE_TORQUE;
   double DEFAULT_THROTTLE;
 
-  double goalMidP_ [2];
-
   //Odo readings
   unsigned long i_;
   double brake_;
   double steering_;
   double throttle_;
+
 };
 
 #endif // ACKERMAN_H

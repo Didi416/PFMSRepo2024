@@ -61,16 +61,16 @@ TEST(SkidSteerExTest, ReachGoals) {
     
     //We now check that the goal has been reached using the PfmsHog
     std::vector<double> distances;
-    // std::cout << "Distance to goal: to be checked"<< std::endl;
-    // bool reachedCheck = pfmsHogPtr->checkGoalsReached(distances);
-    // std::cout << "Goal reach hog check:" << reachedCheck << std::endl;
-    // ASSERT_TRUE(reachedCheck);
+    std::cout << "Distance to goal: to be checked"<< std::endl;
+    bool reachedCheck = pfmsHogPtr->checkGoalsReached(distances);
+    std::cout << "Goal reach hog check:" << reachedCheck << std::endl;
+    ASSERT_TRUE(reachedCheck);
 
-    //We can also check the diatance to the goal reported by PfmsHog
-    // std::cout << "Goal size:" << distances.size() << std::endl;
-    // ASSERT_EQ(distances.size(),1);
-    // std::cout << "Distance to goal:" << distances.at(0) << std::endl;
-    // ASSERT_NEAR(distances.at(0),0,1.0);
+    // We can also check the diatance to the goal reported by PfmsHog
+    std::cout << "Goal size:" << distances.size() << std::endl;
+    ASSERT_EQ(distances.size(),1);
+    std::cout << "Distance to goal:" << distances.at(0) << std::endl;
+    ASSERT_NEAR(distances.at(0),0,1.0);
 
 
     //Let's repeat the process with a new goal
@@ -96,13 +96,13 @@ TEST(SkidSteerExTest, ReachGoals) {
     ASSERT_TRUE(reached);
 
     // //We now check that the goal has been reached using the PfmsHog
-    // reachedCheck = pfmsHogPtr->checkGoalsReached(distances);
-    // ASSERT_TRUE(reachedCheck);
+    reachedCheck = pfmsHogPtr->checkGoalsReached(distances);
+    ASSERT_TRUE(reachedCheck);
 
-    // //We can also check the diatance to the goal reported by PfmsHog
-    // ASSERT_EQ(distances.size(),1);
-    // std::cout << "Distance to goal:" << distances.at(0) << std::endl;
-    // ASSERT_NEAR(distances.at(0),0,1.0);
+    //We can also check the diatance to the goal reported by PfmsHog
+    ASSERT_EQ(distances.size(),1);
+    std::cout << "Distance to goal:" << distances.at(0) << std::endl;
+    ASSERT_NEAR(distances.at(0),0,1.0);
 
 }
 

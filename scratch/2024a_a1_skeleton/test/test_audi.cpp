@@ -38,79 +38,78 @@ TEST_F(AckermanTest, Simple) {
     std::cout << "Ackerman: can reach goal" <<std::endl;
 
     double dist = controllers.at(0)->distanceToGoal();
-    // double t = controllers.at(0)->timeToGoal();
+    double t = controllers.at(0)->timeToGoal();
 
     ASSERT_NEAR(dist,10.2646,0.5);
-    // ASSERT_NEAR(t,3.53951,1.0);
+    ASSERT_NEAR(t,3.53951,1.0);
 }
 
 
-// TEST_F(AckermanTest, Simple2) {
-
-//     // Starting point for vehicle
-//     Odometry odo = populateOdo(0,2,0);
-//     pfmsHogPtr_->teleport(odo);
-
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new Ackerman());
-
-//     pfms::geometry_msgs::Point pt{0,-6.5};
-
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_TRUE(reachable);
-
-//     // double dist = controllers.at(0)->distanceToGoal();
-//     // double t = controllers.at(0)->timeToGoal();
-
-//     // std::cout << "Ackerman: can reach goal " <<
-//     //                      dist << "[m] " << t << "[s]" << std::endl;
-
-//     // ASSERT_NEAR(dist,13.351,0.5);
-//     // ASSERT_NEAR(t,4.6404,1.0);
-// }
-
-// TEST_F(AckermanTest, NotPossible) {
+TEST_F(AckermanTest, Simple2) {
 
     // Starting point for vehicle
-//     Odometry odo = populateOdo(0,2,0);
-//     pfmsHogPtr_->teleport(odo);
+    Odometry odo = populateOdo(0,2,0);
+    pfmsHogPtr_->teleport(odo);
 
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new Ackerman());
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new Ackerman());
 
-//     pfms::geometry_msgs::Point pt {0,-6.0};
+    pfms::geometry_msgs::Point pt{0,-6.5};
 
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_FALSE(reachable);
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_TRUE(reachable);
 
-//     std::cout << "Ackerman: can not reach goal " << std::endl;
-// }
+    double dist = controllers.at(0)->distanceToGoal();
+    double t = controllers.at(0)->timeToGoal();
 
-// TEST_F(AckermanTest, ForwardFacing) {
+    std::cout << "Ackerman: can reach goal " <<
+                         dist << "[m] " << t << "[s]" << std::endl;
 
-//     // Starting point for vehicle
-//     Odometry odo = populateOdo(0.225,-5.306,127.825*M_PI/180);
-//     pfmsHogPtr_->teleport(odo);
+    ASSERT_NEAR(dist,13.351,0.5);
+    ASSERT_NEAR(t,4.6404,1.0);
+}
 
-//     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new Ackerman());
+TEST_F(AckermanTest, NotPossible) {
 
-//     //Goal at x=1,y=4;//This should possible
-//     pfms::geometry_msgs::Point pt {1,4};
+    // Starting point for vehicle
+    Odometry odo = populateOdo(0,2,0);
+    pfmsHogPtr_->teleport(odo);
 
-//     bool reachable = controllers.at(0)->setGoal(pt);
-//     ASSERT_TRUE(reachable);
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new Ackerman());
 
-//     // double dist = controllers.at(0)->distanceToGoal();
-//     // double t = controllers.at(0)->timeToGoal();
+    pfms::geometry_msgs::Point pt {0,-6.0};
 
-//     // std::cout << "Ackerman: can reach goal " <<
-//     //                      dist << "[m] " << t << "[s]" << std::endl;
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_FALSE(reachable);
 
+    std::cout << "Ackerman: can not reach goal " << std::endl;
+}
 
-//     // ASSERT_NEAR(dist,10.2568,0.5);
-//     // ASSERT_NEAR(t,3.53684,1.0);
-// }
+TEST_F(AckermanTest, ForwardFacing) {
+
+    // Starting point for vehicle
+    Odometry odo = populateOdo(0.225,-5.306,127.825*M_PI/180);
+    pfmsHogPtr_->teleport(odo);
+
+    std::vector<ControllerInterface*> controllers;
+    controllers.push_back(new Ackerman());
+
+    //Goal at x=1,y=4;//This should possible
+    pfms::geometry_msgs::Point pt {1,4};
+
+    bool reachable = controllers.at(0)->setGoal(pt);
+    ASSERT_TRUE(reachable);
+
+    double dist = controllers.at(0)->distanceToGoal();
+    double t = controllers.at(0)->timeToGoal();
+
+    std::cout << "Ackerman: can reach goal " <<
+                         dist << "[m] " << t << "[s]" << std::endl;
+
+    ASSERT_NEAR(dist,10.2568,0.5);
+    ASSERT_NEAR(t,3.53684,1.0);
+}
 
 
 int main(int argc, char **argv) {
