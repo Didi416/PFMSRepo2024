@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     }
     
     std::vector<ControllerInterface*> controllers;
-//     controllers.push_back(new Ackerman());
+    controllers.push_back(new Ackerman());
     controllers.push_back(new SkidSteer());
 
 

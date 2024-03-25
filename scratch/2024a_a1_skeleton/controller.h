@@ -81,7 +81,7 @@ public:
   returns current odometry information
   @return odometry - current pose (x,y,yaw) and velocity (vx,vy)
   */
-  virtual pfms::nav_msgs::Odometry getOdometry(void) = 0;
+  pfms::nav_msgs::Odometry getOdometry(void);
 
 protected:
   pfms::PlatformType platformType_;
@@ -91,6 +91,7 @@ protected:
   double timetoCurrentGoal_;
   double totalDistance_;
   double totalTime_;
+  double goalTolerance_;
   
   std::shared_ptr<PfmsConnector> pfmsConnectorPtr_;
 };

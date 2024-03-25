@@ -31,15 +31,13 @@ TEST(MissionTest, Ackerman) {
         pfmsHogSkidPtr->teleport(odo);
     }    
 
-    // Move Ackermna to Strating position
+    // Move Ackerman to Starting position
     pfms::PlatformType platform = pfms::PlatformType::ACKERMAN;
     std::shared_ptr<PfmsHog> pfmsHogAckPtr = std::make_shared<PfmsHog>(platform,true);
     {
         Odometry odo = populateOdo(0,2,0);
         pfmsHogAckPtr->teleport(odo);
     }
-
-
 
     //Set-up the controllers
     std::vector<ControllerInterface*> controllers;

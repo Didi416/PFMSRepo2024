@@ -45,9 +45,9 @@ bool Ackerman::reachGoal(void){
     throttle_ = 0.1;
     int state = 1;
     //compute steering using Audi library and store the value in steering_ (private data member)
-    double distance;
+    double originalDistance;
     Audi audi;
-    audi.computeSteering(currentOdo_, goal_, steering_, distance);
+    audi.computeSteering(currentOdo_, goal_, steering_, originalDistance);
     //Display goal point in gazebo sim (rviz)
     unsigned int j=0;
     pfms::geometry_msgs::Goal goal{j++,goal_};
@@ -56,7 +56,7 @@ bool Ackerman::reachGoal(void){
         pfmsConnectorPtr_->read(currentOdo_,platformType_);
 
         pfms::commands::Ackerman cmd {repeats,brake_,steering_,throttle_};
-        std::cout<<"Brake: "<<brake_<<" Steering: "<<steering_<<" Throttle: "<<throttle_<<std::endl;
+        // std::cout<<"Brake: "<<brake_<<" Steering: "<<steering_<<" Throttle: "<<throttle_<<std::endl;
 
         pfmsConnectorPtr_->send(cmd);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -73,30 +73,27 @@ bool Ackerman::reachGoal(void){
                 throttle_ = 0.0;
                 return true;
             case 1: //start driving, until distance to goal is less than 1m, then switch to apply brakes
-                repeats++;
                 if (distanceToCurrentGoal_ < 1.0){
                     state = 2;
                 }
                 break;
-            case 2: //apply brakes until stopped at goal
+            case 2: //apply brakes until close at goal
                 throttle_ = 0;
                 brake_ = 3000;
                 if (distanceToCurrentGoal_ < 0.5){
                     state = 0;
                 }
                 break;
+            case 3:
+                brake_ = MAX_BRAKE_TORQUE;
+                    state = 0;
+                break;
         }
         
-        if (distanceToCurrentGoal_ >= 0.5){
+        if (distanceToCurrentGoal_ >= goalTolerance_){
             repeats++;
         }
 
         
     }
-}
-
-pfms::nav_msgs::Odometry Ackerman::getOdometry(void){
-    pfmsConnectorPtr_->read(currentOdo_,platformType_);
-
-    return currentOdo_;
 }

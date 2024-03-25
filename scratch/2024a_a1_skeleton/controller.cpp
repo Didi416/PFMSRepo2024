@@ -43,5 +43,11 @@ double Controller::timeInMotion(void){
 }
 
 bool Controller::setTolerance(double tolerance){
+    goalTolerance_ = tolerance;
     return true;
+}
+
+pfms::nav_msgs::Odometry Controller::getOdometry(void){
+    pfmsConnectorPtr_->read(currentOdo_,platformType_);
+    return currentOdo_;
 }

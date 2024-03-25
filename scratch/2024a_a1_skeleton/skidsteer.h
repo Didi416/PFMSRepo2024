@@ -34,7 +34,7 @@ public:
   returns current odometry information
   @return odometry - current pose (x,y,yaw) and velocity (vx,vy)
   */
-  pfms::nav_msgs::Odometry getOdometry(void);
+  // pfms::nav_msgs::Odometry getOdometry(void);
 
 private:
   double velocity_;

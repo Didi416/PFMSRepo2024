@@ -61,23 +61,25 @@ bool SkidSteer::reachGoal(void){
         std::cout<<"Angular Disp: "<<angularDisp_<<std::endl;
         std::cout<<"Angular Velo: "<<angularV_<<std::endl;
         if (angularDisp_ > 0){
-            if (angularDisp_ >= 0.08){
+            if (angularDisp_ >= 0.05){
                 drive(1, angularV_, 0);
                 std::cout<<"TURNING"<<std::endl;
                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (angularDisp_ < 0.3){
-                    angularV_ = angularV_*0.75;
+                    angularV_ = angularV_*0.7;
                 }
             }
-            if (angularDisp_ <= 0.08 && distanceToGoal() >= 0.4){
+            if (angularDisp_ <= 0.05 && distanceToGoal() >= 0.4){
+                angularV_ = 0.5;
                 drive(1, 0, velocity_);
                 std::cout<<"DRIVING: Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+                // angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (distanceToGoal() < 1){
                     velocity_ = 0.1;
                 }
             }
-            if (angularDisp_ <= 0.08 && distanceToGoal() <= 0.4){
+            if (angularDisp_ <= 0.05 && distanceToGoal() <= 0.4){
                 std::cout<<"GOAL REACHED"<<std::endl;
                 velocity_ = 0;
                 angularV_ = 0;
@@ -86,7 +88,7 @@ bool SkidSteer::reachGoal(void){
         }
 
         else if (angularDisp_ < 0){
-            if (angularDisp_ <= -0.08){
+            if (angularDisp_ <= -0.05){
                 drive(1, angularV_, 0);
                 std::cout<<"TURNING2"<<std::endl;
                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
@@ -94,15 +96,16 @@ bool SkidSteer::reachGoal(void){
                     angularV_ = angularV_*0.75;
                 }
             }
-            if (angularDisp_ >= -0.08 && distanceToGoal() >= 0.4){
+            if (angularDisp_ >= -0.05 && distanceToGoal() >= 0.4){
                 drive(1, 0, velocity_);
                 std::cout<<"DRIVING: Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+                // angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (distanceToGoal() < 1){
                     velocity_ = 0.1;
                 }
             }
-            if (angularDisp_ >= -0.08 && distanceToGoal() <= 0.4){
+            if (angularDisp_ >= -0.05 && distanceToGoal() <= 0.4){
                 std::cout<<"GOAL REACHED"<<std::endl;
                 return true;
             }
@@ -111,8 +114,3 @@ bool SkidSteer::reachGoal(void){
     return false;
 }
 
-pfms::nav_msgs::Odometry SkidSteer::getOdometry(){
-    pfmsConnectorPtr_->read(currentOdo_,platformType_);
-
-    return currentOdo_;
-}
