@@ -16,13 +16,12 @@ execute_process(COMMAND lsb_release -cs
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-if("${RELEASE_CODENAME}" STREQUAL "bionic")
+if("${RELEASE_CODENAME}" STREQUAL "jammy")
     message ( STATUS "Ubuntu is in use, LTS version ${RELEASE_CODENAME}" )
-elseif("${RELEASE_CODENAME}" STREQUAL "focal")
-    message ( STATUS "Ubuntu is in use, LTS version ${RELEASE_CODENAME}" )
-else("${RELEASE_CODENAME}" STREQUAL "bionic")
+    set (RELEASE_CODENAME "focal") #Did this to use the focal version of the library on jammy
+else("${RELEASE_CODENAME}" STREQUAL "jammy")
     message ( FATAL_ERROR "Your vesrion on Ubuntu ${RELEASE_CODENAME} is not supported" )
-endif("${RELEASE_CODENAME}" STREQUAL "bionic")
+endif("${RELEASE_CODENAME}" STREQUAL "jammy")
 
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
 if( ${ARCHITECTURE} STREQUAL "aarch64" )
@@ -48,4 +47,3 @@ target_link_libraries(${PROJECT_NAME}_ex analysis)
 if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
-..
