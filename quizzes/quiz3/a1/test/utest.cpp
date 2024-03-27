@@ -44,6 +44,51 @@ TEST (Transforms, Local2Global) {
 
 }
 
+TEST (Transform, Global2Local ) {
+
+    Pose aircraft;
+    aircraft.position = {-2000,1100,0};
+    aircraft.orientation = tf::yawToQuaternion(1.0472);
+
+    {
+        Point bogie = {-3614.49,2759.74,0};
+        RangeBearingStamped rb;
+        rb = {2315.45,1.29518,0};
+
+        RangeBearingStamped rbComputed = tf2::global2local(bogie,aircraft);
+
+        EXPECT_NEAR(rbComputed.range,rb.range,0.5);
+        EXPECT_NEAR(rbComputed.bearing,rb.bearing,1e-3);
+    }
+
+    {
+        Point bogie = {-4842.62,-1380.23,0};
+        RangeBearingStamped rb = {3772.53,2.81182,0};
+
+        RangeBearingStamped rbComputed = tf2::global2local(bogie,aircraft);
+
+        EXPECT_NEAR(rbComputed.range,rb.range,0.5);
+        EXPECT_NEAR(rbComputed.bearing,rb.bearing,1e-3);
+
+    }
+
+
+    {
+
+        aircraft.position = {-2000,1100,0};
+        aircraft.orientation = tf::yawToQuaternion(-1.0472);
+
+        Point bogie = {-1930.32,2438.4,0};
+        RangeBearingStamped rb = {1340.22,2.56598,0};
+
+        RangeBearingStamped rbComputed = tf2::global2local(bogie,aircraft);
+
+        EXPECT_NEAR(rbComputed.range,rb.range,0.5);
+        EXPECT_NEAR(rbComputed.bearing,rb.bearing,1e-3);
+
+    }
+
+}
 
 TEST (Analysis, Time2Impact ) {
 
