@@ -6,24 +6,18 @@
 
 Ackerman::Ackerman(){
     platformType_ = pfms::PlatformType::ACKERMAN;
-    STEERING_RATIO = 17.3;
-    LOCK_TO_LOCK_REVS = 3.2;
-    MAX_STEER_ANGLE = (M_PI * LOCK_TO_LOCK_REVS / STEERING_RATIO); //radians
-    WHEELBASE = 2.65; //m
     MAX_BRAKE_TORQUE = 8000.0; //Nm
     DEFAULT_THROTTLE = 0.1; //m/s
     i_ = 1;
     brake_ = 0.0;
     steering_ = 0.0;
     throttle_ = 0.0;
-    pfmsConnectorPtr_ = std::make_shared<PfmsConnector>();
 }
 
 bool Ackerman::checkOriginToDestination(pfms::nav_msgs::Odometry origin, pfms::geometry_msgs::Point goal, double& distance, double& time, pfms::nav_msgs::Odometry& estimatedGoalPose){
+    //uses Audi library which 'automatically' computes values for distance, time and etimated goal pose and if the goal can be reached by Ackerman.
     Audi audi;
     if (audi.checkOriginToDestination(origin, goal, distance, time, estimatedGoalPose)){
-        distanceToCurrentGoal_ = distance;
-        timetoCurrentGoal_ = time;
         return true;
     }
     else {
@@ -31,16 +25,8 @@ bool Ackerman::checkOriginToDestination(pfms::nav_msgs::Odometry origin, pfms::g
     }
 }
 
-double Ackerman::distanceToGoal(void){    
-    return distanceToCurrentGoal_;
-}
-
-double Ackerman::timeToGoal(void){
-    return timetoCurrentGoal_;
-}
-
 bool Ackerman::reachGoal(void){
-    //Initialise conditions for new reach goal command
+    //Initialise (or reset) conditions for new reach goal command
     unsigned long repeats = 1;
     throttle_ = 0.1;
     int state = 1;
@@ -53,21 +39,18 @@ bool Ackerman::reachGoal(void){
     pfms::geometry_msgs::Goal goal{j++,goal_};
     pfmsConnectorPtr_->send(goal);
     while (true){
-        pfmsConnectorPtr_->read(currentOdo_,platformType_);
+        //takes in brake, steering and throttle values and inputs to Ackerman cmd, sending commands through pfmsConnector and reads current odo
 
         pfms::commands::Ackerman cmd {repeats,brake_,steering_,throttle_};
-        // std::cout<<"Brake: "<<brake_<<" Steering: "<<steering_<<" Throttle: "<<throttle_<<std::endl;
 
         pfmsConnectorPtr_->send(cmd);
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10)); //wait for a period to allow information to be sent then retrieved
 
         pfmsConnectorPtr_->read(currentOdo_,platformType_);
         distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
-        std::cout<<"Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
         
         switch (state){
             case 0:
-                std::cout<<"Finished"<<std::endl;
                 brake_ = 0.0;
                 steering_ = 0.0;
                 throttle_ = 0.0;
@@ -79,21 +62,21 @@ bool Ackerman::reachGoal(void){
                 break;
             case 2: //apply brakes until close at goal
                 throttle_ = 0;
-                brake_ = 3000;
-                if (distanceToCurrentGoal_ < 0.5){
+                brake_ = 3000; //less than max braking, to just gradually slow down
+                if (distanceToCurrentGoal_ < goalTolerance_+0.2){
+                    state = 3;
+                }
+                break;
+            case 3: //apply max braking torque to come to a complete stop
+                brake_ = MAX_BRAKE_TORQUE;
+                if(currentOdo_.linear.x <= 0 && currentOdo_.linear.y <= 0){ //check for when velocity is 0 (stopped) before proceeding with next goal or terminating (finishing) program
                     state = 0;
                 }
                 break;
-            case 3:
-                brake_ = MAX_BRAKE_TORQUE;
-                    state = 0;
-                break;
         }
         
-        if (distanceToCurrentGoal_ >= goalTolerance_){
+        if (distanceToCurrentGoal_ >= goalTolerance_){ //incremental counter for sending commands (needs increasing sequence counter)
             repeats++;
-        }
-
-        
+        }        
     }
 }

@@ -5,6 +5,15 @@
 #include "missioninterface.h"
 #include "pfmsconnector.h"
 
+/*!
+ *  \brief     Mission Class
+ *  \details
+ *  Derived class of Mission Interface class, includes all functions needing to be specified in Mission Interface class 
+ *  
+ *  \author    Dyandra Prins
+ *  \date      2024-27-02
+ */
+
 class Mission: public MissionInterface
 {
 public:

@@ -52,18 +52,15 @@ TEST(SkidSteerExTest, ReachGoals) {
 
     // We set the goal for the PfmsHog (Which will be used to check if the goal is reached or not)
     pfmsHogPtr->setGoal(pt1);
-    std::cout<<"Hog Goal Set"<<std::endl;
     //This now triggers the SkidSteer to reach the goal and "blocks" until the goal is reached
     bool reached = controllers.at(0)->reachGoal();
     //We now check that the goal has been reached (the reachGoal function returns when te goal is reached)
     ASSERT_TRUE(reached);
-    std::cout<<"Goal reached"<<std::endl;
     
     //We now check that the goal has been reached using the PfmsHog
     std::vector<double> distances;
-    std::cout << "Distance to goal: to be checked"<< std::endl;
     bool reachedCheck = pfmsHogPtr->checkGoalsReached(distances);
-    std::cout << "Goal reach hog check:" << reachedCheck << std::endl;
+    std::cout << "Goal reach check:" << reachedCheck << std::endl;
     ASSERT_TRUE(reachedCheck);
 
     // We can also check the diatance to the goal reported by PfmsHog

@@ -5,6 +5,7 @@
 
 //Student defined libraries
 #include "ackerman.h"
+#include "skidsteer.h"
 #include "mission.h"
 
 #include "pfms_types.h"
@@ -20,7 +21,7 @@ using namespace pfms::nav_msgs;
 
 ///////////////////////////////////////////////////////////
 // Unit Tests Start HERE
-////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 TEST(MissionTest, Ackerman) {
 
@@ -71,7 +72,7 @@ TEST(MissionTest, Ackerman) {
 
     // This function will block (not return) until the function has finished
     bool missionOK = mission.runMission();
-    // The mission should succseed
+    // The mission should succeed
     EXPECT_TRUE(missionOK);
 
     {
