@@ -44,11 +44,73 @@ void SkidSteer::drive(unsigned long i, double turnLR, double moveFB){ // custom 
     pfmsConnectorPtr_->read(currentOdo_,platformType_);
 }
 
-bool SkidSteer::reachGoal(void){ //reach goal function computes movements of Skidsteer by calculating angle to turn and then distance to move forward once facing goal
+// bool SkidSteer::reachGoal(void){ //reach goal function computes movements of Skidsteer by calculating angle to turn and then distance to move forward once facing goal
+//     bool goalReached = false;
+
+//     turningAngle_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
+//     //set angular valocity either positive or negative (left or right) and velocity to 1.0 constant
+//     if (turningAngle_ < 0){
+//         angularV_ = 1.0;
+//     }
+//     else if (turningAngle_ > 0){
+//         angularV_ = -1.0;
+//     }
+//     velocity_ = 1.0;
+//     //loop through untl goal reached within tolerance
+//     while (!goalReached){
+//         if (angularDisp_ > 0){ //check if turning left or right to face goal (left first)
+//             if (angularDisp_ >= 0.05){ //while angular dispalcement is above 5 degreees
+//                 drive(1, angularV_, 0); //call drive function (reduces repeating lines by calling function) then recalculate angle to turn
+//                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
+//                 //if angle is less than 0.3 radians, reduce speed so to not over shoot goal angle
+//                 if (angularDisp_ < 0.3){
+//                     angularV_ = angularV_*0.75;
+//                 }
+//             }
+//             if (angularDisp_ <= 0.05 && distanceToGoal() >= 0.4){ //once finished turning, switch to moving forwards, calculated by pythagoras from currentPos to goal
+//                 // angularV_ = 0.5;
+//                 drive(1, 0, velocity_);
+//                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+//                 // reduce speed when less than 1m from goal
+//                 if (distanceToGoal() < 1){
+//                     velocity_ = 0.2;
+//                 }
+//             }
+//             //goal has been reached within a tolerance
+//             if (angularDisp_ <= 0.05 && distanceToGoal() <= 0.4){
+//                 velocity_ = 0;
+//                 angularV_ = 0;
+//                 return true;
+//             }
+//         }
+
+//         else if (angularDisp_ < 0){ // repeat process for turning right
+//             if (angularDisp_ <= -0.05){
+//                 drive(1, angularV_, 0);
+//                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
+//                 if (angularDisp_ > 0.3){
+//                     angularV_ = angularV_*0.75;
+//                 }
+//             }
+//             if (angularDisp_ >= -0.05 && distanceToGoal() >= 0.4){
+//                 drive(1, 0, velocity_);
+//                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+//                 if (distanceToGoal() < 1){
+//                     velocity_ = 0.2;
+//                 }
+//             }
+//             if (angularDisp_ >= -0.05 && distanceToGoal() <= 0.4){
+//                 return true;
+//             }
+//         }
+//     }
+//     return false;
+// }
+
+bool SkidSteer::reachGoal(void){
     bool goalReached = false;
 
     turningAngle_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
-    //set angular valocity either positive or negative (left or right) and velocity to 1.0 constant
     if (turningAngle_ < 0){
         angularV_ = 1.0;
     }
@@ -56,37 +118,41 @@ bool SkidSteer::reachGoal(void){ //reach goal function computes movements of Ski
         angularV_ = -1.0;
     }
     velocity_ = 1.0;
-    //loop through untl goal reached within tolerance
+    
     while (!goalReached){
-        if (angularDisp_ > 0){ //check if turning left or right to face goal (left first)
-            if (angularDisp_ >= 0.05){ //while angular dispalcement is above 5 degreees
-                drive(1, angularV_, 0); //call drive function (reduces repeating lines by calling function) then recalculate angle to turn
+        std::cout<<"Angular Disp: "<<angularDisp_<<std::endl;
+        std::cout<<"Angular Velo: "<<angularV_<<std::endl;
+        if (angularDisp_ > 0){
+            if (angularDisp_ >= 0.05){
+                drive(1, angularV_, 0);
+                std::cout<<"TURNING"<<std::endl;
                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
-                //if angle is less than 0.3 radians, reduce speed so to not over shoot goal angle
                 if (angularDisp_ < 0.3){
                     angularV_ = angularV_*0.75;
                 }
             }
-            if (angularDisp_ <= 0.05 && distanceToGoal() >= 0.4){ //once finished turning, switch to moving forwards, calculated by pythagoras from currentPos to goal
-                // angularV_ = 0.5;
+            if (angularDisp_ <= 0.05 && distanceToGoal() >= 0.4){
+                angularV_ = 0.5;
                 drive(1, 0, velocity_);
+                std::cout<<"DRIVING: Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
-                // reduce speed when less than 1m from goal
+                // angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (distanceToGoal() < 1){
-                    velocity_ = 0.2;
+                    velocity_ = 0.1;
                 }
             }
-            //goal has been reached within a tolerance
             if (angularDisp_ <= 0.05 && distanceToGoal() <= 0.4){
+                std::cout<<"GOAL REACHED"<<std::endl;
                 velocity_ = 0;
                 angularV_ = 0;
                 return true;
             }
         }
 
-        else if (angularDisp_ < 0){ // repeat process for turning right
+        else if (angularDisp_ < 0){
             if (angularDisp_ <= -0.05){
                 drive(1, angularV_, 0);
+                std::cout<<"TURNING2"<<std::endl;
                 angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (angularDisp_ > 0.3){
                     angularV_ = angularV_*0.75;
@@ -94,15 +160,19 @@ bool SkidSteer::reachGoal(void){ //reach goal function computes movements of Ski
             }
             if (angularDisp_ >= -0.05 && distanceToGoal() >= 0.4){
                 drive(1, 0, velocity_);
+                std::cout<<"DRIVING: Distance to Goal: "<<distanceToCurrentGoal_<<std::endl;
                 distanceToCurrentGoal_ = sqrt(pow(currentOdo_.position.x - goal_.x, 2) + pow(currentOdo_.position.y - goal_.y, 2));
+                // angularDisp_ = (atan2(std::abs(currentOdo_.position.y - goal_.y), std::abs(currentOdo_.position.x - goal_.x))) - std::abs(currentOdo_.yaw);
                 if (distanceToGoal() < 1){
-                    velocity_ = 0.2;
+                    velocity_ = 0.1;
                 }
             }
             if (angularDisp_ >= -0.05 && distanceToGoal() <= 0.4){
+                std::cout<<"GOAL REACHED"<<std::endl;
                 return true;
             }
         }
     }
     return false;
+
 }
