@@ -11,7 +11,7 @@ using geometry_msgs::Point;
 using std::pair;
 
 typedef pair<double, unsigned int> EdgeInfo;
-typedef vector<vector<EdgeInfo> > AdjacencyList;
+typedef vector<vector<EdgeInfo>> AdjacencyList;
 
 class Analysis
 {

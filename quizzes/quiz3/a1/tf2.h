@@ -6,6 +6,7 @@
 
 using geometry_msgs::Pose;
 using geometry_msgs::Point;
+using geometry_msgs::Quaternion;
 using geometry_msgs::RangeBearingStamped;
 
 namespace tf2 {
@@ -35,6 +36,12 @@ namespace tf2 {
      * @return normalised angle
      */
     double normaliseAngle(double theta);
+
+    Point rotateFrame(Point point, double theta);
+
+    Point transformLocalToGlobal(Point localPoint, Point localOrigin, double rotation);
+    
+    Point transformGlobalToLocal(Point globalPoint, Point localOrigin, double rotation);
 }
 
 #endif // TF2_H
