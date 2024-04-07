@@ -1,0 +1,11 @@
+[ 12%] Building CXX object CMakeFiles/mission_test.dir/home/student/41012/2024A/a1/submissions/130083/2024a_a1_skeleton_(submission)/mission.cpp.o
+[ 25%] Linking CXX static library libmission_test.a
+[ 25%] Built target mission_test
+[ 37%] Building CXX object CMakeFiles/example.dir/home/student/41012/2024A/a1/submissions/130083/2024a_a1_skeleton_(submission)/ackerman.cpp.o
+[ 50%] Building CXX object CMakeFiles/example.dir/home/student/41012/2024A/a1/submissions/130083/2024a_a1_skeleton_(submission)/controller.cpp.o
+[ 62%] Building CXX object CMakeFiles/example.dir/home/student/41012/2024A/a1/submissions/130083/2024a_a1_skeleton_(submission)/skidsteer.cpp.o
+[ 75%] Linking CXX shared library libexample.so
+[ 75%] Built target example
+[ 87%] Building CXX object CMakeFiles/testMission.dir/test_mission.cpp.o
+[100%] Linking CXX executable testMission
+[100%] Built target testMission
