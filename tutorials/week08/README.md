@@ -7,5 +7,5 @@ The tutorial looks at Unit Testing, and the way to develop it reflecting on Assi
 
 **[TUTORIAL](./TUTORIAL.md)**
 
-
+Additional material ([help using laser](./LASER.md)) for the SUPER mode of A2.
 
