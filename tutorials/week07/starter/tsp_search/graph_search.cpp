@@ -63,6 +63,7 @@ void print_path(AdjacencyList graph,vector<int> path)
 vector<int> brute_force_tsp(AdjacencyList& graph, int start) {
 
     vector<int> order;
+    double value = 0;
     //Let's list the nodes in a vector, and we can do permutations of
     //it as all of the nodes are connected
     vector<int> nodes;
@@ -79,6 +80,11 @@ vector<int> brute_force_tsp(AdjacencyList& graph, int start) {
             cout << node << " ";
         }
         cout << "\n";
+
+        for (int i=0; i<nodes.size(); i++){
+            value = graph.at(i).at(nodes.at(i+1)).second;
+            cout<<nodes.at(i)<<" Distance to next Node: "<< value;
+        }
     } 
     while (std::next_permutation(nodes.begin(), nodes.end()));
 

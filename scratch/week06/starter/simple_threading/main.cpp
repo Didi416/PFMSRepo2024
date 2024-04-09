@@ -7,7 +7,7 @@
 using namespace std;
 
 void incrementNum(int &num, mutex &numMutex) {
-    while (true) {
+    while (num<1001) {
         // We can only obtain a lock in this thread if the mutex
         // is not locked anywhere else
         //numMutex.lock();
@@ -17,7 +17,7 @@ void incrementNum(int &num, mutex &numMutex) {
         // We only access num while the mutex is locked
         num++;
       }
-        //numMutex.unlock();
+        numMutex.unlock();
         // This delay is included to improve the readability of the program output
         // and avoid hard-looping and consuming too much cpu
         std::this_thread::sleep_for (std::chrono::milliseconds(10));
@@ -25,7 +25,7 @@ void incrementNum(int &num, mutex &numMutex) {
 }
 
 void printNum(int &num, mutex &numMutex) {
-    while (true) {
+    while (num<1001) {
         // We can only obtain a lock in this thread if the mutex
         // is not locked anywhere else
         //numMutex.lock();
@@ -34,7 +34,7 @@ void printNum(int &num, mutex &numMutex) {
         // We only access num while the mutex is locked
         cout <<  "num is:" << num << endl;
       }
-        //numMutex.unlock();
+        numMutex.unlock();
         // This delay is included to improve the readability of the program output
         // and avoid hard-looping and consuming too much cpu
         // A better solution would be to use a condition_variable to make
