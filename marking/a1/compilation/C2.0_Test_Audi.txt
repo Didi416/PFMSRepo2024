@@ -1,0 +1,4 @@
+Consolidate compiler generated dependencies of target example
+[ 66%] Built target example
+Consolidate compiler generated dependencies of target testAudi
+[100%] Built target testAudi

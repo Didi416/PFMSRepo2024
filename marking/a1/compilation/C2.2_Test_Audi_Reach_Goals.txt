@@ -1,0 +1,4 @@
+[ 66%] Built target example
+[ 83%] Building CXX object CMakeFiles/testAudiReachGoals.dir/test_audi_reach_goals.cpp.o
+[100%] Linking CXX executable testAudiReachGoals
+[100%] Built target testAudiReachGoals

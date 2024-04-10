@@ -1,0 +1,4 @@
+[ 66%] Built target example
+[ 83%] Building CXX object CMakeFiles/testHuskyReachGoals.dir/test_husky_reach_goals.cpp.o
+[100%] Linking CXX executable testHuskyReachGoals
+[100%] Built target testHuskyReachGoals
