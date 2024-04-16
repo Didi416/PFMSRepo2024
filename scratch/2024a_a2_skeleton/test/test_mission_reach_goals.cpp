@@ -29,12 +29,12 @@ TEST(MissionReachGoals, ThreeGoalsEach) {
     // We teleport the platforms to starting locations
     std::unique_ptr<PfmsHog> pfmsHogAudiPtr = std::make_unique<PfmsHog>(pfms::PlatformType::ACKERMAN);
     {
-        Odometry odo = populateOdo(0,2,0);
+        Odometry odo = populateOdoUGV(0,2,0);
         pfmsHogAudiPtr->teleport(odo);
     }
     std::unique_ptr<PfmsHog> pfmsHogQuadPtr = std::make_unique<PfmsHog>(pfms::PlatformType::QUADCOPTER);
     {
-        Odometry odo = populateOdo(0,-2,0);
+        Odometry odo = populateOdoUAV(0,-2,2,0);
         pfmsHogQuadPtr->teleport(odo);
     }
 

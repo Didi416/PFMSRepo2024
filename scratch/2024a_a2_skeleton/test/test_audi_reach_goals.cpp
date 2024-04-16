@@ -27,7 +27,7 @@ TEST(AckermanReachGoals, ThreeGoals) {
     
     std::unique_ptr<PfmsHog> pfmsHogPtr = std::make_unique<PfmsHog>(pfms::PlatformType::ACKERMAN);
     {
-        Odometry odo = populateOdo(0,2,0);
+        Odometry odo = populateOdoUGV(0,2,0);
         pfmsHogPtr->teleport(odo);
     }
 

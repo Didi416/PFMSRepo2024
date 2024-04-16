@@ -16,7 +16,7 @@ using namespace pfms::nav_msgs;
 ///
 Odometry populateOdoUGV(double x, double y, double yaw){
     Odometry odo;
-    odo.seq=1;//Only for the purposes of this testing do we piggyback on this message and send seq to be 1 or 2
+    odo.time=1;//Only for the purposes of this testing do we piggyback on this message and send seq to be 1 or 2
     odo.position.x=x;
     odo.position.y=y;
     odo.position.z=0;
@@ -28,7 +28,7 @@ Odometry populateOdoUGV(double x, double y, double yaw){
 
 Odometry populateOdoUAV(double x, double y, double z, double yaw){
     Odometry odo;
-    odo.seq=2;//Only for the purposes of this testing do we piggyback on this message and send seq to be 1 or 2
+    odo.time=2;//Only for the purposes of this testing do we piggyback on this message and send seq to be 1 or 2
     odo.position.x=x;
     odo.position.y=y;
     odo.position.z=z;

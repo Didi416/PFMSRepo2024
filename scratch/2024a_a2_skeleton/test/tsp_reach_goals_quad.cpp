@@ -28,7 +28,7 @@ TEST(TSPAckerman, ThreeGoals) {
     //We create the PfmHog object pointer and use it to set initial pose of Quadcopter for test
     std::unique_ptr<PfmsHog> pfmsHogPtr = std::make_unique<PfmsHog>(pfms::PlatformType::QUADCOPTER);
     {
-        Odometry odo = populateOdo(0,-2,0);
+        Odometry odo = populateOdoUAV(0,-2,2,0);
         pfmsHogPtr->teleport(odo);
     }
 
