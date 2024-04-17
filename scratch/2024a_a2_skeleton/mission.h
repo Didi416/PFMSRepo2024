@@ -70,8 +70,13 @@ public:
 
 private:
   std::vector<ControllerInterface*> controllers_; //!< A private copy of ControllerInterfaces @sa ControllerInterface
-  std::vector<pfms::geometry_msgs::Point*> goals_; //!< A private copy of goals
+  std::vector<pfms::geometry_msgs::Point> missionGoals_; //!< A private copy of goals
   std::vector<std::pair<int, int>> platGoalAssoc_;
+  mission::Objective objective_;
+  std::vector<unsigned int> status_;
+  std::vector<std::thread> threads_;
+  double totalDistance_;
+  double totalTime_;
 };
 
 #endif // RANGERFUSION_H

@@ -106,12 +106,16 @@ protected:
   pfms::PlatformType platformType_;
   pfms::PlatformStatus platformStatus_;
   std::vector<pfms::geometry_msgs::Point> goals_;
+  pfms::geometry_msgs::Point currentGoal_;
   pfms::nav_msgs::Odometry currentOdo_;
   double distanceToCurrentGoal_;
   double timetoCurrentGoal_;
   pfms::nav_msgs::Odometry estimatedGoalPose_;
   double goalTolerance_;
   std::shared_ptr<PfmsConnector> pfmsConnectorPtr_;
+  double distanceTravelled_;
+  double timeTravelled_;
+  double startToCurrentGoalDist_;
 };
 
 #endif // CONTROLLER_H

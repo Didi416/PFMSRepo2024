@@ -69,15 +69,19 @@ TEST(MissionReachGoals, ThreeGoalsEach) {
     Mission mission(controllers);
     mission.setMissionObjective(mission::Objective::BASIC);
     mission.setGoals(goalsAck,pfms::PlatformType::ACKERMAN);
+    std::cout<<"Set Ackerman Goals"<<std::endl;
     mission.setGoals(goalsQuad,pfms::PlatformType::QUADCOPTER);
+    std::cout<<"Set Quad Goals"<<std::endl;
 
     auto start_call_mission_time = std::chrono::system_clock::now();
     // We run mission  (non blocking)
     mission.run();
+    std::cout<<"Run Mission"<<std::endl;
     auto current_time = std::chrono::system_clock::now();
     auto time_taken = std::chrono::duration_cast<std::chrono::duration<double>>(current_time - start_call_mission_time);
 
     EXPECT_NEAR(time_taken.count(),0,2.0);//This checks if run mission is a blocking call, should return quickly
+    std::cout<<"Time Taken: "<<time_taken.count()<<std::endl;
 
     // We have an estimated time to reach goal, which is conservative usually vehicles reaches it in
     // less time. 
@@ -102,10 +106,11 @@ TEST(MissionReachGoals, ThreeGoalsEach) {
             timeExceeded=true;
             OK=true;
         }
-
+        std::cout<<"Check Status"<<std::endl;
         //Let's check the status
         std::vector<unsigned int> status = mission.status();
         //Status shoud have two elements
+        std::cout<<"Status size: "<<status.size()<<std::endl;
         ASSERT_EQ(status.size(),2);
 
         // std::cout << "progress ..." << status.front() << "% " <<  status.back() << "% " << std::endl;

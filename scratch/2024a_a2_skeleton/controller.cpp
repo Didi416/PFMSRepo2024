@@ -4,7 +4,8 @@
 #include <iostream>
 
 Controller::Controller(){
-
+    distanceTravelled_ = 0;
+    startToCurrentGoalDist_ = 0;
 }
 Controller::~Controller(){
 
@@ -12,32 +13,36 @@ Controller::~Controller(){
 
 bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
     goals_ = goals;
+    pfms::nav_msgs::Odometry origin = getOdometry();
     for (auto goal:goals_){
-        getOdometry();
         std::cout<<"Current Odo Readings: "<<std::endl;
         std::cout<<currentOdo_.position.x<<std::endl;
         std::cout<<currentOdo_.position.y<<std::endl;
         std::cout<<currentOdo_.position.z<<std::endl;
         std::cout<<currentOdo_.yaw<<std::endl;
-        checkOriginToDestination(currentOdo_, goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+        bool check = checkOriginToDestination(getOdometry(), goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+        std::cout<<"Check: "<<check<<std::endl;
+        origin = estimatedGoalPose_;
     }
     return true;
 }
 
-double Controller::distanceToGoal(void){
-    return 0.0;
+double Controller::distanceToGoal(void){   
+    checkOriginToDestination(getOdometry(), currentGoal_, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+    return distanceToCurrentGoal_; //protected variable so can be accessed from other functions in classes( base and derived)
 }
 
 double Controller::timeToGoal(void){
-    return 0.0;
+    checkOriginToDestination(getOdometry(), currentGoal_, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+    return timetoCurrentGoal_; //protected variable so can be accessed from other functions in classes (base and derived)
 }
 
-double Controller::distanceTravelled(void){
-    return 0.0;
+double Controller::distanceTravelled(void){//Returns total distance travelled up to the current point in time (updates when called)
+    return distanceTravelled_;
 }
 
-double Controller::timeTravelled(void){
-    return 0.0;
+double Controller::timeTravelled(void){//Calculates total time in motion up to the current point in time (updates when called)
+    return timeTravelled_;
 }
 
 pfms::PlatformType Controller::getPlatformType(void){
