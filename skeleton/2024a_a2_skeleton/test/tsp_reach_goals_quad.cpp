@@ -22,7 +22,7 @@ using namespace pfms::nav_msgs;
 // Unit Tests Start HERE
 ////////////////////////////////////////////////////////
 
-TEST(TSPAckerman, ThreeGoals) {
+TEST(TSPQuadcopter, FiveGoals) {
 
 
     //We create the PfmHog object pointer and use it to set initial pose of Quadcopter for test
@@ -44,7 +44,7 @@ TEST(TSPAckerman, ThreeGoals) {
     goalsSupplied.push_back({ -10, 5});
 
 
-    std::vector<int> order = {3,1,2,4,0};
+    std::vector<int> order = {3,2,0,1,4};
 
     std::vector<pfms::geometry_msgs::Point> goalsOrder;
     goalsOrder.push_back(goalsSupplied.at(order.at(0)));
