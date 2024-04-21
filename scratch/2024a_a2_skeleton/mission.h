@@ -75,8 +75,8 @@ private:
   mission::Objective objective_;
   std::vector<unsigned int> status_;
   std::vector<std::thread> threads_;
-  double totalDistance_;
-  double totalTime_;
+  std::vector<double> totalDistance_;
+  std::vector<double> totalTime_;
 };
 
 #endif // RANGERFUSION_H

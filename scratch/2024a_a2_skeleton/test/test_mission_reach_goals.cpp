@@ -106,18 +106,17 @@ TEST(MissionReachGoals, ThreeGoalsEach) {
             timeExceeded=true;
             OK=true;
         }
-        std::cout<<"Check Status"<<std::endl;
         //Let's check the status
         std::vector<unsigned int> status = mission.status();
         //Status shoud have two elements
-        std::cout<<"Status size: "<<status.size()<<std::endl;
         ASSERT_EQ(status.size(),2);
 
-        // std::cout << "progress ..." << status.front() << "% " <<  status.back() << "% " << std::endl;
-        // std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::cout << "progress ..." << status.front() << "% " <<  status.back() << "% " << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
         // The status should be less than 100% for both platforms
         // Thus indicating still completing mission
+        
         bool completed = true;
         for (auto st:status){
             if(st < 100){
@@ -125,6 +124,12 @@ TEST(MissionReachGoals, ThreeGoalsEach) {
                 completed=false;
             }
         }
+
+        // for (int i=0; i<controllers.size(); i++){
+        //     if (controllers.at(i)->status() != pfms::PlatformStatus::IDLE){
+        //         completed = false;
+        //     }
+        // }
 
         // If both platforms have completed the mission, we are done
         if(completed){

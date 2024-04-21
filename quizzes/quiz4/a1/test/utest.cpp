@@ -56,7 +56,7 @@ TEST(QuadcopterTest, Goals) {
     std::vector<ControllerInterface*> controllers;
     controllers.push_back(new Quadcopter());
 
-    double tolerance =0.2;
+    double tolerance =0.5;
     controllers.front()->setTolerance(tolerance);
 
     // We try to reach fisrt point

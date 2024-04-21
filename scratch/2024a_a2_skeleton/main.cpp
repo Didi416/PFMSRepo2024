@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
     controllers.push_back(new Quadcopter());
     controllers.push_back(new Ackerman());
     controllers.front()->setTolerance(0.5);
+    controllers.back()->setTolerance(0.5);
     
     Mission mission(controllers);
     mission.setMissionObjective(objective);

@@ -21,6 +21,8 @@ Controller::Controller() :
     //We set the internal variables of time/distance for goal to zero
     goal_.time=0;
     goal_.distance=0;
+    distance_travelled_ = 0;
+    time_travelled_ = 0;
 };
 
 

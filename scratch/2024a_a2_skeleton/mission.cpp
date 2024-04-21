@@ -6,8 +6,9 @@
 
 Mission::Mission(std::vector<ControllerInterface*> controllers){
     controllers_ = controllers;
-    totalDistance_ = 0;
-    totalTime_ = 0;
+    totalDistance_.resize(controllers.size());
+    totalTime_.resize(controllers.size());
+    status_.resize(controllers.size());
 }
 
 void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::PlatformType platform){
@@ -19,12 +20,13 @@ void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::Plat
             break;
         }
     }
-    controllers_.at(a)->setGoals(missionGoals_);    
+    
+    controllers_.at(a)->setGoals(missionGoals_); 
     for(int i=0; i<missionGoals_.size(); i++){
-        // platGoalAssoc_.push_back(std::make_pair(i,a));
-        totalDistance_ += controllers_.at(a)->distanceToGoal();
-        // totalTime_ += controllers_.at(i)->timeToGoal();
-        // std::cout<<"Total Distance: "<<totalDistance_<<" and Total Time: "<<totalTime_<<std::endl;
+        platGoalAssoc_.push_back(std::make_pair(i,a));
+        totalDistance_.at(a) += (controllers_.at(a)->distanceToGoal());
+        totalTime_.at(a) += controllers_.at(a)->timeToGoal();
+        std::cout<<"Total Distance: "<<totalDistance_.at(a)<<" and Total Time: "<<totalTime_.at(a)<<std::endl;
         std::cout<<"Allocated Goal: "<<i<<" of "<<missionGoals_.size()<<" to "<<a<<std::endl;
     }
 }
@@ -37,11 +39,9 @@ bool Mission::run(){
 }
 
 std::vector<unsigned int> Mission::status(void){
-    std::cout<<"Read Status, controller size: "<<controllers_.size()<<std::endl;
     for (int i=0;i<controllers_.size(); i++){
-        std::cout<<"Total Dist: "<<totalDistance_<<"Distance Trav: "<<controllers_.at(i)->distanceTravelled()<<std::endl;
-        status_.at(i) = int(controllers_.at(i)->distanceTravelled()/totalDistance_);
-        std::cout<<"Status Value: "<<status_.at(i)<<std::endl;
+        std::cout<<"Total Dist: "<<totalDistance_.at(i)<<" and Distance Trav: "<<getDistanceTravelled().at(i)<<std::endl;
+        status_.at(i) = (getDistanceTravelled().at(i)/totalDistance_.at(i));
     }
     return status_;
 }
@@ -53,7 +53,7 @@ void Mission::setMissionObjective(mission::Objective objective){
 std::vector<double> Mission::getDistanceTravelled(){
     std::vector<double> distanceTravelled;
     for (int i=0;i<controllers_.size(); i++){
-        distanceTravelled.at(i) = controllers_.at(i)->distanceTravelled()/totalDistance_;
+        distanceTravelled.push_back(controllers_.at(i)->distanceTravelled());
     }
     return distanceTravelled;
 }
@@ -61,7 +61,7 @@ std::vector<double> Mission::getDistanceTravelled(){
 std::vector<double> Mission::getTimeMoving(){
     std::vector<double> timeMoving;
     for (int i=0;i<controllers_.size(); i++){
-        timeMoving.at(i) = controllers_.at(i)->distanceTravelled()/totalDistance_;
+        timeMoving.push_back(controllers_.at(i)->timeTravelled());
     }
     return timeMoving;
 }

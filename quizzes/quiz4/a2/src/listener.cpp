@@ -25,10 +25,10 @@ private:
 
 
     unsigned int count = analysis::countCharacters(msg->data);
-    int num = analysis::getNumber(msg->data);
+    // int num = analysis::getNumber(msg->data);
 
     RCLCPP_INFO_STREAM (this->get_logger(), "We count " << count << " characters");
-    RCLCPP_INFO_STREAM (this->get_logger(),"And the first integer is " << num );
+    // RCLCPP_INFO_STREAM (this->get_logger(),"And the first integer is " << num );
 
     //This is how to get time, and time lapsed in ROS
     // ts_ = this->get_clock()->now();

@@ -16,11 +16,11 @@ bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
     pfms::nav_msgs::Odometry origin = getOdometry();
     for (auto goal:goals_){
         std::cout<<"Current Odo Readings: "<<std::endl;
-        std::cout<<currentOdo_.position.x<<std::endl;
-        std::cout<<currentOdo_.position.y<<std::endl;
-        std::cout<<currentOdo_.position.z<<std::endl;
-        std::cout<<currentOdo_.yaw<<std::endl;
-        bool check = checkOriginToDestination(getOdometry(), goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+        std::cout<<origin.position.x<<std::endl;
+        std::cout<<origin.position.y<<std::endl;
+        std::cout<<origin.position.z<<std::endl;
+        std::cout<<origin.yaw<<std::endl;
+        bool check = checkOriginToDestination(origin, goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
         std::cout<<"Check: "<<check<<std::endl;
         origin = estimatedGoalPose_;
     }

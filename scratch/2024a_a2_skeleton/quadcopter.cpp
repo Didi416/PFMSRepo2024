@@ -59,13 +59,13 @@ void Quadcopter::reachGoals(void){
         pfmsConnectorPtr_->send(goal);
         while (!goalReached){
             fly(repeats,turnLR_,moveLR_,moveUD_,moveFB_);
-            std::cout<<"i: "<<repeats<<" tLR: "<<turnLR_<<" mLR: "<<moveLR_<<" mUD: "<<moveUD_<<" mFB: "<<moveFB_<<std::endl;
+            // std::cout<<"i: "<<repeats<<" tLR: "<<turnLR_<<" mLR: "<<moveLR_<<" mUD: "<<moveUD_<<" mFB: "<<moveFB_<<std::endl;
             getOdometry();
             straightDistToCurrentGoal = sqrt(pow(currentOdo_.position.x - goals_.at(i).x, 2) + pow(currentOdo_.position.y - goals_.at(i).y, 2));
             dx = currentOdo_.position.x - goals_.at(i).x;
             dy = currentOdo_.position.y - goals_.at(i).y;
-            dz = currentOdo_.position.z - goals_.at(i).z;
-            std::cout<<"Distance: "<<straightDistToCurrentGoal<<" dx: "<<dx<<" dy: "<<dy<<" dz: "<<dz;
+            dz = currentOdo_.position.z - 1;
+            // std::cout<<"Distance: "<<straightDistToCurrentGoal<<" dx: "<<dx<<" dy: "<<dy<<" dz: "<<dz;
             switch(platformStatus_){
                 case pfms::PlatformStatus::IDLE:
                     turnLR_ = 0.0;
@@ -74,17 +74,19 @@ void Quadcopter::reachGoals(void){
                     moveFB_ = 0.0;
                     break;
                 case pfms::PlatformStatus::TAKEOFF:
-                    std::cout<<"Quad TAKEOFF";
+                    // std::cout<<"Quad TAKEOFF";
                     moveUD_ = vertVelocity;
-                    if (dz < 0.3){
+                    if (std::abs(dz) < 0.3){
+                        // std::cout<<"Height of 2m reached"<<std::endl;
                         moveUD_ = 0;
                         if (currentOdo_.linear.x <=0 && currentOdo_.linear.y <=0 && currentOdo_.linear.z <=0){
                             platformStatus_ = pfms::PlatformStatus::RUNNING;
+                            std::cout<<"Quad RUNNING";
                         }
                     }
                     break;
                 case pfms::PlatformStatus::RUNNING:
-                    std::cout<<"Quad RUNNING";
+                    // std::cout<<"Quad RUNNING";
                     if(dx<=0){
                         moveFB_ = horzVelocity;
                     }

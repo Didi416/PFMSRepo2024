@@ -14,6 +14,7 @@ Quadcopter::Quadcopter() :
     TARGET_SPEED(0.4)
 {
   tolerance_=0.5;//We set tolerance to be default of 0.5
+  type_ = pfms::PlatformType::QUADCOPTER;
 };
 
 // We delete the pipes here specifically, which forces them to close before the object is terminated
@@ -60,15 +61,11 @@ bool Quadcopter::calcNewGoal(void) {
 }
 
 void Quadcopter::sendCmd(double turn_l_r, double move_l_r, double move_u_d, double move_f_b) {
-    pfms::commands::Quadcopter cmd = {
-        cmd_pipe_seq_++,
-        turn_l_r,
-        move_l_r,
-        move_u_d,
-        move_f_b,
-    };
+    // std::cout<<move_f_b<<" : "<<move_l_r<<" : "<<cmd_pipe_seq_<<std::endl;
+    cmd_pipe_seq_++;
+    pfms::commands::Quadcopter cmd {cmd_pipe_seq_, turn_l_r, move_l_r, move_u_d, move_f_b}; 
     pfmsConnectorPtr_->send(cmd);
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));//Small delay to ensure message sent
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));//Small delay to ensure message sent
 }
 
 bool Quadcopter::reachGoal(void) {
@@ -76,7 +73,12 @@ bool Quadcopter::reachGoal(void) {
     pfms::nav_msgs::Odometry prev_odo = odo_;
     auto start_time = std::chrono::system_clock::now();
     double estimated_time_to_reach_goal = goal_.time;
+    pfms::PlatformStatus status = pfms::PlatformStatus::RUNNING;
+    pfmsConnectorPtr_->send(status);
 
+    double prevDistance = goal_.distance;
+    double prevTime = goal_.time;
+    
     //Run below loop until we reach goal
     while (!goalReached()) {
 
@@ -94,8 +96,9 @@ bool Quadcopter::reachGoal(void) {
         //! dx and dy - the portion of the control in the two axis
         //! in below we just use 0.1 which will not work, it will fly at 45deg
 
-        double dx = 0.1;
-        double dy = 0.1;
+        double dx = TARGET_SPEED*sin(M_PI_2 - target_angle_);
+        double dy = TARGET_SPEED*sin(target_angle_);
+        
 
         // Check the syntax of the command, for left/right and forward/backward
         sendCmd(0, dy, 0, dx);
@@ -110,14 +113,20 @@ bool Quadcopter::reachGoal(void) {
        // std::cout << "[est/cur] time to goal [" << estimated_time_to_reach_goal << "/" << time_since_starting << "]" << std::endl;
 
 
-        if(time_since_starting>(estimated_time_to_reach_goal+2.0)){
+        if(time_since_starting>(estimated_time_to_reach_goal+5.0)){
             // If we have not reached it in the designated time we abandon reaching goal
             // For TASK 3 and 4, consider if anything else needs updating
             return false;
         }
 
+        
+        // std::cout<<"Dist: "<<goal_.distance<<"Time: "<<goal_.time<<std::endl;
+        
         calcNewGoal(); //get odometry and update target angle of control
-
+        distance_travelled_ += prevDistance - goal_.distance; 
+        time_travelled_ += prevTime - goal_.time;
+        prevDistance = goal_.distance;
+        prevTime = goal_.time;
         ///////////////////////////////////////////////////////////////
         //! @todo
         //! TASK 4 - Update distance travelled
@@ -131,8 +140,9 @@ bool Quadcopter::reachGoal(void) {
         //! odo_ - current position of platform
         //! prev_odo - the previous position
         //! distance_travelled_ - the distance travelled thus far
-
-
+        
+        
+        
         //////////////////////////////////////////////////////////////////
     }
 
@@ -140,7 +150,7 @@ bool Quadcopter::reachGoal(void) {
     sendCmd(0, 0, 0, 0);
 
     calcNewGoal(); //get odometry and update distance to goal
-
+    std::cout<<"Total Dist: "<<distance_travelled_<<"Total Time: "<<time_travelled_<<std::endl;
     ///////////////////////////////////////////////////////////////
     //! @todo
     //! TASK 3 - Update time travelled
@@ -153,7 +163,7 @@ bool Quadcopter::reachGoal(void) {
     //! as you could use the same function
     //! Also, consider, if we aborted the function reachGoal, should we
     //! update the time travelled?
-
+    
     //////////////////////////////////////////////////////////////////
 
     return true;
