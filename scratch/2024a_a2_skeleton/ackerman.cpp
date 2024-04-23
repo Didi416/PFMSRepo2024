@@ -9,11 +9,11 @@ Ackerman::Ackerman(){
     platformType_ = pfms::PlatformType::ACKERMAN;
     pfmsConnectorPtr_ = std::make_shared<PfmsConnector>();
     MAX_BRAKE_TORQUE = 8000.0; //Nm
-    DEFAULT_THROTTLE = 0.1; //m/s
     i_ = 1;
     brake_ = 0.0;
     steering_ = 0.0;
     throttle_ = 0.0;
+    velocity_ = 2.91;
     goalTolerance_ = 0.5; //default goal tolerance for when unit tests do not set it.
 }
 
@@ -42,7 +42,7 @@ void Ackerman::reachGoals(void){
     bool goalReached;
     unsigned long repeats;
     int state;
-    double originalDistance = distanceToGoal();
+    double prevDistance;
     double straightDistToCurrentGoal;
     pfmsConnectorPtr_->send(platformStatus_);
     for (int i=0; i<goals_.size(); i++){
@@ -54,7 +54,7 @@ void Ackerman::reachGoals(void){
         state = 1;
         //compute steering using Audi library and store the value in steering_ (private data member)
         Audi audi;
-        audi.computeSteering(currentOdo_, goals_.at(i), steering_, originalDistance);
+        audi.computeSteering(currentOdo_, goals_.at(i), steering_, prevDistance);
         //Display goal point in gazebo sim (rviz)
         unsigned int j=0;
         pfms::geometry_msgs::Goal goal{j++,goals_.at(i)};
@@ -92,8 +92,9 @@ void Ackerman::reachGoals(void){
                     }
                     break;
             }
-            distanceTravelled_ += originalDistance - distanceTravelled_ - distanceToGoal();
-            timeTravelled_ = distanceTravelled_/currentOdo_.linear.x;
+            
+            distanceTravelled_ += prevDistance - distanceToGoal();
+            timeTravelled_ = distanceTravelled_/velocity_;
             
             if (straightDistToCurrentGoal >= goalTolerance_){ //incremental counter for sending commands (needs increasing sequence counter)
                 repeats++;

@@ -27,13 +27,11 @@ bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
     return true;
 }
 
-double Controller::distanceToGoal(void){   
-    checkOriginToDestination(getOdometry(), currentGoal_, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+double Controller::distanceToGoal(void){
     return distanceToCurrentGoal_; //protected variable so can be accessed from other functions in classes( base and derived)
 }
 
 double Controller::timeToGoal(void){
-    checkOriginToDestination(getOdometry(), currentGoal_, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
     return timetoCurrentGoal_; //protected variable so can be accessed from other functions in classes (base and derived)
 }
 

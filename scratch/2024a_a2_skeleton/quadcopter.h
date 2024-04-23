@@ -27,6 +27,7 @@ public:
   void run(void);
   void reachGoals(void);
   void fly(unsigned long i, double turnLR, double moveLR, double moveUD, double moveFB);
+  bool navCalcs(pfms::geometry_msgs::Point goal);
 
 private:
   double velocity_;
@@ -34,6 +35,7 @@ private:
   double moveFB_;
   double moveLR_;
   double moveUD_;
+  double target_angle_;
 };
 
 #endif // QUADCOPTER_H

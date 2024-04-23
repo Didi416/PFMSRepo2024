@@ -39,6 +39,7 @@ private:
   double brake_;
   double steering_;
   double throttle_;
+  double velocity_;
 };
 
 #endif // ACKERMAN_H

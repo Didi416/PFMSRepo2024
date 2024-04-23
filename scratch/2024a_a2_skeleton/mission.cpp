@@ -40,7 +40,7 @@ bool Mission::run(){
 
 std::vector<unsigned int> Mission::status(void){
     for (int i=0;i<controllers_.size(); i++){
-        std::cout<<"Total Dist: "<<totalDistance_.at(i)<<" and Distance Trav: "<<getDistanceTravelled().at(i)<<std::endl;
+        std::cout<<"Total Dist: "<<i<<" -> "<<totalDistance_.at(i)<<" and Distance Trav: "<<getDistanceTravelled().at(i)<<std::endl;
         status_.at(i) = (getDistanceTravelled().at(i)/totalDistance_.at(i));
     }
     return status_;

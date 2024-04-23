@@ -39,17 +39,24 @@ void Quadcopter::fly(unsigned long i, double turnLR, double moveLR, double moveU
     pfmsConnectorPtr_->read(currentOdo_,platformType_);
 }
 
+bool Quadcopter::navCalcs(pfms::geometry_msgs::Point goal){
+    if (!checkOriginToDestination(getOdometry(), goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_))
+        return false;
+
+    // Calculate absolute travel angle required to reach goal
+    double dx = goal.x - currentOdo_.position.x;
+    double dy = goal.y - currentOdo_.position.y;
+    target_angle_ = std::atan2(dy, dx);
+    return true;
+}
+
 void Quadcopter::reachGoals(void){
     pfmsConnectorPtr_->send(platformStatus_);
-    double originalDistance = distanceToGoal();
-    double straightDistToCurrentGoal;
+    double prevDistance = distanceToGoal();
     unsigned long repeats;
     bool goalReached;
-    double dx, dy, dz;
-    double vertVelocity = velocity_;
-    double horzVelocity = velocity_;
+    double dx, dy, dz, vx, vy, vz;
     for (int i=0; i<goals_.size(); i++){
-        currentGoal_ = goals_.at(i);
         goalReached = false;
         //Initialise (or reset) conditions for new reach goal command
         repeats = 1;
@@ -59,13 +66,13 @@ void Quadcopter::reachGoals(void){
         pfmsConnectorPtr_->send(goal);
         while (!goalReached){
             fly(repeats,turnLR_,moveLR_,moveUD_,moveFB_);
-            // std::cout<<"i: "<<repeats<<" tLR: "<<turnLR_<<" mLR: "<<moveLR_<<" mUD: "<<moveUD_<<" mFB: "<<moveFB_<<std::endl;
-            getOdometry();
-            straightDistToCurrentGoal = sqrt(pow(currentOdo_.position.x - goals_.at(i).x, 2) + pow(currentOdo_.position.y - goals_.at(i).y, 2));
-            dx = currentOdo_.position.x - goals_.at(i).x;
-            dy = currentOdo_.position.y - goals_.at(i).y;
-            dz = currentOdo_.position.z - 1;
-            // std::cout<<"Distance: "<<straightDistToCurrentGoal<<" dx: "<<dx<<" dy: "<<dy<<" dz: "<<dz;
+            navCalcs(goals_.at(i));
+            vx = velocity_*sin(M_PI_2 - target_angle_);
+            vy = velocity_*sin(target_angle_);
+            vz = velocity_;
+            dx = goals_.at(i).x - currentOdo_.position.x;
+            dy = goals_.at(i).y - currentOdo_.position.y;
+            dz = 1 - currentOdo_.position.z;
             switch(platformStatus_){
                 case pfms::PlatformStatus::IDLE:
                     turnLR_ = 0.0;
@@ -75,41 +82,31 @@ void Quadcopter::reachGoals(void){
                     break;
                 case pfms::PlatformStatus::TAKEOFF:
                     // std::cout<<"Quad TAKEOFF";
-                    moveUD_ = vertVelocity;
-                    if (std::abs(dz) < 0.3){
+                    moveUD_ = vz;
+                    if (std::abs(dz) < 0.2){
                         // std::cout<<"Height of 2m reached"<<std::endl;
                         moveUD_ = 0;
-                        if (currentOdo_.linear.x <=0 && currentOdo_.linear.y <=0 && currentOdo_.linear.z <=0){
-                            platformStatus_ = pfms::PlatformStatus::RUNNING;
-                            std::cout<<"Quad RUNNING";
-                        }
+                        platformStatus_ = pfms::PlatformStatus::RUNNING;
                     }
                     break;
                 case pfms::PlatformStatus::RUNNING:
                     // std::cout<<"Quad RUNNING";
-                    if(dx<=0){
-                        moveFB_ = horzVelocity;
-                    }
-                    else{moveFB_ = horzVelocity*-1;}
-                    if(dy<=0){
-                        moveLR_ = horzVelocity;
-                    }
-                    else{moveLR_ = horzVelocity*-1;}
-                    if (std::abs(dx) < 0.3){
+                    moveFB_ = vx;
+                    moveLR_ = vy;
+                    if (std::abs(dx) < 0.2){
                         moveFB_ = 0;
                     }
-                    if (std::abs(dy) < 0.3){
+                    if (std::abs(dy) < 0.2){
                         moveLR_ = 0;
                     }
                     break;
                 case pfms::PlatformStatus::LANDING:
                     break;
             }
-            distanceTravelled_ += originalDistance - distanceTravelled_ - distanceToGoal();
-            timeTravelled_ = distanceTravelled_/currentOdo_.linear.x;
+            distanceTravelled_ += prevDistance - distanceToGoal();
+            timeTravelled_ = distanceTravelled_/velocity_;
 
-            if (straightDistToCurrentGoal <= goalTolerance_){ //incremental counter for sending commands (needs increasing sequence counter)
-                std::cout<<"Goal reached"<<std::endl;
+            if (distanceToGoal() <= goalTolerance_){ //incremental counter for sending commands (needs increasing sequence counter)
                 goalReached = true;
                 if (i == goals_.size()-1){
                     platformStatus_ = pfms::PlatformStatus::IDLE;   
