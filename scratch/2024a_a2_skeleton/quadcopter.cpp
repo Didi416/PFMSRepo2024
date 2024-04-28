@@ -52,11 +52,13 @@ bool Quadcopter::navCalcs(pfms::geometry_msgs::Point goal){
 
 void Quadcopter::reachGoals(void){
     pfmsConnectorPtr_->send(platformStatus_);
-    double prevDistance = distanceToGoal();
+    double prevDistance = 0.0;;
     unsigned long repeats;
     bool goalReached;
     double dx, dy, dz, vx, vy, vz;
     for (int i=0; i<goals_.size(); i++){
+        navCalcs(goals_.at(i));
+        prevDistance = distanceToGoal();
         goalReached = false;
         //Initialise (or reset) conditions for new reach goal command
         repeats = 1;
@@ -67,9 +69,10 @@ void Quadcopter::reachGoals(void){
         while (!goalReached){
             fly(repeats,turnLR_,moveLR_,moveUD_,moveFB_);
             navCalcs(goals_.at(i));
-            vx = velocity_*sin(M_PI_2 - target_angle_);
+            vx = velocity_*cos(target_angle_);
             vy = velocity_*sin(target_angle_);
             vz = velocity_;
+            // std::cout<<"Target Angle: "<<target_angle_<<std::endl;
             dx = goals_.at(i).x - currentOdo_.position.x;
             dy = goals_.at(i).y - currentOdo_.position.y;
             dz = 1 - currentOdo_.position.z;
@@ -93,18 +96,17 @@ void Quadcopter::reachGoals(void){
                     // std::cout<<"Quad RUNNING";
                     moveFB_ = vx;
                     moveLR_ = vy;
-                    if (std::abs(dx) < 0.2){
+                    if (std::abs(dx) < 0.25){
                         moveFB_ = 0;
                     }
-                    if (std::abs(dy) < 0.2){
+                    if (std::abs(dy) < 0.25){
                         moveLR_ = 0;
                     }
                     break;
                 case pfms::PlatformStatus::LANDING:
                     break;
             }
-            distanceTravelled_ += prevDistance - distanceToGoal();
-            timeTravelled_ = distanceTravelled_/velocity_;
+            updateDistTime(velocity_);
 
             if (distanceToGoal() <= goalTolerance_){ //incremental counter for sending commands (needs increasing sequence counter)
                 goalReached = true;

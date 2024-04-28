@@ -6,6 +6,8 @@
 Controller::Controller(){
     distanceTravelled_ = 0;
     startToCurrentGoalDist_ = 0;
+    totalDistance_ = 0;
+    totalTime_ = 0;
 }
 Controller::~Controller(){
 
@@ -15,13 +17,12 @@ bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
     goals_ = goals;
     pfms::nav_msgs::Odometry origin = getOdometry();
     for (auto goal:goals_){
-        std::cout<<"Current Odo Readings: "<<std::endl;
-        std::cout<<origin.position.x<<std::endl;
-        std::cout<<origin.position.y<<std::endl;
-        std::cout<<origin.position.z<<std::endl;
-        std::cout<<origin.yaw<<std::endl;
+        // std::cout<<"Current Odo Readings: "<<std::endl;
+        // std::cout<<origin.position.x<<std::endl;
+        // std::cout<<origin.position.y<<std::endl;
+        // std::cout<<origin.position.z<<std::endl;
+        // std::cout<<origin.yaw<<std::endl;
         bool check = checkOriginToDestination(origin, goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
-        std::cout<<"Check: "<<check<<std::endl;
         origin = estimatedGoalPose_;
     }
     return true;
@@ -64,4 +65,12 @@ pfms::nav_msgs::Odometry Controller::getOdometry(void){
 std::vector<pfms::geometry_msgs::Point> Controller::getObstacles(void){
     std::vector<pfms::geometry_msgs::Point> obstacles;
     return obstacles;
+}
+
+bool Controller::updateDistTime(double velocity){
+    getOdometry();
+    distanceTravelled_ += sqrt(pow((currentOdo_.position.x - previousOdo_.position.x),2)+pow((currentOdo_.position.y - previousOdo_.position.y),2));
+    timeTravelled_ = distanceTravelled_/velocity;
+    previousOdo_ = currentOdo_;
+    return true;
 }

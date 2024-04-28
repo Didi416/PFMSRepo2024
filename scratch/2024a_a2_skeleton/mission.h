@@ -5,6 +5,13 @@
 #include "missioninterface.h"
 #include "pfmsconnector.h"
 
+struct GoalsInfo{
+  pfms::geometry_msgs::Point point;
+  double distanceToGoal;
+  double timeToGoal;
+
+};
+
 class Mission: public MissionInterface
 {
 public:
@@ -75,8 +82,8 @@ private:
   mission::Objective objective_;
   std::vector<unsigned int> status_;
   std::vector<std::thread> threads_;
-  std::vector<double> totalDistance_;
-  std::vector<double> totalTime_;
+  std::vector<double> totalMissionDistance_;
+  std::vector<double> totalMissionTime_;
 };
 
 #endif // RANGERFUSION_H

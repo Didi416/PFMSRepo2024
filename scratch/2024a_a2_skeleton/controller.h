@@ -102,20 +102,26 @@ class Controller: public ControllerInterface
   */
   std::vector<pfms::geometry_msgs::Point> getObstacles(void);
 
+  bool updateDistTime(double velocity);
+
 protected:
   pfms::PlatformType platformType_;
   pfms::PlatformStatus platformStatus_;
   std::vector<pfms::geometry_msgs::Point> goals_;
-  pfms::geometry_msgs::Point currentGoal_;
-  pfms::nav_msgs::Odometry currentOdo_;
-  double distanceToCurrentGoal_;
-  double timetoCurrentGoal_;
-  pfms::nav_msgs::Odometry estimatedGoalPose_;
   double goalTolerance_;
   std::shared_ptr<PfmsConnector> pfmsConnectorPtr_;
+
+  int currentGoalNum_;
+  pfms::nav_msgs::Odometry currentOdo_;
+  pfms::nav_msgs::Odometry previousOdo_;
+  pfms::nav_msgs::Odometry estimatedGoalPose_;
+  double distanceToCurrentGoal_;
+  double timetoCurrentGoal_;
   double distanceTravelled_;
   double timeTravelled_;
   double startToCurrentGoalDist_;
+  double totalDistance_;
+  double totalTime_;
 };
 
 #endif // CONTROLLER_H
