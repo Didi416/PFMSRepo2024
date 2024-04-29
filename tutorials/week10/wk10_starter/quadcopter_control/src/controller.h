@@ -1,0 +1,144 @@
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
+#include <cmath>
+
+#include <functional>
+#include <memory>
+
+//Instead of Pipes now we need to use Ros communication machanism and messages
+//#include <pipes.h>
+#include "rclcpp/rclcpp.hpp"
+#include <tf2/utils.h> //To use getYaw function from the quaternion of orientation
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+
+#include "nav_msgs/msg/odometry.hpp"
+#include "geometry_msgs/msg/point.hpp"
+#include "geometry_msgs/msg/pose.hpp"
+
+#include "controllerinterface.h"
+
+//! Information about the goal for the platform
+struct GoalStats {
+    //! location of goal
+    //pfms::geometry_msgs::Point location;
+    geometry_msgs::msg::Point location;
+
+    //! distance to goal
+    double distance;
+    //! time to goal
+    double time;
+};
+
+/**
+ * \brief Shared functionality/base class for platform controllers
+ *
+ * Platforms need to implement:
+ * - Controller::calcNewGoal (and updating GoalStats)
+ * - ControllerInterface::reachGoal (and updating PlatformStats)
+ * - ControllerInterface::checkOriginToDestination
+ * - ControllerInterface::getPlatformType
+ * - ControllerInterface::getOdometry (and updating PlatformStats.odo)
+ */
+class Controller: public ControllerInterface, public rclcpp::Node
+{
+public:
+  /**
+   * Default Controller constructor, sets odometry and metrics to initial 0
+   */
+  Controller();
+
+  /**
+   * Instructs the underlying platform to recalcuate a goal, and set any internal variables as needed
+   *
+   * Called when goal or tolerance changes
+   * @return Whether goal is reachable by the platform
+   */
+  virtual bool calcNewGoal() = 0;
+
+//! We would now have to sacrifice having a return value to have a setGoal
+//! At week 10 we do not know about services (which allow us to retrun value
+//! So to allow to set a goal via topic we forfit having a return value for now
+//! At week 11 you can replace this with a service
+//! 
+//! in A1/A2 was : bool setGoal(pfms::geometry_msgs::Point goal);
+void setGoal(const geometry_msgs::msg::Point& msg);  
+
+  /**
+  Checks whether the platform can travel between origin and destination
+  @param[in] origin The origin pose, specified as odometry for the platform
+  @param[in] destination The destination point for the platform
+  @param[in|out] distance The distance [m] the platform will need to travel between origin and destination. If destination unreachable distance = -1
+  @param[in|out] time The time [s] the platform will need to travel between origin and destination, If destination unreachable time = -1
+  @param[in|out] estimatedGoalPose The estimated goal pose when reaching goal
+  @return bool indicating the platform can reach the destination from origin supplied
+  */
+  virtual bool checkOriginToDestination(geometry_msgs::msg::Pose origin,
+                                        geometry_msgs::msg::Point goal,
+                                        double& distance,
+                                        double& time,
+                                        geometry_msgs::msg::Pose& estimatedGoalPose) = 0;
+
+
+  //pfms::PlatformType getPlatformType(void);
+
+  geometry_msgs::msg::Pose getOdometry(void);
+
+  bool setTolerance(double tolerance);
+
+  double distanceTravelled(void);
+
+  double timeInMotion(void);
+
+  double distanceToGoal(void);
+
+  double timeToGoal(void);
+
+
+  ///////////////////////////////////////////////////////////////
+  //! @todo
+  //! TASK 3 - Initialisation
+  //!
+  //!
+  //! We need a callback function that we need to declare in the header as well and the <MSG_TYPE> needs to be in subscriber.
+
+protected:
+  /**
+   * Checks if the goal has been reached.
+   *
+   * Update own pose before calling!
+   * @return true if the goal is reached
+   */
+  bool goalReached();
+
+
+  geometry_msgs::msg::Pose pose_;//!< The current pose of platform
+
+  //stats
+  GoalStats goal_;
+  bool goalSet_;
+  
+  double distance_travelled_; //!< Total distance travelled for this program run
+  double time_travelled_; //!< Total time spent travelling for this program run
+  double tolerance_; //!< Radius of tolerance
+  long unsigned int cmd_pipe_seq_; //!<The sequence number of the command
+
+  //Instead of Pipes now we use ROS communication mechanism
+  //Pipes* pipesPtr_; //!< The pipe to communicate
+
+///////////////////////////////////////////////////////////////
+//! @todo
+//! TASK 3 
+//!
+//! What do we need to subscribe to?
+//!
+//! We need to create the callback member varaible as well in the header.
+//! Syntax
+//! rclcpp::Subscription<MSG_TYPE>::SharedPtr sub_member_variable_;
+
+  //Example of subscriber for goals to be send directly
+  rclcpp::Subscription<geometry_msgs::msg::Point>::SharedPtr sub2_;
+
+};
+
+#endif // CONTROLLER_H
