@@ -42,7 +42,7 @@ TEST(TSPQuadcopter, ThreeGoals) {
     goalsSupplied.push_back({ -30, -10});
     goalsSupplied.push_back({ 30, -10});
 
-    std::vector<int> order = {3,0,2,4,1};
+    std::vector<int> order = {1,4,2,0,3};
 
     std::vector<pfms::geometry_msgs::Point> goalsOrder;
     goalsOrder.push_back(goalsSupplied.at(order.at(0)));

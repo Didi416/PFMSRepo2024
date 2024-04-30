@@ -12,6 +12,8 @@ struct GoalsInfo{
 
 };
 
+typedef std::vector<std::vector<std::pair<int,double>> > AdjacencyList;
+
 class Mission: public MissionInterface
 {
 public:
@@ -75,6 +77,9 @@ public:
      */
     std::vector<std::pair<int, int>> getPlatformGoalAssociation();
 
+    AdjacencyList generateGraph(int controller);
+    std::vector<int> bestPathSearch(AdjacencyList graph);
+
 private:
   std::vector<ControllerInterface*> controllers_; //!< A private copy of ControllerInterfaces @sa ControllerInterface
   std::vector<pfms::geometry_msgs::Point> missionGoals_; //!< A private copy of goals
@@ -84,6 +89,7 @@ private:
   std::vector<std::thread> threads_;
   std::vector<double> totalMissionDistance_;
   std::vector<double> totalMissionTime_;
+  std::vector<double> distancesFromOrigin_;
 };
 
 #endif // RANGERFUSION_H

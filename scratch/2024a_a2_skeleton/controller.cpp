@@ -22,7 +22,7 @@ bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
         // std::cout<<origin.position.y<<std::endl;
         // std::cout<<origin.position.z<<std::endl;
         // std::cout<<origin.yaw<<std::endl;
-        bool check = checkOriginToDestination(origin, goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
+        checkOriginToDestination(origin, goal, distanceToCurrentGoal_, timetoCurrentGoal_, estimatedGoalPose_);
         origin = estimatedGoalPose_;
     }
     return true;
