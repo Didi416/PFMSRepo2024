@@ -22,8 +22,9 @@ public:
     @sa ControllerInterface and @sa MissionInterface for more information
     */
   Mission(std::vector<ControllerInterface*> controllers);
+  ~Mission();
   /**
-     * @brief Accepts the container of goals.
+     * @brief Accepts the container of goals for a specific platform.
      *
      * @param goals
      */
@@ -73,11 +74,24 @@ public:
      *
      * @return vector of unsigned int's corresponds to platform number completing the goal
      *
-     * @sa grabAndFuseData
      */
     std::vector<std::pair<int, int>> getPlatformGoalAssociation();
 
+    /**
+     * @brief Used to generate a graph representing which other goals can be accessed by each goal to be searched to identify the optimal (shortest) path
+     *
+     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     *
+     */
     AdjacencyList generateGraph(int controller);
+    /**
+     * @brief Returns a vector of same size as number of controllers (platforms).
+     * The values in the vector correspond to the time the corresponding platfore has been moving
+     * from the time the program started. Moving means the platform was not stationary.
+     *
+     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     *
+     */
     std::vector<int> bestPathSearch(AdjacencyList graph);
 
 private:

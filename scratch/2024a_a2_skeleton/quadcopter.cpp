@@ -11,8 +11,6 @@ Quadcopter::Quadcopter(){
     moveLR_ = 0.0;
     moveUD_ = 0.0;
     moveFB_ = 0.0;
-    distanceTravelled_ = 0.0;
-    timeTravelled_ = 0.0;
 }
 Quadcopter::~Quadcopter(){
     
@@ -23,12 +21,6 @@ bool Quadcopter::checkOriginToDestination(pfms::nav_msgs::Odometry origin, pfms:
     time = distance/velocity_;
     estimatedGoalPose.position = goal;
     return true; //quadcopter can reach any and all goals
-}
-
-void Quadcopter::run(void){
-    platformStatus_ = pfms::PlatformStatus::TAKEOFF;
-    std::thread quadcopterRun(&Quadcopter::reachGoals, this);
-    quadcopterRun.detach();
 }
 
 void Quadcopter::fly(unsigned long i, double turnLR, double moveLR, double moveUD, double moveFB){

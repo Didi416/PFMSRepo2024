@@ -9,7 +9,6 @@
 class Controller: public ControllerInterface
 {
   public:
-  //Default constructors should set all attributes to a default value
   /**
    * @brief Default constructor should set all attributes to a default value,
    * as well as assigning values to private/protected variables from the class header file.
@@ -17,15 +16,17 @@ class Controller: public ControllerInterface
   Controller();
   ~Controller();
 
-  //See controllerinterface.h for more information
   /**
-  Run controller in reaching goals - non blocking call
+  @brief Run controller in reaching goals - non blocking call, unlocks mutexes and updates conditional variables to enable @sa reachGoals function()
   */
   void run(void);
 
+  /**
+  @brief Movement to Reach goal - execute control to reach goal, called in thread, so non-blocking
+  */
   virtual void reachGoals(void) = 0;
   /**
-  Retrurns platform status (indicating if it is executing a series of goals or idle - waiting for goals)
+  @brief Returns platform status (indicating if it is executing a series of goals or idle - waiting for goals)
   @return platform status
   */
   pfms::PlatformStatus status(void);
@@ -33,8 +34,8 @@ class Controller: public ControllerInterface
   /**
   @brief Sets goal and checks if platform can reach goal from current poisiton, the function will update internal variables associated with: @sa timeToGoal
   and @sa distanceToGoal
-  @param[in] goal The goal point (x,y)
-  @return goal reachable
+  @param[in] goals The vector of goal points (x,y,z)
+  @return goals reachable
   */
   bool setGoals(std::vector<pfms::geometry_msgs::Point> goals);
 
@@ -55,81 +56,85 @@ class Controller: public ControllerInterface
                                         pfms::nav_msgs::Odometry& estimatedGoalPose) = 0;
 
   /**
-  Retrieves value for distance to be travelled to reach goal, updates as the platform moves to current goal
+  @brief Retrieves value for distance to be travelled to reach current goal, updates as the platform moves to current goal
   @return distance to be travelled to goal [m]
   */
   double distanceToGoal(void);
 
   /**
-  Retrieves value for time to reach goal, updates at the platform moves to current goal
+  @brief Retrieves value for time to reach current goal, updates at the platform moves to current goal
   @return time to travel to goal [s]
   */
   double timeToGoal(void);
 
 /**
-  Returns total distance travelled by platform
+  @brief Returns total distance travelled by platform at the current time
   @return total distance travelled since started [m]
   */
   double distanceTravelled(void);
 
   /**
-  Returns total time in motion by platform, time when stationary not included
+  @brief Returns total time in motion by platform at the current time, time when stationary not included
   @return total time in motion since started [s]
   */
   double timeTravelled(void);
   /**
-  Returns platform type
-  @return PlatformType
+  @brief Returns platform type, either Ackerman or Quadcopter
+  @return platform type
   */
   pfms::PlatformType getPlatformType(void);
 
   /**
-  Set tolerance for when reaching goal
+  @brief Set tolerance for acceptable margin when reaching goal
   @return tolerance accepted [m]
   */
   bool setTolerance(double tolerance);
 
   /**
-  Returns current odometry information
+  @brief Returns current odometry information from platform
   @return odometry - current pose (x,y,yaw) and velocity (vx,vy)
   */
   pfms::nav_msgs::Odometry getOdometry(void);
 
   /**
-  Getter for obstacles detected (only in SUPER mode), otherwise return empty vector
+  @brief Getter for obstacles detected (only in SUPER mode), otherwise return empty vector
   @param goals
   @return centre of obstacles detected
   */
   std::vector<pfms::geometry_msgs::Point> getObstacles(void);
 
+  /**
+  @brief Updates time and distance travelled from start to current time for both platforms.
+  @return distance and time have been updated
+  */
   bool updateDistTime(double velocity);
 
 protected:
-  pfms::PlatformType platformType_;
-  pfms::PlatformStatus platformStatus_;
-  std::vector<pfms::geometry_msgs::Point> goals_;
-  double goalTolerance_;
-  std::shared_ptr<PfmsConnector> pfmsConnectorPtr_;
+  //constanct variables (do not change after being set initially)
+  pfms::PlatformType platformType_; //stores plat form type (Ackerman or Quadcopter)
+  pfms::PlatformStatus platformStatus_; //stores what status the platform is in (IDLE, RUNNING, TAKEOFF/LANDING)
+  std::vector<pfms::geometry_msgs::Point> goals_; //private copy of goals to be used throughout program
+  double goalTolerance_; //stores value of acceptable tolerance to reaching goals
+  std::shared_ptr<PfmsConnector> pfmsConnectorPtr_; //pfms pipes connector pointer to communicate with ROS nad the platforms
 
-  int currentGoalNum_;
-  pfms::nav_msgs::Odometry currentOdo_;
-  pfms::nav_msgs::Odometry previousOdo_;
-  pfms::nav_msgs::Odometry estimatedGoalPose_;
-  double distanceToCurrentGoal_;
+  //Constantly Updating variables
+  pfms::nav_msgs::Odometry currentOdo_; //stores current odometry of the platform
+  pfms::nav_msgs::Odometry previousOdo_; //stores previous odometry for calculating distance travelled every iteration (for total distance travelled calculations)
+  pfms::nav_msgs::Odometry estimatedGoalPose_; //for checkOriginToDestination function input and setting goals, the estimated goal pose is required to be used as the next origin pose
+  //distance and time to current goal, constantly updated through reachGoals calling checkOriginToDestination
+  double distanceToCurrentGoal_; 
   double timetoCurrentGoal_;
+  //total distance and time travelled from start to current time, recalculated throughout reachGoals
   double distanceTravelled_;
   double timeTravelled_;
-  double startToCurrentGoalDist_;
-  double totalDistance_;
-  double totalTime_;
+
+  double velocity_; //private data member for velocity of platform
 
   //Threading variables
-  std::mutex mtx_;
-  std::mutex mtxStart_;
-  std::condition_variable cvStart_;
-  std::vector<std::thread> threads_;
-  std::atomic<bool> ready_;
-  std::atomic<bool> running_;
+  std::mutex mtxStart_; //mutex variable used for controlling access to any shared resources
+  std::condition_variable cvStart_; //condition variable to wait until run() is called, then continue with the reachGoals() function as called in the thread
+  std::vector<std::thread> threads_; //vector to store threads and to be able to terminate then in destructor
+  std::atomic<bool> running_;  //bool to indicate the loop in reachGoals should still be running (when running_==true)
 };
 
 #endif // CONTROLLER_H

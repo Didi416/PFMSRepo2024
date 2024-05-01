@@ -7,11 +7,16 @@
 #include <queue>
 #include <set>
 
-Mission::Mission(std::vector<ControllerInterface*> controllers){
-    controllers_ = controllers;
-    totalMissionDistance_.resize(controllers.size());
+Mission::Mission(std::vector<ControllerInterface*> controllers){ //Mission class constructor
+    controllers_ = controllers; //copy controllers to private data member to be access from whole class
+    //resize totalMissionDistance, totalMissionTime and status vectors to accomodate all controllers (either 1, 2, 3... etc)
+    totalMissionDistance_.resize(controllers.size()); 
     totalMissionTime_.resize(controllers.size());
     status_.resize(controllers.size());
+}
+
+Mission::~Mission(){ //Mission class destructor
+
 }
 
 void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::PlatformType platform){
@@ -64,43 +69,42 @@ bool Mission::run(){
     return true;
 }
 
-std::vector<unsigned int> Mission::status(void){
-    for (int i=0;i<controllers_.size(); i++){
-        // std::cout<<"Total Dist: "<<i<<" -> "<<totalMissionDistance_.at(i)<<" and Distance Trav: "<<getDistanceTravelled().at(i)<<std::endl;
-        double percentage = (getDistanceTravelled().at(i)/totalMissionDistance_.at(i))*100;
-        if(controllers_.at(i)->status() == pfms::PlatformStatus::IDLE){
-            percentage = 100;
+std::vector<unsigned int> Mission::status(void){ //
+    for (int i=0;i<controllers_.size(); i++){ //iterate through controllers
+        double percentage = (getDistanceTravelled().at(i)/totalMissionDistance_.at(i))*100; //calculate percentage of mission distance currently completed
+        if(controllers_.at(i)->status() == pfms::PlatformStatus::IDLE){ //check if platform status is set to IDLE (platofrm has reached all goals)
+            percentage = 100; //set percentage to 100, as sometimes percentages can vary (not exactly 100, more often around 95-97%)
         }
-        if(percentage >= 100 && controllers_.at(i)->status() != pfms::PlatformStatus::IDLE){
-            percentage = 99;
+        if(percentage >= 100 && controllers_.at(i)->status() != pfms::PlatformStatus::IDLE){ //check if percentage goes above 100 but all goals have not been reached yet (not yet IDLE)
+            percentage = 99; //keep percentage at 99%
         }
-        status_.at(i) = percentage;
+        status_.at(i) = percentage; //allocate the 'i-th' controller's distance percentage to the controller's status position in the vector
     }
-    return status_;
+    return status_; //returns the vector
 }
 
 void Mission::setMissionObjective(mission::Objective objective){
-    objective_ = objective;
+    objective_ = objective; //return the selected objective of the mission, either BASIC, ADVANCED or SUPER
 }
 
-std::vector<double> Mission::getDistanceTravelled(){
-    std::vector<double> distanceTravelled;
-    for (int i=0;i<controllers_.size(); i++){
-        distanceTravelled.push_back(controllers_.at(i)->distanceTravelled());
+std::vector<double> Mission::getDistanceTravelled(){ //function to return current distance of the whole mission (multiple goals)
+    std::vector<double> distanceTravelled; //initialise vector of doubles to store the total distance travelled at this moment of all controllers
+    for (int i=0;i<controllers_.size(); i++){ //iterate through controllers_ vector (number of controllers)
+        distanceTravelled.push_back(controllers_.at(i)->distanceTravelled()); //push_back value of total distance travelled to this moment as calculated in the derived classes of Controller
     }
     return distanceTravelled;
 }
 
-std::vector<double> Mission::getTimeMoving(){
-    std::vector<double> timeMoving;
-    for (int i=0;i<controllers_.size(); i++){
-        timeMoving.push_back(controllers_.at(i)->timeTravelled());
+std::vector<double> Mission::getTimeMoving(){ //function to return current time taken in motion of the whole mission (multiple goals)
+    std::vector<double> timeMoving; //initialise vector of doubles to store the total time travelled at this moment of all controllers
+    for (int i=0;i<controllers_.size(); i++){ //iterate through controllers_ vector (number of controllers)
+        timeMoving.push_back(controllers_.at(i)->timeTravelled()); //push_back value of total distance travelled to this moment as calculated in the derived classes of Controller
     }
-    return timeMoving;
+    return timeMoving; //return the vector of total time in motion
 }
 
-std::vector<std::pair<int, int>> Mission::getPlatformGoalAssociation(){
-    return platGoalAssoc_;
+std::vector<std::pair<int, int>> Mission::getPlatformGoalAssociation(){  
+    return platGoalAssoc_; //returns the vector of pairs relating each of the goals to the controller platform
 }
 
 std::vector<int> Mission::bestPathSearch(AdjacencyList graph){ // Search the goals graph to find shortest path

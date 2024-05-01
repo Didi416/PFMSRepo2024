@@ -6,9 +6,10 @@
 
 Controller::Controller(){
     distanceTravelled_ = 0;
-    startToCurrentGoalDist_ = 0;
-    totalDistance_ = 0;
-    totalTime_ = 0;
+    timeTravelled_ = 0;
+    distanceToCurrentGoal_; 
+    timetoCurrentGoal_;
+    goalTolerance_ = 0.5; //default goal tolerance for when unit tests do not set it.
     
     running_ = false;
     threads_.push_back(std::thread(&Controller::reachGoals, this));

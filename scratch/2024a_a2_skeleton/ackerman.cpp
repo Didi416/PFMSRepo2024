@@ -2,21 +2,17 @@
 #include <chrono>   // Includes the system clock
 #include <algorithm> //Can use algorithms on STL containers
 #include <iostream>
-#include <thread>
 #include "audi.h"
 
 Ackerman::Ackerman(){
     platformType_ = pfms::PlatformType::ACKERMAN;
     pfmsConnectorPtr_ = std::make_shared<PfmsConnector>();
     MAX_BRAKE_TORQUE = 8000.0; //Nm
-    i_ = 1;
     brake_ = 0.0;
     steering_ = 0.0;
     throttle_ = 0.0;
     velocity_ = 2.91;
-    goalTolerance_ = 0.5; //default goal tolerance for when unit tests do not set it.
-    distanceTravelled_ = 0.0;
-    timeTravelled_ = 0.0;
+    
 }
 
 Ackerman::~Ackerman(){

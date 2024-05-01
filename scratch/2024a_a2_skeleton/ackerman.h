@@ -4,6 +4,15 @@
 #include "controller.h"
 #include "audi.h"
 
+/*!
+ *  \brief     Ackerman Class
+ *  \details
+ *  Derived class of Controller, includes functions needing to be implemented from Controller class 
+ *  virtual functions due to differing programming requirements from Quadcopter.
+ *  \author    Dyandra Prins
+ *  \date      2024-01-05
+ */
+
 class Ackerman: public Controller
 {
 public:
@@ -26,19 +35,15 @@ public:
                                 double& distance, double& time, pfms::nav_msgs::Odometry& estimatedGoalPose);
 
   /**
-  Run controller in reaching goals - non blocking call
+  @brief Movement to Reach goal - execute control to reach goal, called in thread, so non-blocking
   */
-
   void reachGoals(void);
 
 private:
-  double MAX_BRAKE_TORQUE;
-  double DEFAULT_THROTTLE;
-  unsigned long i_;
-  double brake_;
-  double steering_;
-  double throttle_;
-  double velocity_;
+  double MAX_BRAKE_TORQUE; //maximum brake torque, set to 8000Nm
+  double brake_; //private data value for braking command
+  double steering_; //private data member for steering command
+  double throttle_; //private data member for throttle command
 };
 
 #endif // ACKERMAN_H
