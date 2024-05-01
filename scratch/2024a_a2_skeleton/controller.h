@@ -122,6 +122,14 @@ protected:
   double startToCurrentGoalDist_;
   double totalDistance_;
   double totalTime_;
+
+  //Threading variables
+  std::mutex mtx_;
+  std::mutex mtxStart_;
+  std::condition_variable cvStart_;
+  std::vector<std::thread> threads_;
+  std::atomic<bool> ready_;
+  std::atomic<bool> running_;
 };
 
 #endif // CONTROLLER_H

@@ -2,15 +2,23 @@
 #include <chrono>   // Includes the system clock
 #include <algorithm> //Can use algorithms on STL containers
 #include <iostream>
+#include <thread>
 
 Controller::Controller(){
     distanceTravelled_ = 0;
     startToCurrentGoalDist_ = 0;
     totalDistance_ = 0;
     totalTime_ = 0;
+    running_ = false;
+    threads_.push_back(std::thread(&Controller::reachGoals, this));
+    platformStatus_ = pfms::PlatformStatus::RUNNING;
 }
 Controller::~Controller(){
-
+    running_ = false;
+    //join threads
+    for(auto & thread : threads_){
+        thread.join();
+    }
 }
 
 bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){

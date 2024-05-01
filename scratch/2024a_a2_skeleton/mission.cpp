@@ -33,11 +33,9 @@ void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::Plat
 
     switch (objective_){
         case mission::Objective::BASIC:
-            std::cout<<"BASIC MODE"<<std::endl;
             controllers_.at(a)->setGoals(missionGoals_);
             break;
         case mission::Objective::ADVANCED:
-            std::cout<<"ADVANCED TSP MODE"<<std::endl;
             graph = generateGraph(a);
             order = bestPathSearch(graph);
             for (int i=0; i<order.size(); i++){
@@ -47,7 +45,6 @@ void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::Plat
             controllers_.at(a)->setGoals(missionGoals_);
             break;
         case mission::Objective::SUPER:
-            std::cout<<"SUPER MODE"<<std::endl;
             controllers_.at(a)->setGoals(missionGoals_);
             break;
     }
@@ -57,7 +54,6 @@ void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::Plat
         controllers_.at(a)->checkOriginToDestination(origin, missionGoals_.at(i), dist, time, estimatedGoalPose);
         origin = estimatedGoalPose;
         totalMissionDistance_.at(a) += dist;
-        std::cout<<"Total Distance: "<<totalMissionDistance_.at(a)<<std::endl;
     }
 } 
 
@@ -143,7 +139,6 @@ std::vector<int> Mission::bestPathSearch(AdjacencyList graph){
             idx++; // Otherwise we increment to next node
         }
         dist += distancesFromOrigin_.at(nodes.at(0));
-        std::cout<<"Current Min Distance: "<<minDistance<<" and current distance: "<<dist<<"For: "<<nodes.at(0)<<nodes.at(1)<<nodes.at(2)<<nodes.at(3)<<nodes.at(4)<<std::endl;
         if(dist<minDistance){
             minDistance=dist; // Save minimum distance
             order.clear(); // clear the current order of nodes
@@ -163,7 +158,6 @@ AdjacencyList Mission::generateGraph(int controller){
     origin = controllers_.at(controller)->getOdometry();
     for (int j=0; j<missionGoals_.size(); j++){
         if(controllers_.at(controller)->checkOriginToDestination(origin, missionGoals_.at(j), distancesFromOrigin_.at(j), time, estimatedGoalPose)){
-            std::cout<<"Platform can reach goal "<<j<<" from start pos in "<<distancesFromOrigin_.at(j)<<" metres."<<std::endl;
         }
     }
     for (int i=0; i<missionGoals_.size(); i++){
@@ -177,11 +171,9 @@ AdjacencyList Mission::generateGraph(int controller){
             if(controllers_.at(controller)->checkOriginToDestination(origin, missionGoals_.at(j), dist, time, estimatedGoalPose)){
                 dist = sqrt(pow(origin.position.x - missionGoals_.at(j).x, 2) + pow(origin.position.y - missionGoals_.at(j).y, 2));
                 graph.at(i).push_back(std::make_pair(j,dist));
-                std::cout<<"Platform can reach goal "<<j<<" from goal "<<i<<" in "<<dist<<" metres."<<std::endl;
             }
             else{
                 graph.at(i).push_back(std::make_pair(j,0));
-                std::cout<<"Platform cannot reach goal "<<j<<" from goal "<<i<<" in "<<dist<<" metres."<<std::endl;
             }
         }
     }
