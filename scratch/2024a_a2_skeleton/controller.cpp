@@ -9,6 +9,7 @@ Controller::Controller(){
     startToCurrentGoalDist_ = 0;
     totalDistance_ = 0;
     totalTime_ = 0;
+    
     running_ = false;
     threads_.push_back(std::thread(&Controller::reachGoals, this));
     platformStatus_ = pfms::PlatformStatus::RUNNING;
@@ -34,6 +35,14 @@ bool Controller::setGoals(std::vector<pfms::geometry_msgs::Point> goals){
         origin = estimatedGoalPose_;
     }
     return true;
+}
+
+void Controller::run(void){
+    running_ = true;
+    std::unique_lock<std::mutex> lck(mtxStart_);
+    mtxStart_.unlock();
+    cvStart_.notify_all();
+    pfmsConnectorPtr_->send(platformStatus_);
 }
 
 double Controller::distanceToGoal(void){

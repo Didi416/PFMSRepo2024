@@ -35,18 +35,6 @@ bool Ackerman::checkOriginToDestination(pfms::nav_msgs::Odometry origin, pfms::g
     
 }
 
-void Ackerman::run(void){
-    // platformStatus_ = pfms::PlatformStatus::RUNNING;
-    // std::thread ackermanRun(&Ackerman::reachGoals, this);
-    // ackermanRun.detach();
-  
-    running_ = true;
-    std::unique_lock<std::mutex> lck(mtxStart_);
-    mtxStart_.unlock();
-    cvStart_.notify_all();
-    pfmsConnectorPtr_->send(platformStatus_);
-}
-
 void Ackerman::reachGoals(void){
     std::unique_lock<std::mutex> lck(mtxStart_);
     cvStart_.wait(lck, [&](){return running_==true;});

@@ -28,7 +28,6 @@ public:
   /**
   Run controller in reaching goals - non blocking call
   */
-  void run(void);
 
   void reachGoals(void);
 

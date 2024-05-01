@@ -21,7 +21,7 @@ class Controller: public ControllerInterface
   /**
   Run controller in reaching goals - non blocking call
   */
-  virtual void run(void) = 0;
+  void run(void);
 
   virtual void reachGoals(void) = 0;
   /**
