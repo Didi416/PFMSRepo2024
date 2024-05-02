@@ -15,14 +15,15 @@ add_library(logger logger.cpp)
 
 add_library(controller controller.cpp ackerman.cpp quadcopter.cpp)
 add_library(mission mission.cpp)
+add_library(tsp tsp.cpp)
 target_link_libraries(controller pfmsconnector audi)
-target_link_libraries(mission pfmsconnector)
+target_link_libraries(mission pfmsconnector tsp)
 
 # Create executable with  cpp files needed
 add_executable(a2 main.cpp)
 
 # Cmake will link against the libraries in final step
-target_link_libraries(a2 logger controller mission pfmsconnector)
+target_link_libraries(a2 logger controller mission tsp pfmsconnector)
 
 if(BUILD_TESTS)
    add_subdirectory(test)

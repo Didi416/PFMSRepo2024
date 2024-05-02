@@ -6,6 +6,7 @@
 #include "controller.h"
 #include <queue>
 #include <set>
+#include "tsp.h"
 
 Mission::Mission(std::vector<ControllerInterface*> controllers){ //Mission class constructor
     controllers_ = controllers; //copy controllers to private data member to be access from whole class
@@ -34,18 +35,23 @@ void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::Plat
     double dist, time; //for input into chekOriginToDestination function that calculates distance
 
     //Variables for ADVANCED
-    std::vector<int> order(missionGoals_.size(),0); //specif
+    std::vector<int> order(missionGoals_.size(),0); //specify the size of the goals order vector
     AdjacencyList graph;
     std::vector<pfms::geometry_msgs::Point> tempGoals;
+    TSP tsp;
 
     switch (objective_){ //check mission objective (BASIC, ADVANCED or SUPER)
         case mission::Objective::BASIC: //for BASIC mode
             controllers_.at(a)->setGoals(missionGoals_); //setGoals for the controller
+            for (int i=0; i<missionGoals_.size(); i++){
+                order.at(i) = i; //default order, for platform goal association purposes, otherwise, all would be 0
+            }
             break;
         case mission::Objective::ADVANCED: //for ADVANCED mode
+            //Start TSP
             graph = generateGraph(a);//generate a graph fo the goals, to determine whcih goals can be accessed from other goals
-            order = bestPathSearch(graph); //search the graph for the shortest path through all goals
-            //following for loop temporarily stores the mission goals in the order specified from teh bestPathSearch
+            order = tsp.bestPathSearch(graph,distancesFromOrigin_); //search the graph for the shortest path through all goals
+            //following for loop temporarily stores the mission goals in the order specified from the bestPathSearch
             for (int i=0; i<order.size(); i++){
                 tempGoals.push_back(missionGoals_.at(order.at(i)));
             }
@@ -110,45 +116,45 @@ std::vector<std::pair<int, int>> Mission::getPlatformGoalAssociation(){
     return platGoalAssoc_; //returns the vector of pairs relating each of the goals to the controller platform
 }
 
-std::vector<int> Mission::bestPathSearch(AdjacencyList graph){ // Search the goals graph to find shortest path
-    //start tsp search, focusing on moving to the goal with the next shortest distance from current goal
-    std::vector<int> order;
-    //List all goals in a vector, to do permutations
-    std::vector<int> goals;
-    for (unsigned int i=0; i< graph.size(); i++){
-        goals.push_back(i);
-    }
-    double minDistance = 1e6; //Set initial minimum distance to a large value, so first permutation is definitely less than
+// std::vector<int> Mission::bestPathSearch(AdjacencyList graph){ // Search the goals graph to find shortest path
+//     //start tsp search, focusing on moving to the goal with the next shortest distance from current goal
+//     std::vector<int> order;
+//     //List all goals in a vector, to do permutations
+//     std::vector<int> goals;
+//     for (unsigned int i=0; i< graph.size(); i++){
+//         goals.push_back(i);
+//     }
+//     double minDistance = 1e6; //Set initial minimum distance to a large value, so first permutation is definitely less than
 
-    //Go through all permutations of the order of goals, comparing total distances to 
-    //determine the minimum distance possible and asociated permuation:
-    do {
-        bool OK = true; //Use this to abort search if distanec is already above minimum distance
-        unsigned int i = 1;//Start from index 1 to end 
-        double dist = 0; // Current distance travelled through goals
-        while((i<goals.size()) && (OK)){
-            // Checks distance between two goals in the order dictated by the current permutation
-            unsigned int goal1 = goals.at(i-1);
-            unsigned int goal2 = goals.at(i);
-            //We find in the adjacency list (graph), the goal1 connection to goal2 and access the second element which is the distance between goal1 and goal2
-            dist += graph.at(goal1).at(goal2).second;
-            //We abort current search if dist is already over the min distance
-            if(dist > minDistance){
-                OK = false;
-            }
-            i++; // increment to next goal in permutation
-        }
-        dist += distancesFromOrigin_.at(goals.at(0));
-        if(dist<minDistance){
-            minDistance=dist; // Save current dist as new minimum distance
-            order.clear(); // Clear the current order of goals
-            order=goals; // Save the order of goals as current shortest path
-        }
-    } 
-    while (std::next_permutation(goals.begin(), goals.end())); //Go to next permutation of goals order
+//     //Go through all permutations of the order of goals, comparing total distances to 
+//     //determine the minimum distance possible and asociated permuation:
+//     do {
+//         bool OK = true; //Use this to abort search if distanec is already above minimum distance
+//         unsigned int i = 1;//Start from index 1 to end 
+//         double dist = 0; // Current distance travelled through goals
+//         while((i<goals.size()) && (OK)){
+//             // Checks distance between two goals in the order dictated by the current permutation
+//             unsigned int goal1 = goals.at(i-1);
+//             unsigned int goal2 = goals.at(i);
+//             //We find in the adjacency list (graph), the goal1 connection to goal2 and access the second element which is the distance between goal1 and goal2
+//             dist += graph.at(goal1).at(goal2).second;
+//             //We abort current search if dist is already over the min distance
+//             if(dist > minDistance){
+//                 OK = false;
+//             }
+//             i++; // increment to next goal in permutation
+//         }
+//         dist += distancesFromOrigin_.at(goals.at(0));
+//         if(dist<minDistance){
+//             minDistance=dist; // Save current dist as new minimum distance
+//             order.clear(); // Clear the current order of goals
+//             order=goals; // Save the order of goals as current shortest path
+//         }
+//     } 
+//     while (std::next_permutation(goals.begin(), goals.end())); //Go to next permutation of goals order
 
-    return order;
-}
+//     return order;
+// }
 
 AdjacencyList Mission::generateGraph(int controller){ //Generate graph for searching from mission goals
     AdjacencyList graph (missionGoals_.size()); // Create graph of size of mission goals (number of vectors in the vector = missionGoals.size())

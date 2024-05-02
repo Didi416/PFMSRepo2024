@@ -84,13 +84,13 @@ public:
      *
      */
     AdjacencyList generateGraph(int controller);
-    /**
-     * @brief Returns a vector of int that is the order determined to be the best (shortest path through all goals)
-     * @param graph AdjacencyList which is a generated graph showing connecting goals
-     * @return vector of ints of size corresponding to number of goals, with the order of the shortest path
-     *
-     */
-    std::vector<int> bestPathSearch(AdjacencyList graph);
+    // /**
+    //  * @brief Returns a vector of int that is the order determined to be the best (shortest path through all goals)
+    //  * @param graph AdjacencyList which is a generated graph showing connecting goals
+    //  * @return vector of ints of size corresponding to number of goals, with the order of the shortest path
+    //  *
+    //  */
+    // std::vector<int> bestPathSearch(AdjacencyList graph);
 
 private:
   std::vector<ControllerInterface*> controllers_; //!< A private copy of ControllerInterfaces @sa ControllerInterface
@@ -98,9 +98,9 @@ private:
   std::vector<std::pair<int, int>> platGoalAssoc_; //vector of which goals are assigned to a platform and order of goals to be visited
   mission::Objective objective_; //mission objective (BASIC, ADVANCED, SUPER)
   std::vector<unsigned int> status_; //vector for storing percentage of mission completed
-  std::vector<double> totalMissionDistance_; 
-  std::vector<double> totalMissionTime_;
-  std::vector<double> distancesFromOrigin_;
+  std::vector<double> totalMissionDistance_; //total mission distance between all goals given to platform
+  std::vector<double> totalMissionTime_; //total estimated time for mission to complete
+  std::vector<double> distancesFromOrigin_; //vector to store distances from the platform origin to all different goals, used to add initial travel distance to first goal for tsp
 };
 
 #endif // RANGERFUSION_H

@@ -22,8 +22,6 @@ target_link_libraries(student_lib pfmsconnector audi)
 add_dependencies(student_lib pipes::pfmsconnector)
 link_directories(/usr/local/lib)
 
-# add_library(mission "../mission.cpp")
-# target_link_libraries(mission pfmsconnector)
 
 # ACKERMAN TEST
 add_executable(testAudiReachGoals test_audi_reach_goals.cpp)
@@ -45,3 +43,6 @@ target_link_libraries(testTspReachGoalsAck ${GTEST_LIBRARIES} student_lib missio
 add_executable(testTspReachGoalsQuad tsp_reach_goals_quad.cpp)
 target_link_libraries(testTspReachGoalsQuad ${GTEST_LIBRARIES} student_lib mission pfmshog pthread)
 
+# TSPTest
+add_executable(testTspSearch testTSPSearch.cpp)
+target_link_libraries(testTspSearch ${GTEST_LIBRARIES} student_lib mission pfmshog pthread)

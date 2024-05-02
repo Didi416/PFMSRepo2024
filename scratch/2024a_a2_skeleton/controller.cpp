@@ -17,6 +17,7 @@ Controller::Controller(){
     threads_.push_back(std::thread(&Controller::reachGoals, this)); //start thread and add to vector for easy destruction of objects and threads
     platformStatus_ = pfms::PlatformStatus::RUNNING; //set platform status to RUNNING
 }
+
 Controller::~Controller(){ //object destructor
     //set running_ to false, as mission is complete, platform object is no longer used
     running_ = false;

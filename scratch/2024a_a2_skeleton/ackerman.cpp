@@ -104,8 +104,8 @@ void Ackerman::reachGoals(void){
                 }else{repeats++;} //incremental counter for sending commands (needs increasing sequence counter)
             }
         }
-        platformStatus_ = pfms::PlatformStatus::IDLE;
-        pfmsConnectorPtr_->send(platformStatus_);
-        std::this_thread::sleep_for (std::chrono::milliseconds(10));
+        // platformStatus_ = pfms::PlatformStatus::IDLE;
+        // pfmsConnectorPtr_->send(platformStatus_);
+        // std::this_thread::sleep_for (std::chrono::milliseconds(10));
     }
 }
