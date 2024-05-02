@@ -18,15 +18,15 @@ class Mission: public MissionInterface
 {
 public:
     /**
-    The Default constructor
+    @brief The Mission default constructor, takes in a container of controllers to use for access to Controller class functions
     @sa ControllerInterface and @sa MissionInterface for more information
     */
   Mission(std::vector<ControllerInterface*> controllers);
   ~Mission();
   /**
-     * @brief Accepts the container of goals for a specific platform.
+     * @brief Accepts the container of goals for a specific platform
      *
-     * @param goals
+     * @param goals Vector of goal points that the platform needs to check if it can reach
      */
     void setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::PlatformType platform);
 
@@ -38,13 +38,13 @@ public:
     bool run();
 
     /**
-    Retrurns mission completion status (indicating percentage of completion of task) by each platform @sa setGoals
+    Returns mission completion status (indicating percentage of completion of task) by each platform @sa setGoals
     @return vector with each element of vector corresponding to a platform. The value is percent of completed distance of entire mission for the corresponding platform value between 0-100.
     */
     std::vector<unsigned int> status(void);
 
     /**
-     * @brief Set mission objective
+     * @brief Set mission objective, either BASIC, ADVANCED or SUPER
      */
     void setMissionObjective(mission::Objective objective);
 
@@ -53,7 +53,7 @@ public:
      * The values in the vector correspond to the total distance travelled by the corresponding platform
      * from the time of starting the program.
      *
-     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     * @return std::vector<double> - each element is the distance travelled for each vehicle [m]
      *
      */
     std::vector<double> getDistanceTravelled();
@@ -63,7 +63,7 @@ public:
      * The values in the vector correspond to the time the corresponding platfore has been moving
      * from the time the program started. Moving means the platform was not stationary.
      *
-     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     * @return std::vector<double> - each element is the time in motion for each vehicle [m]
      *
      */
     std::vector<double> getTimeMoving();
@@ -72,24 +72,22 @@ public:
      * @brief Returns a vector of same size as number of goals. The values in the vector
      * correspond to the platform number that is completing the goal
      *
-     * @return vector of unsigned int's corresponds to platform number completing the goal
+     * @return vector of pairs of unsigned int's corresponds to platform number completing the goal (first int is the controller, second is goal number)
      *
      */
     std::vector<std::pair<int, int>> getPlatformGoalAssociation();
 
     /**
      * @brief Used to generate a graph representing which other goals can be accessed by each goal to be searched to identify the optimal (shortest) path
-     *
-     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     * @param controller int corresponding to the position of the current controller
+     * @return Adjacency List (graph) representing nodes (goals) and edges (connections/which goals can be reached from other goals)
      *
      */
     AdjacencyList generateGraph(int controller);
     /**
-     * @brief Returns a vector of same size as number of controllers (platforms).
-     * The values in the vector correspond to the time the corresponding platfore has been moving
-     * from the time the program started. Moving means the platform was not stationary.
-     *
-     * @return std::vector<double> - each elemtn distance travelled for each vehicle [m]
+     * @brief Returns a vector of int that is the order determined to be the best (shortest path through all goals)
+     * @param graph AdjacencyList which is a generated graph showing connecting goals
+     * @return vector of ints of size corresponding to number of goals, with the order of the shortest path
      *
      */
     std::vector<int> bestPathSearch(AdjacencyList graph);
@@ -97,11 +95,10 @@ public:
 private:
   std::vector<ControllerInterface*> controllers_; //!< A private copy of ControllerInterfaces @sa ControllerInterface
   std::vector<pfms::geometry_msgs::Point> missionGoals_; //!< A private copy of goals
-  std::vector<std::pair<int, int>> platGoalAssoc_;
-  mission::Objective objective_;
-  std::vector<unsigned int> status_;
-  std::vector<std::thread> threads_;
-  std::vector<double> totalMissionDistance_;
+  std::vector<std::pair<int, int>> platGoalAssoc_; //vector of which goals are assigned to a platform and order of goals to be visited
+  mission::Objective objective_; //mission objective (BASIC, ADVANCED, SUPER)
+  std::vector<unsigned int> status_; //vector for storing percentage of mission completed
+  std::vector<double> totalMissionDistance_; 
   std::vector<double> totalMissionTime_;
   std::vector<double> distancesFromOrigin_;
 };

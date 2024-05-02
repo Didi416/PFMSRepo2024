@@ -20,52 +20,55 @@ Mission::~Mission(){ //Mission class destructor
 }
 
 void Mission::setGoals(std::vector<pfms::geometry_msgs::Point> goals, pfms::PlatformType platform){
-    missionGoals_ = goals;
-    int a = 0;
-    for (int i=0; i<controllers_.size(); i++){
-        if (controllers_.at(i)->getPlatformType() == platform){
-            a = i;
-            break;
+    missionGoals_ = goals; //copy current order of goals into private data member
+    int a = 0; //initialise int variable to be able to identify position of controller (as specified from the 'platform' input variable) in the controllers_ vector
+    for (int i=0; i<controllers_.size(); i++){ //iterate through active controllers
+        if (controllers_.at(i)->getPlatformType() == platform){ //check for which controller in the vector is the same type as specified in the input 'platform' variable
+            a = i; //store the position of the controller in the vector
+            break; //no need to keep searching, as we have already found the controller
         }
     }
+    // Initialise setGoals variable
+    pfms::nav_msgs::Odometry origin, estimatedGoalPose; //odometry readings
+    origin = controllers_.at(a)->getOdometry(); //update current odometry of the platform
+    double dist, time; //for input into chekOriginToDestination function that calculates distance
 
-    pfms::nav_msgs::Odometry origin, estimatedGoalPose;
-    origin = controllers_.at(a)->getOdometry();
-    double dist, time;
-    std::vector<int> order(missionGoals_.size(),0);
+    //Variables for ADVANCED
+    std::vector<int> order(missionGoals_.size(),0); //specif
     AdjacencyList graph;
     std::vector<pfms::geometry_msgs::Point> tempGoals;
 
-    switch (objective_){
-        case mission::Objective::BASIC:
-            controllers_.at(a)->setGoals(missionGoals_);
+    switch (objective_){ //check mission objective (BASIC, ADVANCED or SUPER)
+        case mission::Objective::BASIC: //for BASIC mode
+            controllers_.at(a)->setGoals(missionGoals_); //setGoals for the controller
             break;
-        case mission::Objective::ADVANCED:
-            graph = generateGraph(a);
-            order = bestPathSearch(graph);
+        case mission::Objective::ADVANCED: //for ADVANCED mode
+            graph = generateGraph(a);//generate a graph fo the goals, to determine whcih goals can be accessed from other goals
+            order = bestPathSearch(graph); //search the graph for the shortest path through all goals
+            //following for loop temporarily stores the mission goals in the order specified from teh bestPathSearch
             for (int i=0; i<order.size(); i++){
                 tempGoals.push_back(missionGoals_.at(order.at(i)));
             }
-            missionGoals_.assign(tempGoals.begin(), tempGoals.end());
-            controllers_.at(a)->setGoals(missionGoals_);
+            missionGoals_.assign(tempGoals.begin(), tempGoals.end()); //updates the private goals vector with the temporary goals vector, updating to correct order
+            controllers_.at(a)->setGoals(missionGoals_); //setGoals in correct order to the controller
             break;
-        case mission::Objective::SUPER:
+        case mission::Objective::SUPER: //for SUPER (incomplete)
             controllers_.at(a)->setGoals(missionGoals_);
             break;
     }
-
-    for(int i=0; i<missionGoals_.size(); i++){
-        platGoalAssoc_.push_back(std::make_pair(a,order.at(i)));
-        controllers_.at(a)->checkOriginToDestination(origin, missionGoals_.at(i), dist, time, estimatedGoalPose);
-        origin = estimatedGoalPose;
-        totalMissionDistance_.at(a) += dist;
+    //same process for all modes
+    for(int i=0; i<missionGoals_.size(); i++){ //iterate through goals
+        platGoalAssoc_.push_back(std::make_pair(a,order.at(i))); //assign each goal to the controller, accordign to the correct order
+        controllers_.at(a)->checkOriginToDestination(origin, missionGoals_.at(i), dist, time, estimatedGoalPose); //use checkOriginToDestination to compute distances between goals
+        origin = estimatedGoalPose; //update origin to be the estimated pose of the goal that the distance was just calculated for, instead of always from currect platform origin
+        totalMissionDistance_.at(a) += dist; //add up the distances between goals to get the total distance of the mission (needed for status)
     }
 } 
 
-bool Mission::run(){
-    for (auto controller : controllers_){
-        controller->run();
-    }
+bool Mission::run(){ //Starts mission running
+    for (auto controller : controllers_){ //iterate through all active controllers
+        controller->run(); //call their respective run functions, therefore starting the threads within each object to reachGoals
+    } //Mission::run terminates (non-blocking) as threading has taken over for the reachGoals in each controller, and so reaches the end of Mission::run()
     return true;
 }
 
