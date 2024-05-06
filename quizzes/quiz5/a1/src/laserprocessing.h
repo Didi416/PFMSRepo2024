@@ -60,6 +60,8 @@ public:
    */
   void newScan(sensor_msgs::msg::LaserScan laserScan);
 
+  geometry_msgs::msg::Point segmentToPoint(int i);
+
 
 private:
   /*! @brief Returns the cartesian position of laer reading at specific index
@@ -78,8 +80,7 @@ private:
 
 private:
   sensor_msgs::msg::LaserScan laserScan_;
-
-
+  std::vector<std::vector<int>> obstacles_;
   std::vector<std::pair<double,double>> cones_;
 
 };

@@ -1,0 +1,72 @@
+[0.089s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': AMENT_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${CMAKE_PREFIX_PATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process
+[0.100s] UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.100s] Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.100s]    Site: labNVXMF8
+[0.100s]    Build name: (empty)
+[0.100s]  Add coverage exclude regular expressions.
+[0.101s] Create new tag: 20240505-0506 - Experimental
+[0.101s] UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.101s] Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.101s] Test project /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+[0.102s] Constructing a list of tests
+[0.102s] Done constructing a list of tests
+[0.102s] Updating test list for fixtures
+[0.102s] Added 0 tests to meet fixture requirements
+[0.102s] Checking test dependency graph...
+[0.102s] Checking test dependency graph end
+[0.102s] test 1
+[0.102s]     Start 1: test_quiz5_a1
+[0.102s] 
+[0.103s] 1: Test command: /usr/bin/python3.10 "-u" "/opt/ros/humble/share/ament_cmake_ros/cmake/run_test_isolated.py" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml" "--package-name" "quiz5" "--output-file" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/ament_cmake_gtest/test_quiz5_a1.txt" "--command" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1" "--gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml"
+[0.103s] 1: Test timeout computed to be: 60
+[0.171s] 1: Running with ROS_DOMAIN_ID 1
+[0.173s] 1: -- run_test.py: invoking following command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5':
+[0.173s] 1:  - /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1 --gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml
+[0.179s] 1: Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc
+[0.179s] 1: [==========] Running 4 tests from 1 test suite.
+[0.179s] 1: [----------] Global test environment set-up.
+[0.179s] 1: [----------] 4 tests from LaserProcessing
+[0.179s] 1: [ RUN      ] LaserProcessing.CountReturns
+[0.182s] 1: [INFO] [1714885572.127316648] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.190s] 1: [       OK ] LaserProcessing.CountReturns (10 ms)
+[0.190s] 1: [ RUN      ] LaserProcessing.CountSegments
+[0.192s] 1: [INFO] [1714885572.137597023] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.193s] 1: [       OK ] LaserProcessing.CountSegments (3 ms)
+[0.193s] 1: [ RUN      ] LaserProcessing.DetectClosestCone
+[0.195s] 1: [INFO] [1714885572.140504372] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.195s] 1: [       OK ] LaserProcessing.DetectClosestCone (3 ms)
+[0.196s] 1: [ RUN      ] LaserProcessing.FindRoad
+[0.198s] 1: [INFO] [1714885572.143273119] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.198s] 1: Start 
+[0.199s] 1: Hi 
+[0.199s] 1: Hello 
+[0.199s] 1: unknown file: Failure
+[0.199s] 1: C++ exception with description "vector::_M_range_check: __n (which is 4294967295) >= this->size() (which is 640)" thrown in the test body.
+[0.199s] 1: [  FAILED  ] LaserProcessing.FindRoad (3 ms)
+[0.199s] 1: [----------] 4 tests from LaserProcessing (19 ms total)
+[0.200s] 1: 
+[0.200s] 1: [----------] Global test environment tear-down
+[0.200s] 1: [==========] 4 tests from 1 test suite ran. (19 ms total)
+[0.200s] 1: [  PASSED  ] 3 tests.
+[0.200s] 1: [  FAILED  ] 1 test, listed below:
+[0.200s] 1: [  FAILED  ] LaserProcessing.FindRoad
+[0.200s] 1: 
+[0.201s] 1:  1 FAILED TEST
+[0.201s] 1: -- run_test.py: return code 1
+[0.201s] 1: -- run_test.py: inject classname prefix into gtest result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+[0.201s] 1: -- run_test.py: verify result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+[0.210s] 1/1 Test #1: test_quiz5_a1 ....................***Failed    0.11 sec
+[0.210s] 
+[0.210s] 0% tests passed[0;0m, [0;31m1 tests failed[0;0m out of 1
+[0.210s] 
+[0.211s] Label Time Summary:
+[0.211s] gtest    =   0.11 sec*proc (1 test)
+[0.211s] 
+[0.211s] Total Test time (real) =   0.11 sec
+[0.211s] 
+[0.211s] The following tests FAILED:
+[0.211s] 	[0;31m  1 - test_quiz5_a1 (Failed)[0;0m
+[0.211s] Errors while running CTest
+[0.212s] Output from these tests are in: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/Testing/Temporary/LastTest.log
+[0.212s] Use "--rerun-failed --output-on-failure" to re-run the failed cases verbosely.
+[0.214s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '8': AMENT_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${CMAKE_PREFIX_PATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process

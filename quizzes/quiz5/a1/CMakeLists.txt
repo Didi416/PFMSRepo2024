@@ -24,6 +24,7 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(rosbag2_cpp REQUIRED)
+find_package(std_srvs REQUIRED)
 ## TASK 5 - Add the package here
 
 
@@ -36,7 +37,7 @@ ament_target_dependencies(laserprocessing rclcpp std_msgs sensor_msgs nav_msgs)
 add_executable(sample src/main.cpp src/detection_node.cpp)
 
 ## TASK 5 - Add the package to the end of the dependencies
-ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs)
+ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
 
 target_link_libraries(sample laserprocessing)
 

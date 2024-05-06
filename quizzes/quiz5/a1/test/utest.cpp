@@ -129,3 +129,44 @@ TEST(LaserProcessing,DetectClosestCone){
     }
 
 }
+
+//SELF-MADE UNIT TEST FOR DETECTING ROAD
+
+// TEST(LaserProcessing,FindRoad){
+
+//     // Reading bag files based on
+//     // https://docs.ros.org/en/humble/Tutorials/Advanced/Reading-From-A-Bag-File-CPP.html
+
+//     std::string package_share_directory = ament_index_cpp::get_package_share_directory("quiz5");
+//     std::string bag_filename=package_share_directory + "/data/ros2";
+
+//     rosbag2_cpp::Reader reader;
+//     rclcpp::Serialization<sensor_msgs::msg::LaserScan> serialization;
+//     sensor_msgs::msg::LaserScan::SharedPtr laser_msg = std::make_shared<sensor_msgs::msg::LaserScan>();
+
+//     reader.open(bag_filename);
+//     while (reader.has_next()) {
+//         rosbag2_storage::SerializedBagMessageSharedPtr msg = reader.read_next();
+
+//         if (msg->topic_name != "/orange/laser/scan") {
+//             continue;
+//         }
+//         rclcpp::SerializedMessage serialized_msg(*msg->serialized_data);
+
+//         serialization.deserialize_message(&serialized_msg, laser_msg.get());
+//         break;
+//     }
+
+//     ////////////////////////////////////////////
+//     // Our code is tested below
+
+//     LaserProcessing laserProcessing(*laser_msg);
+
+//     {
+//         geometry_msgs::msg::Point pt = laserProcessing.detectRoadCentre();
+
+//         EXPECT_NEAR(pt.x,2.08091,0.1);
+//         EXPECT_NEAR(pt.y,3.919465,0.1);
+//     }
+
+// }

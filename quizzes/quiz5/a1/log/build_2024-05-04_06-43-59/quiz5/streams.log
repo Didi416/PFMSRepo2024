@@ -1,0 +1,88 @@
+[0.072s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5
+[0.132s] -- The C compiler identification is GNU 11.4.0
+[0.197s] -- The CXX compiler identification is GNU 11.4.0
+[0.206s] -- Detecting C compiler ABI info
+[0.289s] -- Detecting C compiler ABI info - done
+[0.300s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.300s] -- Detecting C compile features
+[0.301s] -- Detecting C compile features - done
+[0.305s] -- Detecting CXX compiler ABI info
+[0.403s] -- Detecting CXX compiler ABI info - done
+[0.413s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.413s] -- Detecting CXX compile features
+[0.414s] -- Detecting CXX compile features - done
+[0.417s] -- Found ament_cmake: 1.3.7 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.624s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+[0.692s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.733s] -- Found rclcpp: 16.0.8 (/opt/ros/humble/share/rclcpp/cmake)
+[0.792s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.799s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.812s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.830s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.859s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.954s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.958s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.073s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.103s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.159s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.173s] -- Looking for pthread.h
+[1.262s] -- Looking for pthread.h - found
+[1.263s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.349s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.350s] -- Found Threads: TRUE  
+[1.548s] -- Found nav_msgs: 4.2.3 (/opt/ros/humble/share/nav_msgs/cmake)
+[1.713s] -- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.821s] -- Found tf2: 0.25.5 (/opt/ros/humble/share/tf2/cmake)
+[1.839s] -- Found tf2_ros: 0.25.5 (/opt/ros/humble/share/tf2_ros/cmake)
+[2.255s] -- Found tf2_geometry_msgs: 0.25.5 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[2.274s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[2.275s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[2.276s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.288s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[2.300s] -- Found rosbag2_cpp: 0.15.9 (/opt/ros/humble/share/rosbag2_cpp/cmake)
+[2.353s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[2.439s] -- Configuring done
+[2.470s] -- Generating done
+[2.475s] -- Build files have been written to: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+[2.492s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5
+[2.495s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --build /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5 -- -j8 -l8
+[2.558s] [  9%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[2.560s] [ 18%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[2.561s] [ 27%] [32mBuilding CXX object CMakeFiles/laserprocessing.dir/src/laserprocessing.cpp.o[0m
+[3.375s] [ 36%] [32m[1mLinking CXX shared library liblaserprocessing.so[0m
+[3.542s] [ 36%] Built target laserprocessing
+[3.570s] [ 45%] [32mBuilding CXX object CMakeFiles/sample.dir/src/main.cpp.o[0m
+[3.571s] [ 54%] [32mBuilding CXX object CMakeFiles/sample.dir/src/detection_node.cpp.o[0m
+[3.647s] [ 63%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[3.690s] [ 63%] Built target gtest_main
+[6.553s] [ 72%] [32m[1mLinking CXX static library libgtest.a[0m
+[6.627s] [ 72%] Built target gtest
+[6.658s] [ 81%] [32mBuilding CXX object CMakeFiles/test_quiz5_a1.dir/test/utest.cpp.o[0m
+[11.258s] [ 90%] [32m[1mLinking CXX executable test_quiz5_a1[0m
+[11.505s] [ 90%] Built target test_quiz5_a1
+[13.092s] [100%] [32m[1mLinking CXX executable sample[0m
+[13.568s] [100%] Built target sample
+[13.583s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --build /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5 -- -j8 -l8
+[13.639s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --install /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+[13.648s] -- Install configuration: ""
+[13.648s] -- Execute custom install script
+[13.649s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/sample
+[13.659s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/liblaserprocessing.so
+[13.668s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/metadata.yaml
+[13.678s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3
+[13.688s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/package_run_dependencies/quiz5
+[13.698s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/parent_prefix_path/quiz5
+[13.707s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.sh
+[13.717s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.dsv
+[13.726s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.sh
+[13.735s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.dsv
+[13.746s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.bash
+[13.755s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.sh
+[13.764s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.zsh
+[13.775s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.dsv
+[13.787s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.dsv
+[13.796s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/packages/quiz5
+[13.808s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config.cmake
+[13.816s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config-version.cmake
+[13.825s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.xml
+[13.837s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --install /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5

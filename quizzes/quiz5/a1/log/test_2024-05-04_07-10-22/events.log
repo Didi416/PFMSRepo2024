@@ -1,0 +1,122 @@
+[0.000000] (-) TimerEvent: {}
+[0.000454] (quiz5) JobQueued: {'identifier': 'quiz5', 'dependencies': OrderedDict([('quiz5', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5')])}
+[0.000644] (quiz5) JobStarted: {'identifier': 'quiz5'}
+[0.086088] (quiz5) Command: {'cmd': ['/usr/bin/ctest', '-C', 'Release', '-D', 'ExperimentalTest', '--no-compress-output', '-V', '--force-new-ctest-process'], 'cwd': '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'student'), ('SSH_AGENT_PID', '1961'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/student/ros2_ws/install/sjtu_drone_description/lib:/home/student/ros2_ws/install/audibot_gazebo/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/student'), ('OLDPWD', '/home/student/ros2_ws'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '42016'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1002/bus'), ('COLORTERM', 'truecolor'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/student/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'student'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/labNVXMF8:@/tmp/.ICE-unix/2038,unix/labNVXMF8:/tmp/.ICE-unix/2038'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/4b70a69b_9f48_4186_805f_94f9dbb18985'), ('XDG_RUNTIME_DIR', '/run/user/1002'), ('DISPLAY', ':10.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.146'), ('SSH_AUTH_SOCK', '/run/user/1002/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description:/opt/ros/humble'), ('UID', '1002'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1002/gnupg/S.gpg-agent:0:1'), ('GAZEBO_RESOURCE_PATH', '/home/student/ros2_ws/install/audibot_description/share/audibot_description:/usr/share/gazebo-11/'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/student/ros2_ws/build/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_control/lib/python3.10/site-packages:/home/student/ros2_ws/build/sjtu_drone_bringup:/home/student/ros2_ws/install/sjtu_drone_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('SGX_AESM_ADDR', '1'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description')]), 'shell': False}
+[0.100119] (-) TimerEvent: {}
+[0.105471] (quiz5) StdoutLine: {'line': b'UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini\n'}
+[0.105833] (quiz5) StdoutLine: {'line': b'Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini\n'}
+[0.106010] (quiz5) StdoutLine: {'line': b'   Site: labNVXMF8\n'}
+[0.106186] (quiz5) StdoutLine: {'line': b'   Build name: (empty)\n'}
+[0.106352] (quiz5) StdoutLine: {'line': b' Add coverage exclude regular expressions.\n'}
+[0.106521] (quiz5) StdoutLine: {'line': b'Create new tag: 20240504-0710 - Experimental\n'}
+[0.106732] (quiz5) StdoutLine: {'line': b'UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini\n'}
+[0.106913] (quiz5) StdoutLine: {'line': b'Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini\n'}
+[0.107084] (quiz5) StdoutLine: {'line': b'Test project /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5\n'}
+[0.107258] (quiz5) StdoutLine: {'line': b'Constructing a list of tests\n'}
+[0.107460] (quiz5) StdoutLine: {'line': b'Done constructing a list of tests\n'}
+[0.107658] (quiz5) StdoutLine: {'line': b'Updating test list for fixtures\n'}
+[0.107822] (quiz5) StdoutLine: {'line': b'Added 0 tests to meet fixture requirements\n'}
+[0.108111] (quiz5) StdoutLine: {'line': b'Checking test dependency graph...\n'}
+[0.108323] (quiz5) StdoutLine: {'line': b'Checking test dependency graph end\n'}
+[0.108482] (quiz5) StdoutLine: {'line': b'test 1\n'}
+[0.108675] (quiz5) StdoutLine: {'line': b'    Start 1: test_quiz5_a1\n'}
+[0.109426] (quiz5) StdoutLine: {'line': b'\n'}
+[0.109668] (quiz5) StdoutLine: {'line': b'1: Test command: /usr/bin/python3.10 "-u" "/opt/ros/humble/share/ament_cmake_ros/cmake/run_test_isolated.py" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml" "--package-name" "quiz5" "--output-file" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/ament_cmake_gtest/test_quiz5_a1.txt" "--command" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1" "--gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml"\n'}
+[0.109881] (quiz5) StdoutLine: {'line': b'1: Test timeout computed to be: 60\n'}
+[0.183650] (quiz5) StdoutLine: {'line': b'1: Running with ROS_DOMAIN_ID 1\n'}
+[0.185582] (quiz5) StdoutLine: {'line': b"1: -- run_test.py: invoking following command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5':\n"}
+[0.185795] (quiz5) StdoutLine: {'line': b'1:  - /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1 --gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml\n'}
+[0.192191] (quiz5) StdoutLine: {'line': b'1: Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc\n'}
+[0.192353] (quiz5) StdoutLine: {'line': b'1: [==========] Running 3 tests from 1 test suite.\n'}
+[0.192433] (quiz5) StdoutLine: {'line': b'1: [----------] Global test environment set-up.\n'}
+[0.192507] (quiz5) StdoutLine: {'line': b'1: [----------] 3 tests from LaserProcessing\n'}
+[0.192577] (quiz5) StdoutLine: {'line': b'1: [ RUN      ] LaserProcessing.CountReturns\n'}
+[0.197695] (quiz5) StdoutLine: {'line': b"1: [INFO] [1714806623.187839942] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.\n"}
+[0.200197] (-) TimerEvent: {}
+[0.203333] (quiz5) StdoutLine: {'line': b'1: 34\n'}
+[0.203615] (quiz5) StdoutLine: {'line': b'1: [       OK ] LaserProcessing.CountReturns (11 ms)\n'}
+[0.203729] (quiz5) StdoutLine: {'line': b'1: [ RUN      ] LaserProcessing.CountSegments\n'}
+[0.206196] (quiz5) StdoutLine: {'line': b"1: [INFO] [1714806623.197240133] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.\n"}
+[0.206624] (quiz5) StdoutLine: {'line': b'1: 2\n'}
+[0.206928] (quiz5) StdoutLine: {'line': b'1: 3\n'}
+[0.207071] (quiz5) StdoutLine: {'line': b'1: 4\n'}
+[0.207201] (quiz5) StdoutLine: {'line': b'1: 5\n'}
+[0.207326] (quiz5) StdoutLine: {'line': b'1: 6\n'}
+[0.207478] (quiz5) StdoutLine: {'line': b'1: 7\n'}
+[0.207611] (quiz5) StdoutLine: {'line': b'1: 8\n'}
+[0.207733] (quiz5) StdoutLine: {'line': b'1: 9\n'}
+[0.207857] (quiz5) StdoutLine: {'line': b'1: 10\n'}
+[0.207979] (quiz5) StdoutLine: {'line': b'1: 11\n'}
+[0.208098] (quiz5) StdoutLine: {'line': b'1: 12\n'}
+[0.208226] (quiz5) StdoutLine: {'line': b'1: 13\n'}
+[0.208351] (quiz5) StdoutLine: {'line': b'1: 14\n'}
+[0.208473] (quiz5) StdoutLine: {'line': b'1: 15\n'}
+[0.208594] (quiz5) StdoutLine: {'line': b'1: 16\n'}
+[0.208714] (quiz5) StdoutLine: {'line': b'1: 17\n'}
+[0.208832] (quiz5) StdoutLine: {'line': b'1: 18\n'}
+[0.208942] (quiz5) StdoutLine: {'line': b'1: 19\n'}
+[0.209052] (quiz5) StdoutLine: {'line': b'1: 20\n'}
+[0.209164] (quiz5) StdoutLine: {'line': b'1: 21\n'}
+[0.209289] (quiz5) StdoutLine: {'line': b'1: 22\n'}
+[0.209416] (quiz5) StdoutLine: {'line': b'1: 23\n'}
+[0.209537] (quiz5) StdoutLine: {'line': b'1: 24\n'}
+[0.209659] (quiz5) StdoutLine: {'line': b'1: 25\n'}
+[0.209790] (quiz5) StdoutLine: {'line': b'1: 26\n'}
+[0.209909] (quiz5) StdoutLine: {'line': b'1: 27\n'}
+[0.210021] (quiz5) StdoutLine: {'line': b'1: 28\n'}
+[0.210141] (quiz5) StdoutLine: {'line': b'1: 29\n'}
+[0.210267] (quiz5) StdoutLine: {'line': b'1: 30\n'}
+[0.210396] (quiz5) StdoutLine: {'line': b'1: 31\n'}
+[0.210570] (quiz5) StdoutLine: {'line': b'1: 32\n'}
+[0.210923] (quiz5) StdoutLine: {'line': b'1: 33\n'}
+[0.211313] (quiz5) StdoutLine: {'line': b'1: 34\n'}
+[0.211726] (quiz5) StdoutLine: {'line': b'1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:89: Failure\n'}
+[0.211921] (quiz5) StdoutLine: {'line': b'1: Expected equality of these values:\n'}
+[0.212074] (quiz5) StdoutLine: {'line': b'1:   segments\n'}
+[0.212184] (quiz5) StdoutLine: {'line': b'1:     Which is: 34\n'}
+[0.212285] (quiz5) StdoutLine: {'line': b'1:   7\n'}
+[0.212383] (quiz5) StdoutLine: {'line': b'1: [  FAILED  ] LaserProcessing.CountSegments (3 ms)\n'}
+[0.212492] (quiz5) StdoutLine: {'line': b'1: [ RUN      ] LaserProcessing.DetectClosestCone\n'}
+[0.212598] (quiz5) StdoutLine: {'line': b"1: [INFO] [1714806623.201678275] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.\n"}
+[0.212704] (quiz5) StdoutLine: {'line': b'1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:127: Failure\n'}
+[0.212803] (quiz5) StdoutLine: {'line': b'1: The difference between pt.x and 2.04752 is 2.04752, which exceeds 0.1, where\n'}
+[0.212904] (quiz5) StdoutLine: {'line': b'1: pt.x evaluates to 0,\n'}
+[0.213004] (quiz5) StdoutLine: {'line': b'1: 2.04752 evaluates to 2.04752, and\n'}
+[0.213098] (quiz5) StdoutLine: {'line': b'1: 0.1 evaluates to 0.10000000000000001.\n'}
+[0.213229] (quiz5) StdoutLine: {'line': b'1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:128: Failure\n'}
+[0.213309] (quiz5) StdoutLine: {'line': b'1: The difference between pt.y and -3.67013 is 3.6701299999999999, which exceeds 0.1, where\n'}
+[0.213380] (quiz5) StdoutLine: {'line': b'1: pt.y evaluates to 0,\n'}
+[0.213505] (quiz5) StdoutLine: {'line': b'1: -3.67013 evaluates to -3.6701299999999999, and\n'}
+[0.213627] (quiz5) StdoutLine: {'line': b'1: 0.1 evaluates to 0.10000000000000001.\n'}
+[0.213785] (quiz5) StdoutLine: {'line': b'1: [  FAILED  ] LaserProcessing.DetectClosestCone (5 ms)\n'}
+[0.213863] (quiz5) StdoutLine: {'line': b'1: [----------] 3 tests from LaserProcessing (19 ms total)\n'}
+[0.213932] (quiz5) StdoutLine: {'line': b'1: \n'}
+[0.214008] (quiz5) StdoutLine: {'line': b'1: [----------] Global test environment tear-down\n'}
+[0.214078] (quiz5) StdoutLine: {'line': b'1: [==========] 3 tests from 1 test suite ran. (19 ms total)\n'}
+[0.214144] (quiz5) StdoutLine: {'line': b'1: [  PASSED  ] 1 test.\n'}
+[0.214218] (quiz5) StdoutLine: {'line': b'1: [  FAILED  ] 2 tests, listed below:\n'}
+[0.214332] (quiz5) StdoutLine: {'line': b'1: [  FAILED  ] LaserProcessing.CountSegments\n'}
+[0.214405] (quiz5) StdoutLine: {'line': b'1: [  FAILED  ] LaserProcessing.DetectClosestCone\n'}
+[0.214474] (quiz5) StdoutLine: {'line': b'1: \n'}
+[0.214543] (quiz5) StdoutLine: {'line': b'1:  2 FAILED TESTS\n'}
+[0.214610] (quiz5) StdoutLine: {'line': b'1: -- run_test.py: return code 1\n'}
+[0.214676] (quiz5) StdoutLine: {'line': b"1: -- run_test.py: inject classname prefix into gtest result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'\n"}
+[0.214744] (quiz5) StdoutLine: {'line': b"1: -- run_test.py: verify result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'\n"}
+[0.224629] (quiz5) StdoutLine: {'line': b'1/1 Test #1: test_quiz5_a1 ....................***Failed    0.12 sec\n'}
+[0.225257] (quiz5) StdoutLine: {'line': b'\n'}
+[0.225477] (quiz5) StdoutLine: {'line': b'0% tests passed\x1b[0;0m, \x1b[0;31m1 tests failed\x1b[0;0m out of 1\n'}
+[0.225607] (quiz5) StdoutLine: {'line': b'\n'}
+[0.225728] (quiz5) StdoutLine: {'line': b'Label Time Summary:\n'}
+[0.225848] (quiz5) StdoutLine: {'line': b'gtest    =   0.12 sec*proc (1 test)\n'}
+[0.225966] (quiz5) StdoutLine: {'line': b'\n'}
+[0.226085] (quiz5) StdoutLine: {'line': b'Total Test time (real) =   0.12 sec\n'}
+[0.226294] (quiz5) StdoutLine: {'line': b'\n'}
+[0.226418] (quiz5) StdoutLine: {'line': b'The following tests FAILED:\n'}
+[0.226537] (quiz5) StdoutLine: {'line': b'\t\x1b[0;31m  1 - test_quiz5_a1 (Failed)\x1b[0;0m\n'}
+[0.226657] (quiz5) StderrLine: {'line': b'Errors while running CTest\n'}
+[0.226806] (quiz5) StderrLine: {'line': b'Output from these tests are in: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/Testing/Temporary/LastTest.log\n'}
+[0.226934] (quiz5) StderrLine: {'line': b'Use "--rerun-failed --output-on-failure" to re-run the failed cases verbosely.\n'}
+[0.228416] (quiz5) CommandEnded: {'returncode': 8}
+[0.229465] (quiz5) TestFailure: {'identifier': 'quiz5'}
+[0.229555] (quiz5) JobEnded: {'identifier': 'quiz5', 'rc': 0}
+[0.230852] (-) EventReactorShutdown: {}

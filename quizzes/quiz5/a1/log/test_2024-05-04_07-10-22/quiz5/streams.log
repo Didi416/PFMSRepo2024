@@ -1,0 +1,114 @@
+[0.089s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': AMENT_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${CMAKE_PREFIX_PATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process
+[0.105s] UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.105s] Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.105s]    Site: labNVXMF8
+[0.106s]    Build name: (empty)
+[0.106s]  Add coverage exclude regular expressions.
+[0.106s] Create new tag: 20240504-0710 - Experimental
+[0.106s] UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.106s] Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+[0.107s] Test project /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+[0.107s] Constructing a list of tests
+[0.107s] Done constructing a list of tests
+[0.107s] Updating test list for fixtures
+[0.107s] Added 0 tests to meet fixture requirements
+[0.108s] Checking test dependency graph...
+[0.108s] Checking test dependency graph end
+[0.108s] test 1
+[0.108s]     Start 1: test_quiz5_a1
+[0.109s] 
+[0.109s] 1: Test command: /usr/bin/python3.10 "-u" "/opt/ros/humble/share/ament_cmake_ros/cmake/run_test_isolated.py" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml" "--package-name" "quiz5" "--output-file" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/ament_cmake_gtest/test_quiz5_a1.txt" "--command" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1" "--gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml"
+[0.109s] 1: Test timeout computed to be: 60
+[0.183s] 1: Running with ROS_DOMAIN_ID 1
+[0.185s] 1: -- run_test.py: invoking following command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5':
+[0.185s] 1:  - /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1 --gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml
+[0.192s] 1: Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc
+[0.192s] 1: [==========] Running 3 tests from 1 test suite.
+[0.192s] 1: [----------] Global test environment set-up.
+[0.192s] 1: [----------] 3 tests from LaserProcessing
+[0.192s] 1: [ RUN      ] LaserProcessing.CountReturns
+[0.197s] 1: [INFO] [1714806623.187839942] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.203s] 1: 34
+[0.203s] 1: [       OK ] LaserProcessing.CountReturns (11 ms)
+[0.203s] 1: [ RUN      ] LaserProcessing.CountSegments
+[0.206s] 1: [INFO] [1714806623.197240133] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.206s] 1: 2
+[0.206s] 1: 3
+[0.206s] 1: 4
+[0.207s] 1: 5
+[0.207s] 1: 6
+[0.207s] 1: 7
+[0.207s] 1: 8
+[0.207s] 1: 9
+[0.207s] 1: 10
+[0.207s] 1: 11
+[0.208s] 1: 12
+[0.208s] 1: 13
+[0.208s] 1: 14
+[0.208s] 1: 15
+[0.208s] 1: 16
+[0.208s] 1: 17
+[0.208s] 1: 18
+[0.208s] 1: 19
+[0.208s] 1: 20
+[0.209s] 1: 21
+[0.209s] 1: 22
+[0.209s] 1: 23
+[0.209s] 1: 24
+[0.209s] 1: 25
+[0.209s] 1: 26
+[0.209s] 1: 27
+[0.209s] 1: 28
+[0.210s] 1: 29
+[0.210s] 1: 30
+[0.210s] 1: 31
+[0.210s] 1: 32
+[0.210s] 1: 33
+[0.211s] 1: 34
+[0.211s] 1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:89: Failure
+[0.211s] 1: Expected equality of these values:
+[0.211s] 1:   segments
+[0.212s] 1:     Which is: 34
+[0.212s] 1:   7
+[0.212s] 1: [  FAILED  ] LaserProcessing.CountSegments (3 ms)
+[0.212s] 1: [ RUN      ] LaserProcessing.DetectClosestCone
+[0.212s] 1: [INFO] [1714806623.201678275] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+[0.212s] 1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:127: Failure
+[0.212s] 1: The difference between pt.x and 2.04752 is 2.04752, which exceeds 0.1, where
+[0.212s] 1: pt.x evaluates to 0,
+[0.212s] 1: 2.04752 evaluates to 2.04752, and
+[0.213s] 1: 0.1 evaluates to 0.10000000000000001.
+[0.213s] 1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:128: Failure
+[0.213s] 1: The difference between pt.y and -3.67013 is 3.6701299999999999, which exceeds 0.1, where
+[0.213s] 1: pt.y evaluates to 0,
+[0.213s] 1: -3.67013 evaluates to -3.6701299999999999, and
+[0.213s] 1: 0.1 evaluates to 0.10000000000000001.
+[0.213s] 1: [  FAILED  ] LaserProcessing.DetectClosestCone (5 ms)
+[0.213s] 1: [----------] 3 tests from LaserProcessing (19 ms total)
+[0.213s] 1: 
+[0.213s] 1: [----------] Global test environment tear-down
+[0.213s] 1: [==========] 3 tests from 1 test suite ran. (19 ms total)
+[0.214s] 1: [  PASSED  ] 1 test.
+[0.214s] 1: [  FAILED  ] 2 tests, listed below:
+[0.214s] 1: [  FAILED  ] LaserProcessing.CountSegments
+[0.214s] 1: [  FAILED  ] LaserProcessing.DetectClosestCone
+[0.214s] 1: 
+[0.214s] 1:  2 FAILED TESTS
+[0.214s] 1: -- run_test.py: return code 1
+[0.214s] 1: -- run_test.py: inject classname prefix into gtest result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+[0.214s] 1: -- run_test.py: verify result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+[0.224s] 1/1 Test #1: test_quiz5_a1 ....................***Failed    0.12 sec
+[0.225s] 
+[0.225s] 0% tests passed[0;0m, [0;31m1 tests failed[0;0m out of 1
+[0.225s] 
+[0.225s] Label Time Summary:
+[0.225s] gtest    =   0.12 sec*proc (1 test)
+[0.225s] 
+[0.226s] Total Test time (real) =   0.12 sec
+[0.226s] 
+[0.226s] The following tests FAILED:
+[0.226s] 	[0;31m  1 - test_quiz5_a1 (Failed)[0;0m
+[0.226s] Errors while running CTest
+[0.226s] Output from these tests are in: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/Testing/Temporary/LastTest.log
+[0.226s] Use "--rerun-failed --output-on-failure" to re-run the failed cases verbosely.
+[0.228s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '8': AMENT_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5:${CMAKE_PREFIX_PATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process

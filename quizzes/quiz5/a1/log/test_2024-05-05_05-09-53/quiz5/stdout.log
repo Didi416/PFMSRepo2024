@@ -1,0 +1,184 @@
+UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+   Site: labNVXMF8
+   Build name: (empty)
+ Add coverage exclude regular expressions.
+Create new tag: 20240505-0509 - Experimental
+UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Test project /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: test_quiz5_a1
+
+1: Test command: /usr/bin/python3.10 "-u" "/opt/ros/humble/share/ament_cmake_ros/cmake/run_test_isolated.py" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml" "--package-name" "quiz5" "--output-file" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/ament_cmake_gtest/test_quiz5_a1.txt" "--command" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1" "--gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml"
+1: Test timeout computed to be: 60
+1: Running with ROS_DOMAIN_ID 1
+1: -- run_test.py: invoking following command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5':
+1:  - /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1 --gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml
+1: Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc
+1: [==========] Running 4 tests from 1 test suite.
+1: [----------] Global test environment set-up.
+1: [----------] 4 tests from LaserProcessing
+1: [ RUN      ] LaserProcessing.CountReturns
+1: [INFO] [1714885793.469532146] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.CountReturns (10 ms)
+1: [ RUN      ] LaserProcessing.CountSegments
+1: [INFO] [1714885793.480062720] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.CountSegments (4 ms)
+1: [ RUN      ] LaserProcessing.DetectClosestCone
+1: [INFO] [1714885793.483304574] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.DetectClosestCone (3 ms)
+1: [ RUN      ] LaserProcessing.FindRoad
+1: [INFO] [1714885793.486298623] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: Start 
+1: Hi 
+1: Hello 
+1: 0
+1: Hello 
+1: 11.5319
+1: Hello 
+1: 23.0266
+1: Hello 
+1: 23.7486
+1: Hello 
+1: 13.6715
+1: Hello 
+1: 7.89541
+1: Road found 
+1: Hello 
+1: 27.8788
+1: Hi 
+1: Hello 
+1: 11.5319
+1: Hello 
+1: 0
+1: Hello 
+1: 11.5099
+1: Hello 
+1: 13.2407
+1: Hello 
+1: 7.94292
+1: Road found 
+1: Hello 
+1: 14.1725
+1: Hello 
+1: 27.9246
+1: Hi 
+1: Hello 
+1: 23.0266
+1: Hello 
+1: 11.5099
+1: Hello 
+1: 0
+1: Hello 
+1: 8.08288
+1: Road found 
+1: Hello 
+1: 14.7623
+1: Hello 
+1: 24.835
+1: Hello 
+1: 33.0565
+1: Hi 
+1: Hello 
+1: 23.7486
+1: Hello 
+1: 13.2407
+1: Hello 
+1: 8.08288
+1: Road found 
+1: Hello 
+1: 0
+1: Hello 
+1: 11.5047
+1: Hello 
+1: 22.8677
+1: Hello 
+1: 26.2708
+1: Hi 
+1: Hello 
+1: 13.6715
+1: Hello 
+1: 7.94292
+1: Road found 
+1: Hello 
+1: 14.7623
+1: Hello 
+1: 11.5047
+1: Hello 
+1: 0
+1: Hello 
+1: 11.3746
+1: Hello 
+1: 20.1265
+1: Hi 
+1: Hello 
+1: 7.89541
+1: Road found 
+1: Hello 
+1: 14.1725
+1: Hello 
+1: 24.835
+1: Hello 
+1: 22.8677
+1: Hello 
+1: 11.3746
+1: Hello 
+1: 0
+1: Hello 
+1: 20.283
+1: Hi 
+1: Hello 
+1: 27.8788
+1: Hello 
+1: 27.9246
+1: Hello 
+1: 33.0565
+1: Hello 
+1: 26.2708
+1: Hello 
+1: 20.1265
+1: Hello 
+1: 20.283
+1: Hello 
+1: 0
+1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:166: Failure
+1: The difference between pt.x and 2.04752 is 2.04752, which exceeds 0.1, where
+1: pt.x evaluates to 0,
+1: 2.04752 evaluates to 2.04752, and
+1: 0.1 evaluates to 0.10000000000000001.
+1: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/test/utest.cpp:167: Failure
+1: The difference between pt.y and -3.67013 is 3.6701299999999999, which exceeds 0.1, where
+1: pt.y evaluates to 0,
+1: -3.67013 evaluates to -3.6701299999999999, and
+1: 0.1 evaluates to 0.10000000000000001.
+1: [  FAILED  ] LaserProcessing.FindRoad (3 ms)
+1: [----------] 4 tests from LaserProcessing (20 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 4 tests from 1 test suite ran. (20 ms total)
+1: [  PASSED  ] 3 tests.
+1: [  FAILED  ] 1 test, listed below:
+1: [  FAILED  ] LaserProcessing.FindRoad
+1: 
+1:  1 FAILED TEST
+1: -- run_test.py: return code 1
+1: -- run_test.py: inject classname prefix into gtest result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+1: -- run_test.py: verify result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+1/1 Test #1: test_quiz5_a1 ....................***Failed    0.11 sec
+
+0% tests passed[0;0m, [0;31m1 tests failed[0;0m out of 1
+
+Label Time Summary:
+gtest    =   0.11 sec*proc (1 test)
+
+Total Test time (real) =   0.11 sec
+
+The following tests FAILED:
+	[0;31m  1 - test_quiz5_a1 (Failed)[0;0m

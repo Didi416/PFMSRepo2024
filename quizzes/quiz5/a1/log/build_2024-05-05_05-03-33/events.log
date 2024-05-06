@@ -1,0 +1,178 @@
+[0.000000] (-) TimerEvent: {}
+[0.000594] (quiz5) JobQueued: {'identifier': 'quiz5', 'dependencies': OrderedDict()}
+[0.000781] (quiz5) JobStarted: {'identifier': 'quiz5'}
+[0.085959] (quiz5) JobProgress: {'identifier': 'quiz5', 'progress': 'cmake'}
+[0.093528] (quiz5) JobProgress: {'identifier': 'quiz5', 'progress': 'build'}
+[0.094457] (quiz5) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5', '--', '-j8', '-l8'], 'cwd': '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'student'), ('SSH_AGENT_PID', '1994'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/student/ros2_ws/install/sjtu_drone_description/lib:/home/student/ros2_ws/install/audibot_gazebo/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/student'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '4330'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1002/bus'), ('COLORTERM', 'truecolor'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/student/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'student'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/labNVXMF8:@/tmp/.ICE-unix/2071,unix/labNVXMF8:/tmp/.ICE-unix/2071'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/9f6134ed_b07e_4dc0_a16c_66c0cd6ff2a9'), ('XDG_RUNTIME_DIR', '/run/user/1002'), ('DISPLAY', ':10.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.120'), ('SSH_AUTH_SOCK', '/run/user/1002/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description:/opt/ros/humble'), ('UID', '1002'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1002/gnupg/S.gpg-agent:0:1'), ('GAZEBO_RESOURCE_PATH', '/home/student/ros2_ws/install/audibot_description/share/audibot_description:/usr/share/gazebo-11/'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/student/ros2_ws/build/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_control/lib/python3.10/site-packages:/home/student/ros2_ws/build/sjtu_drone_bringup:/home/student/ros2_ws/install/sjtu_drone_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('SGX_AESM_ADDR', '1'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble')]), 'shell': False}
+[0.099697] (-) TimerEvent: {}
+[0.199964] (-) TimerEvent: {}
+[0.300334] (-) TimerEvent: {}
+[0.368365] (quiz5) StdoutLine: {'line': b'[ 18%] Built target gtest_main\n'}
+[0.368700] (quiz5) StdoutLine: {'line': b'[ 27%] \x1b[32mBuilding CXX object CMakeFiles/laserprocessing.dir/src/laserprocessing.cpp.o\x1b[0m\n'}
+[0.370001] (quiz5) StdoutLine: {'line': b'[ 45%] Built target gtest\n'}
+[0.402482] (-) TimerEvent: {}
+[0.502873] (-) TimerEvent: {}
+[0.603302] (-) TimerEvent: {}
+[0.703662] (-) TimerEvent: {}
+[0.804085] (-) TimerEvent: {}
+[0.904473] (-) TimerEvent: {}
+[1.004822] (-) TimerEvent: {}
+[1.105189] (-) TimerEvent: {}
+[1.205588] (-) TimerEvent: {}
+[1.305935] (-) TimerEvent: {}
+[1.374580] (quiz5) StderrLine: {'line': b'\x1b[01m\x1b[K/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/src/laserprocessing.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kgeometry_msgs::msg::Point LaserProcessing::detectRoadCentre()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.374882] (quiz5) StderrLine: {'line': b'\x1b[01m\x1b[K/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/src/laserprocessing.cpp:107:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[KroadWidth\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.375007] (quiz5) StderrLine: {'line': b'  107 |     double \x1b[01;35m\x1b[KroadWidth\x1b[m\x1b[K = 8; //roughly 8m\n'}
+[1.375120] (quiz5) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[1.406122] (-) TimerEvent: {}
+[1.506590] (-) TimerEvent: {}
+[1.606965] (-) TimerEvent: {}
+[1.707387] (-) TimerEvent: {}
+[1.807754] (-) TimerEvent: {}
+[1.865927] (quiz5) StdoutLine: {'line': b'[ 54%] \x1b[32m\x1b[1mLinking CXX shared library liblaserprocessing.so\x1b[0m\n'}
+[1.907877] (-) TimerEvent: {}
+[2.008254] (-) TimerEvent: {}
+[2.108627] (-) TimerEvent: {}
+[2.208957] (-) TimerEvent: {}
+[2.309374] (-) TimerEvent: {}
+[2.339026] (quiz5) StdoutLine: {'line': b'[ 54%] Built target laserprocessing\n'}
+[2.392358] (quiz5) StdoutLine: {'line': b'[ 72%] \x1b[32mBuilding CXX object CMakeFiles/test_quiz5_a1.dir/test/utest.cpp.o\x1b[0m\n'}
+[2.392756] (quiz5) StdoutLine: {'line': b'[ 72%] \x1b[32mBuilding CXX object CMakeFiles/sample.dir/src/main.cpp.o\x1b[0m\n'}
+[2.392922] (quiz5) StdoutLine: {'line': b'[ 81%] \x1b[32mBuilding CXX object CMakeFiles/sample.dir/src/detection_node.cpp.o\x1b[0m\n'}
+[2.409516] (-) TimerEvent: {}
+[2.509954] (-) TimerEvent: {}
+[2.610385] (-) TimerEvent: {}
+[2.710987] (-) TimerEvent: {}
+[2.811548] (-) TimerEvent: {}
+[2.911986] (-) TimerEvent: {}
+[3.012442] (-) TimerEvent: {}
+[3.112867] (-) TimerEvent: {}
+[3.213304] (-) TimerEvent: {}
+[3.315438] (-) TimerEvent: {}
+[3.415917] (-) TimerEvent: {}
+[3.516378] (-) TimerEvent: {}
+[3.616820] (-) TimerEvent: {}
+[3.717264] (-) TimerEvent: {}
+[3.817709] (-) TimerEvent: {}
+[3.918155] (-) TimerEvent: {}
+[4.018600] (-) TimerEvent: {}
+[4.118961] (-) TimerEvent: {}
+[4.219421] (-) TimerEvent: {}
+[4.319887] (-) TimerEvent: {}
+[4.420309] (-) TimerEvent: {}
+[4.520698] (-) TimerEvent: {}
+[4.621042] (-) TimerEvent: {}
+[4.721403] (-) TimerEvent: {}
+[4.821798] (-) TimerEvent: {}
+[4.922147] (-) TimerEvent: {}
+[5.022500] (-) TimerEvent: {}
+[5.122920] (-) TimerEvent: {}
+[5.223382] (-) TimerEvent: {}
+[5.323749] (-) TimerEvent: {}
+[5.424129] (-) TimerEvent: {}
+[5.524529] (-) TimerEvent: {}
+[5.625019] (-) TimerEvent: {}
+[5.725436] (-) TimerEvent: {}
+[5.825789] (-) TimerEvent: {}
+[5.926155] (-) TimerEvent: {}
+[6.026509] (-) TimerEvent: {}
+[6.126900] (-) TimerEvent: {}
+[6.227347] (-) TimerEvent: {}
+[6.327897] (-) TimerEvent: {}
+[6.428303] (-) TimerEvent: {}
+[6.528678] (-) TimerEvent: {}
+[6.629031] (-) TimerEvent: {}
+[6.729375] (-) TimerEvent: {}
+[6.829714] (-) TimerEvent: {}
+[6.930076] (-) TimerEvent: {}
+[7.030884] (-) TimerEvent: {}
+[7.131316] (-) TimerEvent: {}
+[7.231744] (-) TimerEvent: {}
+[7.332129] (-) TimerEvent: {}
+[7.428825] (quiz5) StdoutLine: {'line': b'[ 90%] \x1b[32m\x1b[1mLinking CXX executable test_quiz5_a1\x1b[0m\n'}
+[7.432174] (-) TimerEvent: {}
+[7.532557] (-) TimerEvent: {}
+[7.632968] (-) TimerEvent: {}
+[7.733577] (-) TimerEvent: {}
+[7.744701] (quiz5) StdoutLine: {'line': b'[ 90%] Built target test_quiz5_a1\n'}
+[7.833789] (-) TimerEvent: {}
+[7.934157] (-) TimerEvent: {}
+[8.034522] (-) TimerEvent: {}
+[8.134851] (-) TimerEvent: {}
+[8.235189] (-) TimerEvent: {}
+[8.335557] (-) TimerEvent: {}
+[8.436282] (-) TimerEvent: {}
+[8.536640] (-) TimerEvent: {}
+[8.637031] (-) TimerEvent: {}
+[8.737425] (-) TimerEvent: {}
+[8.837935] (-) TimerEvent: {}
+[8.938270] (-) TimerEvent: {}
+[9.038602] (-) TimerEvent: {}
+[9.138952] (-) TimerEvent: {}
+[9.239366] (-) TimerEvent: {}
+[9.339765] (-) TimerEvent: {}
+[9.440138] (-) TimerEvent: {}
+[9.540515] (-) TimerEvent: {}
+[9.640948] (-) TimerEvent: {}
+[9.741346] (-) TimerEvent: {}
+[9.841743] (-) TimerEvent: {}
+[9.942250] (-) TimerEvent: {}
+[10.042691] (-) TimerEvent: {}
+[10.143175] (-) TimerEvent: {}
+[10.243531] (-) TimerEvent: {}
+[10.343953] (-) TimerEvent: {}
+[10.444335] (-) TimerEvent: {}
+[10.544719] (-) TimerEvent: {}
+[10.646513] (-) TimerEvent: {}
+[10.746954] (-) TimerEvent: {}
+[10.847414] (-) TimerEvent: {}
+[10.947804] (-) TimerEvent: {}
+[11.048186] (-) TimerEvent: {}
+[11.148576] (-) TimerEvent: {}
+[11.249003] (-) TimerEvent: {}
+[11.349614] (-) TimerEvent: {}
+[11.450038] (-) TimerEvent: {}
+[11.550474] (-) TimerEvent: {}
+[11.650910] (-) TimerEvent: {}
+[11.751292] (-) TimerEvent: {}
+[11.851746] (-) TimerEvent: {}
+[11.952170] (-) TimerEvent: {}
+[12.053103] (-) TimerEvent: {}
+[12.120357] (quiz5) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable sample\x1b[0m\n'}
+[12.153100] (-) TimerEvent: {}
+[12.253438] (-) TimerEvent: {}
+[12.353882] (-) TimerEvent: {}
+[12.454268] (-) TimerEvent: {}
+[12.554754] (-) TimerEvent: {}
+[12.655116] (-) TimerEvent: {}
+[12.655660] (quiz5) StdoutLine: {'line': b'[100%] Built target sample\n'}
+[12.669619] (quiz5) CommandEnded: {'returncode': 0}
+[12.717191] (quiz5) JobProgress: {'identifier': 'quiz5', 'progress': 'install'}
+[12.728602] (quiz5) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5'], 'cwd': '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'student'), ('SSH_AGENT_PID', '1994'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/student/ros2_ws/install/sjtu_drone_description/lib:/home/student/ros2_ws/install/audibot_gazebo/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/student'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '4330'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1002/bus'), ('COLORTERM', 'truecolor'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/student/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'student'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/labNVXMF8:@/tmp/.ICE-unix/2071,unix/labNVXMF8:/tmp/.ICE-unix/2071'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/9f6134ed_b07e_4dc0_a16c_66c0cd6ff2a9'), ('XDG_RUNTIME_DIR', '/run/user/1002'), ('DISPLAY', ':10.0'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.120'), ('SSH_AUTH_SOCK', '/run/user/1002/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description:/opt/ros/humble'), ('UID', '1002'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1002/gnupg/S.gpg-agent:0:1'), ('GAZEBO_RESOURCE_PATH', '/home/student/ros2_ws/install/audibot_description/share/audibot_description:/usr/share/gazebo-11/'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/student/ros2_ws/build/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_control/lib/python3.10/site-packages:/home/student/ros2_ws/build/sjtu_drone_bringup:/home/student/ros2_ws/install/sjtu_drone_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('SGX_AESM_ADDR', '1'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/student/ros2_ws/install/sjtu_drone_description:/home/student/ros2_ws/install/quiz5:/home/student/ros2_ws/install/husky_gazebo:/home/student/ros2_ws/install/husky_control:/home/student/ros2_ws/install/husky_description:/home/student/ros2_ws/install/gazebo_tf:/home/student/ros2_ws/install/audibot:/home/student/ros2_ws/install/audibot_gazebo:/home/student/ros2_ws/install/audibot_description:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble')]), 'shell': False}
+[12.742421] (quiz5) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[12.751054] (quiz5) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[12.751475] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/sample\n'}
+[12.751676] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/liblaserprocessing.so\n'}
+[12.753210] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/metadata.yaml\n'}
+[12.753442] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3\n'}
+[12.753957] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/package_run_dependencies/quiz5\n'}
+[12.754169] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/parent_prefix_path/quiz5\n'}
+[12.754311] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.sh\n'}
+[12.754482] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.dsv\n'}
+[12.754607] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.sh\n'}
+[12.754767] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.dsv\n'}
+[12.754974] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.bash\n'}
+[12.755111] (-) TimerEvent: {}
+[12.755458] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.sh\n'}
+[12.755718] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.zsh\n'}
+[12.755955] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.dsv\n'}
+[12.756118] (quiz5) StdoutLine: {'line': b'-- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.dsv\n'}
+[12.766354] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/packages/quiz5\n'}
+[12.766601] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config.cmake\n'}
+[12.766750] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config-version.cmake\n'}
+[12.766882] (quiz5) StdoutLine: {'line': b'-- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.xml\n'}
+[12.768931] (quiz5) CommandEnded: {'returncode': 0}
+[12.855376] (-) TimerEvent: {}
+[12.955787] (-) TimerEvent: {}
+[12.982332] (quiz5) JobEnded: {'identifier': 'quiz5', 'rc': 0}
+[12.983268] (-) EventReactorShutdown: {}

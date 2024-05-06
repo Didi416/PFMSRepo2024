@@ -1,0 +1,34 @@
+[0.080s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --build /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5 -- -j8 -l8
+[0.149s] [  9%] [32mBuilding CXX object CMakeFiles/laserprocessing.dir/src/laserprocessing.cpp.o[0m
+[0.150s] [ 27%] Built target gtest
+[0.150s] [ 45%] Built target gtest_main
+[0.955s] [ 54%] [32m[1mLinking CXX shared library liblaserprocessing.so[0m
+[1.103s] [ 54%] Built target laserprocessing
+[1.136s] [ 63%] [32m[1mLinking CXX executable sample[0m
+[1.137s] [ 72%] [32m[1mLinking CXX executable test_quiz5_a1[0m
+[1.394s] [ 81%] Built target test_quiz5_a1
+[1.661s] [100%] Built target sample
+[1.674s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --build /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5 -- -j8 -l8
+[1.731s] Invoking command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --install /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+[1.744s] -- Install configuration: ""
+[1.744s] -- Execute custom install script
+[1.744s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/sample
+[1.744s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/lib/quiz5/liblaserprocessing.so
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/metadata.yaml
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/package_run_dependencies/quiz5
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/parent_prefix_path/quiz5
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.sh
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/ament_prefix_path.dsv
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.sh
+[1.745s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/environment/path.dsv
+[1.746s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.bash
+[1.746s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.sh
+[1.746s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.zsh
+[1.746s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/local_setup.dsv
+[1.746s] -- Symlinking: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.dsv
+[1.756s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/ament_index/resource_index/packages/quiz5
+[1.756s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config.cmake
+[1.756s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/cmake/quiz5Config-version.cmake
+[1.756s] -- Up-to-date symlink: /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/package.xml
+[1.758s] Invoked command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/student/ros2_ws/install/sjtu_drone_control:/home/student/ros2_ws/install/sjtu_drone_bringup:/opt/ros/humble /usr/bin/cmake --install /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5

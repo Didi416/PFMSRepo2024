@@ -11,8 +11,8 @@ Detection::Detection()
 
     //! @todo Allow an incoming service on service name "detect_road_centre"
     //!  Syntax: 
-    //!  service_ = this->create_service<service_type>(service_name, 
-    //!           std::bind(&ClassName::functionName,this,std::placeholders::_1, std::placeholders::_2));
+    service1_ = this->create_service<std_srvs::srv::Trigger>("detect_road_centre", 
+               std::bind(&Detection::detect,this,std::placeholders::_1, std::placeholders::_2));
     //!
     //!  where service_type is the service message type, service_name is the name of the service 
     //!  and ClassName is the name of the class where the function is defined
@@ -52,11 +52,16 @@ void Detection::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan>
 }
 
 //! @todo - TASK 5: Change the detect function so it can be a callback for the service, and matches your declaration in header file
-void Detection::detect()
+void Detection::detect(const std::shared_ptr<std_srvs::srv::Trigger::Request> req, std::shared_ptr<std_srvs::srv::Trigger::Response> res)
 {
 
     //! @todo: TASK 5: In the detect service callback set the response message to "Road centre detected" 
     //! and the success flag to true
 
+    // Set the response message to "Road centre detected"
+    res->message = "Road centre detected";
+
+    // Set the success flag to true
+    res->success = true;
 }
 

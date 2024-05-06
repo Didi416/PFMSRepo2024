@@ -1,0 +1,64 @@
+UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+   Site: labNVXMF8
+   Build name: (empty)
+ Add coverage exclude regular expressions.
+Create new tag: 20240505-0504 - Experimental
+UpdateCTestConfiguration  from :/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Parse Config file:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/CTestConfiguration.ini
+Test project /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: test_quiz5_a1
+
+1: Test command: /usr/bin/python3.10 "-u" "/opt/ros/humble/share/ament_cmake_ros/cmake/run_test_isolated.py" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml" "--package-name" "quiz5" "--output-file" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/ament_cmake_gtest/test_quiz5_a1.txt" "--command" "/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1" "--gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml"
+1: Test timeout computed to be: 60
+1: Running with ROS_DOMAIN_ID 1
+1: -- run_test.py: invoking following command in '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5':
+1:  - /home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_quiz5_a1 --gtest_output=xml:/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml
+1: Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc
+1: [==========] Running 4 tests from 1 test suite.
+1: [----------] Global test environment set-up.
+1: [----------] 4 tests from LaserProcessing
+1: [ RUN      ] LaserProcessing.CountReturns
+1: [INFO] [1714885458.084580126] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.CountReturns (12 ms)
+1: [ RUN      ] LaserProcessing.CountSegments
+1: [INFO] [1714885458.094784703] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.CountSegments (3 ms)
+1: [ RUN      ] LaserProcessing.DetectClosestCone
+1: [INFO] [1714885458.097830556] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: [       OK ] LaserProcessing.DetectClosestCone (3 ms)
+1: [ RUN      ] LaserProcessing.FindRoad
+1: [INFO] [1714885458.100842308] [rosbag2_storage]: Opened database '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/install/quiz5/share/quiz5/data/ros2/ros2.db3' for READ_ONLY.
+1: unknown file: Failure
+1: C++ exception with description "vector::_M_range_check: __n (which is 4294967295) >= this->size() (which is 640)" thrown in the test body.
+1: [  FAILED  ] LaserProcessing.FindRoad (4 ms)
+1: [----------] 4 tests from LaserProcessing (22 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 4 tests from 1 test suite ran. (22 ms total)
+1: [  PASSED  ] 3 tests.
+1: [  FAILED  ] 1 test, listed below:
+1: [  FAILED  ] LaserProcessing.FindRoad
+1: 
+1:  1 FAILED TEST
+1: -- run_test.py: return code 1
+1: -- run_test.py: inject classname prefix into gtest result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+1: -- run_test.py: verify result file '/home/student/git/pfms-2024a-Didi416/quizzes/quiz5/a1/build/quiz5/test_results/quiz5/test_quiz5_a1.gtest.xml'
+1/1 Test #1: test_quiz5_a1 ....................***Failed    0.11 sec
+
+0% tests passed[0;0m, [0;31m1 tests failed[0;0m out of 1
+
+Label Time Summary:
+gtest    =   0.11 sec*proc (1 test)
+
+Total Test time (real) =   0.11 sec
+
+The following tests FAILED:
+	[0;31m  1 - test_quiz5_a1 (Failed)[0;0m
