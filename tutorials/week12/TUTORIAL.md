@@ -135,11 +135,11 @@ Try to move Ackerman using `a1_snippets` `command_ugv` or moving it via the gaze
 - [ ] Creating another unit test
 - [ ] Answer: where is the ros bag going to be deposited on your system after you compile the code?
 
-## ROS parameters, Visualisation
+## ROS parameters and remapping, visualisation
 
 You have been supplied a `a3_support` package that has two nodes. Symbolically link this package to your `ros2_ws/src` folder. You should know the syntax of the command thus far (the `ln -s` syntax) we have done this in week 10,11, quiz4 and quiz5 thus far,
 
-### ROS parameters
+### ROS parameters and remapping
 
 The `goal_publisher` node loads goals from a file supplied and publishes them on two topics. Here we introduce [ros parameters](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html) and also looks at visualisation messages. This package and node contain GOALS that can be used for testing your algorithms towards Assignment 3. 
 
@@ -153,19 +153,32 @@ std::string filename = node->get_parameter("filename").as_string();
 RCLCPP_INFO_STREAM(node->get_logger(),"file name with goals to be saved:" << filename);
 ```
 
-The line `node->declare_parameter("filename", default_filename, param_desc);` tries to find `filename` being passed to this node and saves it to `param_desc` where `default_filename` is used if a parameter is not provided.  In our code we thereafter open the filename and read information about goals. Equally we can pass other values that could alter behaviour of the node.
+The line `node->declare_parameter("filename", default_filename, param_desc);` tries to find `filename` being passed to this node as a **parameter** and saves it to `param_desc` where `default_filename` is used if a parameter is not provided (default value).  In our code we thereafter open the filename and read information about goals from  the file. *Note that the topic name the data to be published is supplied when declaring the publisher.
 
-If we run `ros2 run a3_support goals_publisher` it will publish `GOALS.TXT` which are the default goals in the data directory. However if we wish to publish different set of goals we can supply them on command line such as:
-
-```bash
-ros2 run a3_support goals_publisher --ros-args -p filename:=/home/student/ros2_ws/install/a3_support/share/a3_support/data/ACKERMAN.TXT
+```c++
+rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr goals_pub = 
+	node->create_publisher<geometry_msgs::msg::PoseArray>("goals", 100);
 ```
 
-The path here is related to my system (where /home/student is my home directory). Run any of the launch files for a3 and: 
+If we run `ros2 run a3_support goals_publisher` it will publish `GOALS.TXT` which are the default goals in the data directory to `/goals` topic. However if we wish to publish different set of goals,  we can supply them on command line a remapping such as:
 
-- [ ] supply the QUADCOPTER.TXT goals in the above folder
-- [ ] view what rviz is showing and indicate how many goa,s are diplayed
-- [ ] display in terminal the goals, which are published as a `PoseArray` on another topic (use the ROS CLI)
+```bash
+ros2 run a3_support goals_publisher --ros-args -p filename:=$HOME/ros2_ws/install/a3_support/share/a3_support/data/ACKERMAN.TXT
+```
+
+The path here is related to my system (where my ros2_ws is installed is my home directory)  
+
+If we wish to publish to a different topic then we can start the node with a **remapping** argument `--ros-args --remap` followed by the remapping we wish to acheive`existing_topic:=new_topic` so if we wanted to publish to `mission/goals` instead of `goals`we need to start on command line such as
+
+```bash
+ros2 run a3_support goals_publisher --ros-args --remap goals:=mission/goals -p filename:=$HOME/ros2_ws/install/a3_support/share/a3_support/data/ACKERMAN.TXT
+```
+
+Run any of the launch files for a3 and: 
+
+- [ ] run goals_publisher by supplying the QUADCOPTER.TXT goals instead of GOALS.txt using the ros p arameters
+- [ ] view what rviz is showing and indicate how many goals are diplayed
+- [ ] display in terminal the goals, that are published as a `PoseArray`  (use the ROS CLI)
 
 ### Visualisation
 
