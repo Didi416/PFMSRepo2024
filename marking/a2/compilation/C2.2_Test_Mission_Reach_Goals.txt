@@ -1,0 +1,7 @@
+Consolidate compiler generated dependencies of target tsp
+[ 16%] Built target tsp
+Consolidate compiler generated dependencies of target mission
+[ 33%] Built target mission
+[ 83%] Built target student_lib
+Consolidate compiler generated dependencies of target testMissionReachGoals
+[100%] Built target testMissionReachGoals
