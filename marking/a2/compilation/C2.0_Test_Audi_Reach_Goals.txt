@@ -1,0 +1,4 @@
+Consolidate compiler generated dependencies of target student_lib
+[ 75%] Built target student_lib
+Consolidate compiler generated dependencies of target testAudiReachGoals
+[100%] Built target testAudiReachGoals

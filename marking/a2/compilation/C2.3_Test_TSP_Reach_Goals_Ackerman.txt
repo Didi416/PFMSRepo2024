@@ -1,0 +1,5 @@
+[ 16%] Built target tsp
+[ 33%] Built target mission
+[ 83%] Built target student_lib
+Consolidate compiler generated dependencies of target testTspReachGoalsAck
+[100%] Built target testTspReachGoalsAck

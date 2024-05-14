@@ -1,0 +1,3 @@
+[ 75%] Built target student_lib
+Consolidate compiler generated dependencies of target testQuadcopterReachGoals
+[100%] Built target testQuadcopterReachGoals
