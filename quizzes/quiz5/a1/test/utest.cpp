@@ -2,21 +2,12 @@
 #include <climits>
 #include <vector>
 
-// #include "rclcpp/rclcpp.hpp"
-
-// #include <ros/package.h> //This tool allows to identify the path of the package on your system
-// #include <rosbag/bag.h>
-// #include <rosbag/view.h>
-
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/serialization.hpp"
 #include "rosbag2_cpp/reader.hpp"
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
-// #include <sensor_msgs/LaserScan.h>
 #include "sensor_msgs/msg/laser_scan.hpp"
-// #include <nav_msgs/Odometry.h>
-// #include "tf/transform_datatypes.h" //To use getYaw function from the quaternion of orientation
 
 #include "../src/laserprocessing.h"
 
@@ -130,43 +121,38 @@ TEST(LaserProcessing,DetectClosestCone){
 
 }
 
-//SELF-MADE UNIT TEST FOR DETECTING ROAD
 
-// TEST(LaserProcessing,FindRoad){
+TEST(LaserProcessing,DetectRoadCentre){
 
-//     // Reading bag files based on
-//     // https://docs.ros.org/en/humble/Tutorials/Advanced/Reading-From-A-Bag-File-CPP.html
+    // Reading bag files based on
+    // https://docs.ros.org/en/humble/Tutorials/Advanced/Reading-From-A-Bag-File-CPP.html
 
-//     std::string package_share_directory = ament_index_cpp::get_package_share_directory("quiz5");
-//     std::string bag_filename=package_share_directory + "/data/ros2";
+    std::string package_share_directory = ament_index_cpp::get_package_share_directory("quiz5");
+    std::string bag_filename=package_share_directory + "/data/ros2";
 
-//     rosbag2_cpp::Reader reader;
-//     rclcpp::Serialization<sensor_msgs::msg::LaserScan> serialization;
-//     sensor_msgs::msg::LaserScan::SharedPtr laser_msg = std::make_shared<sensor_msgs::msg::LaserScan>();
+    rosbag2_cpp::Reader reader;
+    rclcpp::Serialization<sensor_msgs::msg::LaserScan> serialization;
+    sensor_msgs::msg::LaserScan::SharedPtr laser_msg = std::make_shared<sensor_msgs::msg::LaserScan>();
 
-//     reader.open(bag_filename);
-//     while (reader.has_next()) {
-//         rosbag2_storage::SerializedBagMessageSharedPtr msg = reader.read_next();
+    reader.open(bag_filename);
+    while (reader.has_next()) {
+        rosbag2_storage::SerializedBagMessageSharedPtr msg = reader.read_next();
 
-//         if (msg->topic_name != "/orange/laser/scan") {
-//             continue;
-//         }
-//         rclcpp::SerializedMessage serialized_msg(*msg->serialized_data);
+        if (msg->topic_name != "/orange/laser/scan") {
+            continue;
+        }
+        rclcpp::SerializedMessage serialized_msg(*msg->serialized_data);
 
-//         serialization.deserialize_message(&serialized_msg, laser_msg.get());
-//         break;
-//     }
+        serialization.deserialize_message(&serialized_msg, laser_msg.get());
+        break;
+    }
 
-//     ////////////////////////////////////////////
-//     // Our code is tested below
 
-//     LaserProcessing laserProcessing(*laser_msg);
+    ////////////////////////////////////////////
+    // Our code is tested below
 
-//     {
-//         geometry_msgs::msg::Point pt = laserProcessing.detectRoadCentre();
-
-//         EXPECT_NEAR(pt.x,2.08091,0.1);
-//         EXPECT_NEAR(pt.y,3.919465,0.1);
-//     }
-
-// }
+    LaserProcessing laserProcessing(*laser_msg);
+    geometry_msgs::msg::Point pt = laserProcessing.detectRoadCentre();
+    EXPECT_NEAR(pt.x,2.1,0.2);
+    EXPECT_NEAR(pt.y,0.241,0.2);
+ }
