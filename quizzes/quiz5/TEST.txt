@@ -1,0 +1,58 @@
+---------------------------------------------------------------------
+ A1 
+---------------------------------------------------------------------
+**********************************************************************
+Making tests distributed with quiz
+----------------------------------------------------------------------
+Starting >>> quiz5
+Finished <<< quiz5 [14.1s]
+
+Summary: 1 package finished [14.4s]
+  1 package had stderr output: quiz5
+---------------------------------------------------------------------
+Executing test part A1
+---------------------------------------------------------------------
+Running main() from /opt/ros/humble/src/gtest_vendor/src/gtest_main.cc
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from LaserProcessing
+[ RUN      ] LaserProcessing.CountReturns
+[       OK ] LaserProcessing.CountReturns (20 ms)
+[ RUN      ] LaserProcessing.CountSegments
+[       OK ] LaserProcessing.CountSegments (5 ms)
+[ RUN      ] LaserProcessing.DetectClosestCone
+[       OK ] LaserProcessing.DetectClosestCone (4 ms)
+[ RUN      ] LaserProcessing.DetectRoadCentre
+/home/student/pfms_ws/src/quiz5/a1/test/utest.cpp:157: Failure
+The difference between pt.y and 0.241 is 3.6784604158401488, which exceeds 0.2, where
+pt.y evaluates to 3.9194604158401489,
+0.241 evaluates to 0.24099999999999999, and
+0.2 evaluates to 0.20000000000000001.
+[  FAILED  ] LaserProcessing.DetectRoadCentre (5 ms)
+[----------] 4 tests from LaserProcessing (34 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (34 ms total)
+[  PASSED  ] 3 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] LaserProcessing.DetectRoadCentre
+
+ 1 FAILED TEST
+---------------------------------------------------------------------
+Part A1 scored 3
+---------------------------------------------------------------------
+ A1 
+---------------------------------------------------------------------
+**********************************************************************
+Making A2 sample, main node distributed with quiz
+----------------------------------------------------------------------
+Starting >>> quiz5
+Finished <<< quiz5 [0.31s]
+
+Summary: 1 package finished [0.58s]
+---------------------------------------------------------------------
+Executing ros2 service call - A2
+---------------------------------------------------------------------
+[INFO] [1715877329.942310757] [diagnostics_node]: OK
+---------------------------------------------------------------------
+Part A2 scored 1
