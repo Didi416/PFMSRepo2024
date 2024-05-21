@@ -9,7 +9,6 @@
 // In the example we only have laser scan and trigger services
 // If you have more messages or services, you can add them here
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "std_srvs/srv/trigger.hpp"
 
 #include "laserprocessing.h"
 
@@ -39,8 +38,8 @@ public:
   * @param[out] res - The response object which contains a number of valid readings in last laser scan received "Readings: <number of readings>"
   * if no laser scan is received, the response will contain error message "ERROR: No laser data available"
   */
-  void detect(const std::shared_ptr<std_srvs::srv::Trigger::Request>  req,
-                    std::shared_ptr<std_srvs::srv::Trigger::Response> res);
+  // void detect(const std::shared_ptr<std_srvs::srv::Trigger::Request>  req,
+  //                   std::shared_ptr<std_srvs::srv::Trigger::Response> res);
 
   /*! @brief - A callback for the timer
   * We will simply do some logging here in this function as an example
@@ -63,7 +62,7 @@ private:
 
 private:
 
-    rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr service_; //!< Pointer to the service object 
+    // rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr service_; //!< Pointer to the service object 
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub1_;//!< Pointer to the laser scan subscriber
     std::unique_ptr<LaserProcessing> laserProcessingPtr_;//!< Pointer to the laser processing object
     std::thread* thread_; //!< Thread object pointer

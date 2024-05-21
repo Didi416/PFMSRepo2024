@@ -13,8 +13,8 @@ Sample::Sample()
     // The callback function is detect
     // Callback function is called when the service is called
     // Change the service type and callback function to match the requirements of assessment task
-    service_ = this->create_service<std_srvs::srv::Trigger>("detect", 
-                std::bind(&Sample::detect,this,std::placeholders::_1, std::placeholders::_2));
+    // service_ = this->create_service<std_srvs::srv::Trigger>("detect", 
+    //             std::bind(&Sample::detect,this,std::placeholders::_1, std::placeholders::_2));
 
     // We create as an example here a function that is called via a timer at a set interval
     // Create a timer that calls the timerCallback function every 500ms
@@ -51,22 +51,22 @@ void Sample::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan> ms
     }
 }
 
-void Sample::detect(const std::shared_ptr<std_srvs::srv::Trigger::Request> req, 
-                       std::shared_ptr<std_srvs::srv::Trigger::Response> res)
-{
-    // Call the countObjectReadings function from the laserProcessingPtr object
-    // check if laserProcessingPtr_ is not null   
-    if(laserProcessingPtr_ == nullptr){
-        RCLCPP_ERROR_STREAM(this->get_logger(),"No laser data available");
-        res->success = false;
-        res->message = "ERROR No laser data available";
-        return;
-    }
-    unsigned int readings = laserProcessingPtr_->countObjectReadings();
-    RCLCPP_INFO_STREAM(this->get_logger(),"valid readings:" << readings);
-    res->success = true;
-    res->message = "Readings: " + std::to_string(readings);
-}
+// void Sample::detect(const std::shared_ptr<std_srvs::srv::Trigger::Request> req, 
+//                        std::shared_ptr<std_srvs::srv::Trigger::Response> res)
+// {
+//     // Call the countObjectReadings function from the laserProcessingPtr object
+//     // check if laserProcessingPtr_ is not null   
+//     if(laserProcessingPtr_ == nullptr){
+//         RCLCPP_ERROR_STREAM(this->get_logger(),"No laser data available");
+//         res->success = false;
+//         res->message = "ERROR No laser data available";
+//         return;
+//     }
+//     unsigned int readings = laserProcessingPtr_->countObjectReadings();
+//     RCLCPP_INFO_STREAM(this->get_logger(),"valid readings:" << readings);
+//     res->success = true;
+//     res->message = "Readings: " + std::to_string(readings);
+// }
 
 void Sample::timerCallback()
 {

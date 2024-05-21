@@ -11,6 +11,7 @@
 
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
+#include "geometry_msgs/msg/pose_array.hpp"
 
 #include "laserprocessing.h"
 

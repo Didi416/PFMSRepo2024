@@ -1,6 +1,6 @@
 
 #include "rclcpp/rclcpp.hpp"
-#include "sample.h"
+#include "ackerman.h"
 
 
 int main(int argc, char **argv)
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
    */
   rclcpp::init(argc, argv);
 
-  rclcpp::spin(std::make_shared<Sample>());
+  rclcpp::spin(std::make_shared<Ackerman>());
   rclcpp::shutdown();
  
   return 0;

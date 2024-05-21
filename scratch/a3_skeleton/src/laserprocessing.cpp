@@ -10,8 +10,6 @@ LaserProcessing::LaserProcessing(sensor_msgs::msg::LaserScan laserScan):
 {
 }
 
-
-
 unsigned int LaserProcessing::countObjectReadings()
 {
     std::unique_lock<std::mutex> lck(mtx);
@@ -33,6 +31,46 @@ unsigned int LaserProcessing::countObjectReadings()
 
     objectReadings_=count;
     return objectReadings_;
+}
+
+unsigned int LaserProcessing::countSegments()
+{
+    unsigned int count = 0;
+    geometry_msgs::msg::Point point1;
+    geometry_msgs::msg::Point point2;
+    double euDist;
+    double dx;
+    double dy;
+    std::vector<int> currentSeg;
+
+    for (unsigned int i=0; i<laserScan_.ranges.size(); i++) {
+        if (laserScan_.ranges.at(i) < laserScan_.range_max) {
+            if (count == 0){ //if no other obstacle points have been recorded
+                count++;
+                currentSeg.push_back(i);
+            }
+            else{
+
+                point1 = polarToCart(i-1);
+                point2 = polarToCart(i);
+                dx = point1.x - point2.x;
+                dy = point1.y - point2.y;
+
+                euDist = std::hypot(dx,dy);
+                if (euDist < 0.3){
+                    currentSeg.push_back(i);
+                }
+                else{
+                    std::cout<<euDist<<std::endl;
+                    std::cout<<"dx:"<<dx<<"dy:"<<dy<<std::endl;
+                    count++;
+                    obstacles_.push_back(currentSeg);
+                    currentSeg.clear();
+                }
+            }
+        }
+    }
+    return count;
 }
 
 void LaserProcessing::newScan(sensor_msgs::msg::LaserScan laserScan){

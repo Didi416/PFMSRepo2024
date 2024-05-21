@@ -12,6 +12,7 @@
 // Include the header file for the class that you are testing
 // relative to this file
 #include "../src/laserprocessing.h"
+#include "../src/ackerman.h"
 
 // We state the test suite name and the test name
 TEST(LaserProcessing,CountReturns){
@@ -21,7 +22,7 @@ TEST(LaserProcessing,CountReturns){
     // We read the bag file to get the messages
     // The bag is in the data folder of the package
     std::string package_share_directory = ament_index_cpp::get_package_share_directory("a3_skeleton");//If you chnage package name you need to change this
-    std::string bag_filename=package_share_directory + "/data/position1"; // The data for the bag are in the data folder and each folder (such as position1) has a bag file
+    std::string bag_filename=package_share_directory + "/data/laserScanBagProj2"; // The data for the bag are in the data folder and each folder (such as position1) has a bag file
 
     rosbag2_cpp::Reader reader; // Create a reader object
 
@@ -58,7 +59,13 @@ TEST(LaserProcessing,CountReturns){
 
     // We check if the function returned the expected value, this should not be a value from your code.
     // rather obtained by other means such as manual calculation or visual inspection of the data
-    EXPECT_EQ(readings,640);
+    EXPECT_EQ(readings,17);
+
+
+    unsigned int obstacles = laserProcessing.countSegments();
+    std::cout<<obstacles<<std::endl;
+    EXPECT_EQ(obstacles,5);
+
 
 }
 

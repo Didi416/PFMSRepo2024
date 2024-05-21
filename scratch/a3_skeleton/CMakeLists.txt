@@ -23,25 +23,29 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
-
+find_package(visualization_msgs REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(rosbag2_cpp REQUIRED)
 
 #################################################################
 # The library we are developing will be called laserprocessing
 add_library(laserprocessing src/laserprocessing.cpp)
-ament_target_dependencies(laserprocessing rclcpp std_msgs sensor_msgs nav_msgs)
+ament_target_dependencies(laserprocessing rclcpp std_msgs sensor_msgs nav_msgs std_srvs)
 
 ## This is the executable
-add_executable(sample src/main.cpp src/sample.cpp)
+# add_executable(sample src/main.cpp src/sample.cpp)
+# ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
 
-## TASK 5 - Add the package to the end of the dependencies
-ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
+add_executable(ackerman src/main.cpp src/controller.cpp src/ackerman.cpp)
+ament_target_dependencies(ackerman rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
+# add_executable(mission src/main.cpp src/mission.cpp)
+# ament_target_dependencies(mission rclcpp std_msgs sensor_msgs nav_msgs tf2 visualization_msgs std_srvs)
 
-target_link_libraries(sample laserprocessing)
+
+target_link_libraries(ackerman laserprocessing)
 
 install(TARGETS
-  sample
+  ackerman
   laserprocessing
   DESTINATION lib/${PROJECT_NAME})
 

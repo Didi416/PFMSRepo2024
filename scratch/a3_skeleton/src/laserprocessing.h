@@ -24,6 +24,8 @@ public:
   */
   unsigned int countObjectReadings();
 
+  unsigned int countSegments();
+
 
   /*! @brief Accepts a new laserScan, threadsafe function
    *  @param[in]    laserScan  - laserScan supplied
@@ -50,6 +52,8 @@ private:
   sensor_msgs::msg::LaserScan laserScan_;
   std::mutex mtx; //!< Mutex to protect the laserScan_ from being accessed by multiple threads
   unsigned int objectReadings_; //!< Number of readings belonging to objects
+
+  std::vector<std::vector<int>> obstacles_;
 };
 
 #endif // LASERPROCESSING_H
