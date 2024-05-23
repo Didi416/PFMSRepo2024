@@ -26,23 +26,27 @@ find_package(std_srvs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(rosbag2_cpp REQUIRED)
+find_package(pipes 3.0.5 REQUIRED)
 
 #################################################################
 # The library we are developing will be called laserprocessing
 add_library(laserprocessing src/laserprocessing.cpp)
-ament_target_dependencies(laserprocessing rclcpp std_msgs sensor_msgs nav_msgs std_srvs)
+ament_target_dependencies(laserprocessing rclcpp std_msgs sensor_msgs nav_msgs std_srvs visualization_msgs)
+
+add_library(controller src/controller.cpp)
+ament_target_dependencies(controller rclcpp std_msgs sensor_msgs nav_msgs std_srvs visualization_msgs)
 
 ## This is the executable
 # add_executable(sample src/main.cpp src/sample.cpp)
 # ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
 
 add_executable(ackerman src/main.cpp src/controller.cpp src/ackerman.cpp)
-ament_target_dependencies(ackerman rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
+ament_target_dependencies(ackerman rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs visualization_msgs)
 # add_executable(mission src/main.cpp src/mission.cpp)
 # ament_target_dependencies(mission rclcpp std_msgs sensor_msgs nav_msgs tf2 visualization_msgs std_srvs)
 
 
-target_link_libraries(ackerman laserprocessing)
+target_link_libraries(ackerman controller laserprocessing audi)
 
 install(TARGETS
   ackerman

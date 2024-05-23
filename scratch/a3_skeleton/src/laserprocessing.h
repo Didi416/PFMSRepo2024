@@ -32,6 +32,7 @@ public:
    */
   void newScan(sensor_msgs::msg::LaserScan laserScan);
 
+  std::vector<geometry_msgs::msg::Point> detectConeCentres();
 
 private:
   /*! @brief Returns the cartesian position of laer reading at specific index
@@ -48,10 +49,13 @@ private:
     */
   double angleConnectingPoints(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2);
 
+  geometry_msgs::msg::Point segmentToPoint(int i);
+
 private:
   sensor_msgs::msg::LaserScan laserScan_;
   std::mutex mtx; //!< Mutex to protect the laserScan_ from being accessed by multiple threads
   unsigned int objectReadings_; //!< Number of readings belonging to objects
+  std::vector<unsigned int> objectReadingIndex_; 
 
   std::vector<std::vector<int>> obstacles_;
 };

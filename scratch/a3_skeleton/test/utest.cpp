@@ -12,7 +12,6 @@
 // Include the header file for the class that you are testing
 // relative to this file
 #include "../src/laserprocessing.h"
-#include "../src/ackerman.h"
 
 // We state the test suite name and the test name
 TEST(LaserProcessing,CountReturns){

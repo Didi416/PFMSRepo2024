@@ -32,13 +32,16 @@ public:
 
   void timerCallback();
 
+  /*! @brief - A function that will be run in a separate thread
+  * We will simply do some logging here in this function as an example
+  */
+  void threadFunction();
+
 private:
 
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr brakePub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr steeringPub_; 
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr throttlePub_; 
-  
-  rclcpp::TimerBase::SharedPtr timer_;
 
   double MAX_BRAKE_TORQUE; //maximum brake torque, set to 8000Nm
   std_msgs::msg::Float64 brake_; //private data value for braking command
@@ -46,7 +49,7 @@ private:
   std_msgs::msg::Float64 throttle_; //private data member for throttle command
   double velocity_;
   double tolerance_;
-  bool running_;
+  std::thread* thread_; //!< Thread object pointer
 };
 
 #endif // ACKERMAN_H
