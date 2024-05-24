@@ -3,6 +3,10 @@
 
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <geometry_msgs/msg/pose.hpp>
+#include <geometry_msgs/msg/pose_array.hpp>
+#include <geometry_msgs/msg/quaternion.hpp>
+#include <tf2/utils.h>
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 #include <math.h>
 #include <mutex>
 
@@ -41,6 +45,8 @@ private:
    *  @return position cartesian values
    */
    geometry_msgs::msg::Point polarToCart(unsigned int index);
+
+   double cartesianToPolar(geometry_msgs::msg::Point cart);
 
    /*! @brief Given two points (only x,y are used), returns the slope slope of the lines connecting them
     *  @param[in] p1 - first point

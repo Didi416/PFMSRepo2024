@@ -53,44 +53,53 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
         laserProcessingPtr_->newScan(*msg);
     }
 
-    // std::vector<geometry_msgs::msg::Point> cones = laserProcessingPtr_->detectConeCentres();
-    // geometry_msgs::msg::Pose cone_pose;
+    std::vector<geometry_msgs::msg::Point> cones = laserProcessingPtr_->detectConeCentres();
+    geometry_msgs::msg::Pose cone_pose;
     
-    // for (auto cone:cones){
-    //     cone_pose.position.x = cone.x + pose_.position.x + 3.5; 
-    //     cone_pose.position.y = cone.y + pose_.position.y;
-    //     detected_cones_.poses.push_back(cone_pose);
-    // }
-    // conesPub_->publish(detected_cones_);
+    detected_cones_.poses.clear();
+    
+    for (auto cone:cones){
+        // cone_pose.position.x = cone.position.x + pose_.position.x + 3.5; 
+        // cone_pose.position.y = cone.position.y + pose_.position.y;
+        tf2::Vector3 audiPoint(pose_.position.x, pose_.position.y, pose_.position.z);
+        tf2::Quaternion q(pose_.orientation.x, pose_.orientation.y, pose_.orientation.z, pose_.orientation.w);
+        tf2::Transform transform(q,audiPoint);
+        tf2::Vector3 conePoint(cone.x+3.5, cone.y, cone.z);
+        tf2::Vector3 transformedConePoint = transform * conePoint;
+        cone_pose.position.x = transformedConePoint.x();
+        cone_pose.position.y = transformedConePoint.y();
+        cone_pose.position.z = transformedConePoint.z();
+        detected_cones_.poses.push_back(cone_pose);
+    }
+    conesPub_->publish(detected_cones_);
 
-    // visualization_msgs::msg::MarkerArray marker_array;
-    // for (const auto& cone_pose : detected_cones_.poses)
-    // {
+    visualization_msgs::msg::MarkerArray marker_array;
+    for (const auto& cone_pose : detected_cones_.poses)
+    {
 
-    //     visualization_msgs::msg::Marker marker;
-    //     marker.header.frame_id = "world";
-    //     marker.header.stamp = this->now();
-    //     marker.ns = "cones";
-    //     marker.id = marker_array.markers.size();
-    //     marker.type = visualization_msgs::msg::Marker::CYLINDER;
-    //     marker.action = visualization_msgs::msg::Marker::ADD;
-    //     marker.pose = cone_pose;
-    //     marker.scale.x = 0.2;
-    //     marker.scale.y = 0.2;
-    //     marker.scale.z = 0.5;
-    //     marker.color.a = 1.0;
-    //     marker.color.r = 1.0;
-    //     marker.color.g = 0.5;
-    //     marker.color.b = 0.0;
-    //     marker_array.markers.push_back(marker);
+        visualization_msgs::msg::Marker marker;
+        marker.header.frame_id = "world";
+        marker.header.stamp = this->now();
+        marker.ns = "cones";
+        marker.id = marker_array.markers.size();
+        marker.type = visualization_msgs::msg::Marker::CYLINDER;
+        marker.action = visualization_msgs::msg::Marker::ADD;
+        marker.pose = cone_pose;
+        marker.scale.x = 0.2;
+        marker.scale.y = 0.2;
+        marker.scale.z = 0.5;
+        marker.color.a = 1.0;
+        marker.color.r = 1.0;
+        marker.color.g = 0.5;
+        marker.color.b = 0.0;
+        marker_array.markers.push_back(marker);
 
-    // }
-    // markerPub_->publish(marker_array);
+    }
+    markerPub_->publish(marker_array);
 }
 
 void Controller::odomCallback(const std::shared_ptr<nav_msgs::msg::Odometry> msg){
     // RCLCPP_INFO(this->get_logger(), "Odo Callback");
-    getOdometry();
     std::unique_lock<std::mutex> lck(poseMtx_);
     pose_ = msg->pose.pose;
 }

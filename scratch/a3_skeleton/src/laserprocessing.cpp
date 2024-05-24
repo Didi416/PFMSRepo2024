@@ -103,6 +103,34 @@ unsigned int LaserProcessing::countSegments()
     return count;
 }
 
+// geometry_msgs::msg::PoseArray LaserProcessing::detectConeCentres(){
+//     geometry_msgs::msg::Pose point;
+//     geometry_msgs::msg::Pose tempPoint;
+//     geometry_msgs::msg::PoseArray cones;
+
+//     countSegments();
+    
+//     for (size_t i=0; i<obstacles_.size(); i++){
+
+//         tempPoint.position = segmentToPoint(i);
+//         // std::cout<<"segment to point"<<std::endl;
+
+//         point.position.x = tempPoint.position.x;
+//         point.position.y = tempPoint.position.y;
+//         point.position.z = 0.0;
+
+//         double angle = cartesianToPolar(point.position);
+//         tf2::Quaternion q;
+//         q.setRPY(0,0,angle);
+//         point.orientation = tf2::toMsg(q);
+
+//         cones.poses.push_back(point);
+//         // std::cout<<"cone push back"<<std::endl;
+//     }
+
+//     return cones;
+// }
+
 std::vector<geometry_msgs::msg::Point> LaserProcessing::detectConeCentres(){
     geometry_msgs::msg::Point point;
     geometry_msgs::msg::Point tempPoint;
@@ -136,11 +164,16 @@ geometry_msgs::msg::Point LaserProcessing::polarToCart(unsigned int index)
 {
     float angle = laserScan_.angle_min + laserScan_.angle_increment*index;// + angle_range/2;
     float range = laserScan_.ranges.at(index);
-    // std::cout<<"Range: "<<range<<std::endl;
     geometry_msgs::msg::Point cart;
     cart.x = static_cast<double>(range*cos(angle));
     cart.y = static_cast<double>(range*sin(angle));
     return cart;
+}
+
+double LaserProcessing::cartesianToPolar(geometry_msgs::msg::Point cart){
+    // double range = (sqrt(cart.x * cart.x + cart.y * cart.y));
+    double angle = (atan2(cart.y, cart.x));
+    return angle;
 }
 
 double LaserProcessing::angleConnectingPoints(geometry_msgs::msg::Point p1, geometry_msgs::msg::Point p2)

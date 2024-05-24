@@ -37,7 +37,6 @@ void Ackerman::reachGoals(void){
         state = 1;
         //compute steering using Audi library and store the value in steering_ (private data member)
         audi.computeSteering(getOdometry(), pfmsGoals_.at(i), steering_.data, distanceToCurrentGoal_);
-        std::cout<<"Next Goal Coords: "<<pfmsGoals_.at(i).x<<", "<<pfmsGoals_.at(i).y<<std::endl;
         while (!goalReached){ //start driving to goal until goalReached returns true
             // std::cout<<"Start loop \n";
             audi.computeSteering(getOdometry(), pfmsGoals_.at(i), steering_.data, distanceToCurrentGoal_);
@@ -54,8 +53,6 @@ void Ackerman::reachGoals(void){
                 case 1: //start driving, until distance to goal is less than 2m, then switch to apply brakes
                     if (distanceToGoal() < 2){ //distanceToGoal is updated constantly through running chekcOriginToDestination, which updates the variable that distanceToGoal returns
                         state = 2; //switch to next state (braking)
-                        // std::cout<<"State: "<<state<<", CMD: "<<steering_.data<<", "<<brake_.data<<", "<<throttle_.data<<std::endl;
-                        // std::cout<<"Distance: "<<distanceToGoal()<<std::endl;
                     }
                     break;
                 case 2: //apply brakes until close at goal
@@ -63,16 +60,12 @@ void Ackerman::reachGoals(void){
                     brake_.data = 3000; //less than max braking, to just gradually slow down
                     if (distanceToGoal() < tolerance_){ //check for when distance reaches the tolerance value set
                         state = 3; //switch to max braking to come to a stop
-                        std::cout<<"State: "<<state<<", CMD: "<<steering_.data<<", "<<brake_.data<<", "<<throttle_.data<<std::endl;
-                        std::cout<<"Distance: "<<distanceToGoal()<<std::endl;
                     }
                     break;
                 case 3: //apply max braking torque to come to a complete stop
                     brake_.data = MAX_BRAKE_TORQUE; //MAX_BRAKE_TORQUE is set to 8000Nm as per specifications
                     if(currentOdo_.linear.x <= 0 && currentOdo_.linear.y <= 0){ //check for when velocity is 0 (stopped) before proceeding with next goal or terminating (finishing) program
                         state = 0; //default state, command variables set to 0 (platform does not move)
-                        std::cout<<"State: "<<state<<", CMD: "<<steering_.data<<", "<<brake_.data<<", "<<throttle_.data<<std::endl;
-                        std::cout<<"Distance: "<<distanceToGoal()<<std::endl;
                     }
                     break;
             }
@@ -83,14 +76,7 @@ void Ackerman::reachGoals(void){
             throttlePub_->publish(throttle_);
 
         }
-        std::cout<<"Goal "<<i<<" reached. \n";
     }
-    
-    // brake_.data = 0;
-    // steering_.data = 0;
-    // throttle_.data = 0.1;
-    
-
 }
 
 void Ackerman::timerCallback(){
