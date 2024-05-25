@@ -1,39 +1,24 @@
 #include "controller.h"
 
-Controller::Controller()
-    : Node("a3_skeleton") //Node name is "a3_skeleton"
+Controller::Controller(): Node("controller") //Node name is "a3_skeleton"
 {
     //Subscribing to laser, this will call the laserCallback function when a new message is published
     laserSub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("orange/laserscan", 10, 
                                 std::bind(&Controller::laserCallback,this,std::placeholders::_1));   
-
     odoSub_ = this->create_subscription<nav_msgs::msg::Odometry>("orange/odom", 10, 
                                 std::bind(&Controller::odomCallback,this,std::placeholders::_1));   
-
     goalsSub_ = this->create_subscription<geometry_msgs::msg::PoseArray>("orange/goals", 10, 
                                 std::bind(&Controller::goalsCallback,this,std::placeholders::_1));
-    
-    markerPub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("visualization_marker",3);  
-
+    progressSub_ = this->create_subscription<std_msgs::msg::String>("orange/progress", 10, 
+                                std::bind(&Controller::progressCallback,this,std::placeholders::_1));                            
+    markerPub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("visualization_marker",3); 
     conesPub_ = this->create_publisher<geometry_msgs::msg::PoseArray>("orange/cones",3);  
-
-    // timer_ = this->create_wall_timer(std::chrono::milliseconds(1000), std::bind(&Controller::goalsCallback, this, std::placeholders::_1));
-
-    // The service is of type std_srvs::srv::Trigger
-    // The service is created with the name "detect"
-    // The callback function is detect
-    // Callback function is called when the service is called
-    // Change the service type and callback function to match the requirements of assessment task
-    // service_ = this->create_service<std_srvs::srv::Trigger>("detect", 
-    //             std::bind(&Sample::detect,this,std::placeholders::_1, std::placeholders::_2));
-
+    missionService_ = this->create_service<std_srvs::srv::SetBool>("orange/mission", 
+                std::bind(&Controller::detect,this,std::placeholders::_1, std::placeholders::_2));
 }
 
 Controller::~Controller()
 {
-    // We join the thread here to make sure it is finished before the object is destroyed
-    // Thanksfull, we check ros::ok() in the threadFunction to make sure it terminates, otherwise
-    // we would have a deadlock here as the thread would be waiting for threadFunction to finish
     thread_->join();
 }
 
@@ -52,19 +37,16 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
     else{
         laserProcessingPtr_->newScan(*msg);
     }
-
     std::vector<geometry_msgs::msg::Point> cones = laserProcessingPtr_->detectConeCentres();
     geometry_msgs::msg::Pose cone_pose;
     
     detected_cones_.poses.clear();
     
     for (auto cone:cones){
-        // cone_pose.position.x = cone.position.x + pose_.position.x + 3.5; 
-        // cone_pose.position.y = cone.position.y + pose_.position.y;
         tf2::Vector3 audiPoint(pose_.position.x, pose_.position.y, pose_.position.z);
         tf2::Quaternion q(pose_.orientation.x, pose_.orientation.y, pose_.orientation.z, pose_.orientation.w);
         tf2::Transform transform(q,audiPoint);
-        tf2::Vector3 conePoint(cone.x+3.5, cone.y, cone.z);
+        tf2::Vector3 conePoint(cone.x+3.75, cone.y, cone.z);
         tf2::Vector3 transformedConePoint = transform * conePoint;
         cone_pose.position.x = transformedConePoint.x();
         cone_pose.position.y = transformedConePoint.y();
@@ -72,11 +54,13 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
         detected_cones_.poses.push_back(cone_pose);
     }
     conesPub_->publish(detected_cones_);
+    produceMarkers(detected_cones_);
+}
 
+void Controller::produceMarkers(geometry_msgs::msg::PoseArray msg){
     visualization_msgs::msg::MarkerArray marker_array;
-    for (const auto& cone_pose : detected_cones_.poses)
+    for (const auto& pose : detected_cones_.poses)
     {
-
         visualization_msgs::msg::Marker marker;
         marker.header.frame_id = "world";
         marker.header.stamp = this->now();
@@ -84,7 +68,7 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
         marker.id = marker_array.markers.size();
         marker.type = visualization_msgs::msg::Marker::CYLINDER;
         marker.action = visualization_msgs::msg::Marker::ADD;
-        marker.pose = cone_pose;
+        marker.pose = pose;
         marker.scale.x = 0.2;
         marker.scale.y = 0.2;
         marker.scale.z = 0.5;
@@ -100,18 +84,24 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
 
 void Controller::odomCallback(const std::shared_ptr<nav_msgs::msg::Odometry> msg){
     // RCLCPP_INFO(this->get_logger(), "Odo Callback");
-    std::unique_lock<std::mutex> lck(poseMtx_);
+    std::unique_lock<std::mutex> lck(odoMtx_);
     pose_ = msg->pose.pose;
+    lck.unlock();
 }
 
 void Controller::goalsCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg){
-
     RCLCPP_INFO(this->get_logger(), "Goals Callback");
-    goals_ = *msg;
-    for (size_t i=0; i<goals_.poses.size(); i++){
-        pfmsGoals_.push_back({goals_.poses.at(i).position.x, goals_.poses.at(i).position.y, goals_.poses.at(i).position.z});
-    }
+    setGoals(*msg);
+}
 
+void Controller::progressCallback(const std::shared_ptr<std_msgs::msg::String> msg){
+    progress_ = msg->data;
+}
+
+void Controller::setGoals(geometry_msgs::msg::PoseArray msg){
+    for (size_t i=0; i<msg.poses.size(); i++){
+        pfmsGoals_.push_back({msg.poses.at(i).position.x, msg.poses.at(i).position.y, msg.poses.at(i).position.z});
+    }
 }
 
 pfms::nav_msgs::Odometry Controller::getOdometry(void){
@@ -121,9 +111,21 @@ pfms::nav_msgs::Odometry Controller::getOdometry(void){
     currentOdo_.position.y = pose_.position.y;
     currentOdo_.position.z = pose_.position.z;
     currentOdo_.yaw = tf2::getYaw(pose_.orientation);
+    lck.unlock();
     return currentOdo_;
 }
 
-double Controller::distanceToGoal(void){ // Returns the distance to current goal as claculated in checkOriginToDestinatione(), continuously updated through reachGoals
+double Controller::distanceToGoal(void){ // Returns the distance to current goal as calculated in checkOriginToDestinatione(), continuously updated through reachGoals
     return distanceToCurrentGoal_; //protected variable so can be accessed from other functions in classes in inheritance tree (base and derived)
+}
+
+void Controller::detect(const std::shared_ptr<std_srvs::srv::SetBool::Request> req, std::shared_ptr<std_srvs::srv::SetBool::Response> res){ 
+    startMission_ = req->data;
+    if(req->data){
+        res->message = "Mission Running, Progress: " + progress_;
+    }
+    else{
+        res->message = "Stop Mission, Progress: " + progress_;
+    }
+    res->success = true;
 }

@@ -43,11 +43,11 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr steeringPub_; 
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr throttlePub_; 
 
+  Audi audi;
   double MAX_BRAKE_TORQUE; //maximum brake torque, set to 8000Nm
   std_msgs::msg::Float64 brake_; //private data value for braking command
   std_msgs::msg::Float64 steering_; //private data member for steering command
   std_msgs::msg::Float64 throttle_; //private data member for throttle command
-  double velocity_;
   double tolerance_;
   std::thread* thread_; //!< Thread object pointer
 };

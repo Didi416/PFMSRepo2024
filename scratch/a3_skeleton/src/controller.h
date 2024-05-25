@@ -4,21 +4,23 @@
 
 #include <thread>
 #include <mutex>
-#include <set>
+#include <deque>
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "geometry_msgs/msg/pose_array.hpp"
 #include "visualization_msgs/msg/marker_array.hpp"
+#include "std_msgs/msg/string.hpp"
+#include "std_srvs/srv/set_bool.hpp"
 #include "pfms_types.h"
 #include "laserprocessing.h"
-#include <tf2/utils.h> //To use getYaw function from the quaternion of orientation
+#include "tf2/utils.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
 class Controller: public rclcpp::Node{
 
-    public:
+public:
     /*! @brief Sample constructor.
     *
     *  Will initialise the callbacks and internal variables
@@ -46,15 +48,17 @@ class Controller: public rclcpp::Node{
      * @brief Retrieves value for distance to be travelled to reach current goal, updates as the platform moves to current goal
      * @return distance to be travelled to goal [m]
     */
-  double distanceToGoal(void);
+    void setGoals(geometry_msgs::msg::PoseArray msg);
+
+    void produceMarkers(geometry_msgs::msg::PoseArray msg);
 
     virtual void reachGoals(void) = 0;
 
-    protected:
-    geometry_msgs::msg::PoseArray goals_;
-    double distanceToCurrentGoal_;
-    std::vector<pfms::geometry_msgs::Point> pfmsGoals_;
+    double distanceToGoal();
 
+    void detect(const std::shared_ptr<std_srvs::srv::SetBool::Request> req, std::shared_ptr<std_srvs::srv::SetBool::Response> res);
+
+protected:
     /*! @brief LaserScan Callback
     *
     *  @param std::shared_ptr<sensor_msgs::msg::LaserScan - The laserscan message as a const pointer
@@ -76,16 +80,22 @@ class Controller: public rclcpp::Node{
     */
     void goalsCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg);
 
-    // rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr service_; //!< Pointer to the service object 
+    void progressCallback(const std::shared_ptr<std_msgs::msg::String> msg);
 
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laserSub_;//!< Pointer to the laser scan subscriber
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odoSub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr goalsSub_;
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr progressSub_;
 
-    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr markerPub_; 
     rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr conesPub_;
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr markerPub_;
+
+    rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr missionService_;
 
     geometry_msgs::msg::PoseArray detected_cones_;
+    std::deque<pfms::geometry_msgs::Point> pfmsGoals_;
+    double distanceToCurrentGoal_;
+    std::string progress_;
 
     std::unique_ptr<LaserProcessing> laserProcessingPtr_;//!< Pointer to the laser processing object
     std::thread* thread_; //!< Thread object pointer
@@ -94,8 +104,7 @@ class Controller: public rclcpp::Node{
 
     geometry_msgs::msg::Pose pose_;
     pfms::nav_msgs::Odometry currentOdo_;
-    std::mutex poseMtx_;
     std::mutex odoMtx_;
 
-
+    bool startMission_;
 };

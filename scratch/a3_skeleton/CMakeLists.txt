@@ -40,16 +40,17 @@ ament_target_dependencies(controller rclcpp std_msgs sensor_msgs nav_msgs std_sr
 # add_executable(sample src/main.cpp src/sample.cpp)
 # ament_target_dependencies(sample rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs)
 
-add_executable(ackerman src/main.cpp src/controller.cpp src/ackerman.cpp)
+add_executable(ackerman src/main_ackerman.cpp src/controller.cpp src/ackerman.cpp)
 ament_target_dependencies(ackerman rclcpp std_msgs sensor_msgs nav_msgs tf2 tf2_ros tf2_geometry_msgs std_srvs visualization_msgs)
-# add_executable(mission src/main.cpp src/mission.cpp)
-# ament_target_dependencies(mission rclcpp std_msgs sensor_msgs nav_msgs tf2 visualization_msgs std_srvs)
+add_executable(mission src/main_mission.cpp src/mission.cpp)
+ament_target_dependencies(mission rclcpp std_msgs sensor_msgs nav_msgs tf2 visualization_msgs std_srvs)
 
 
 target_link_libraries(ackerman controller laserprocessing audi)
 
 install(TARGETS
   ackerman
+  mission
   laserprocessing
   DESTINATION lib/${PROJECT_NAME})
 

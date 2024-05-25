@@ -95,41 +95,13 @@ unsigned int LaserProcessing::countSegments()
                     count++;
                     obstacles_.push_back(currentSeg);
                     currentSeg.clear();
-                    // std::cout<<"dx: "<<dx<<" dy: "<<dy<<"Obs size:"<<obstacles_.size()<<std::endl;
+                    std::cout<<"dx: "<<dx<<" dy: "<<dy<<"Obs size:"<<obstacles_.size()<<std::endl;
                 }
             }
         }
     }
     return count;
 }
-
-// geometry_msgs::msg::PoseArray LaserProcessing::detectConeCentres(){
-//     geometry_msgs::msg::Pose point;
-//     geometry_msgs::msg::Pose tempPoint;
-//     geometry_msgs::msg::PoseArray cones;
-
-//     countSegments();
-    
-//     for (size_t i=0; i<obstacles_.size(); i++){
-
-//         tempPoint.position = segmentToPoint(i);
-//         // std::cout<<"segment to point"<<std::endl;
-
-//         point.position.x = tempPoint.position.x;
-//         point.position.y = tempPoint.position.y;
-//         point.position.z = 0.0;
-
-//         double angle = cartesianToPolar(point.position);
-//         tf2::Quaternion q;
-//         q.setRPY(0,0,angle);
-//         point.orientation = tf2::toMsg(q);
-
-//         cones.poses.push_back(point);
-//         // std::cout<<"cone push back"<<std::endl;
-//     }
-
-//     return cones;
-// }
 
 std::vector<geometry_msgs::msg::Point> LaserProcessing::detectConeCentres(){
     geometry_msgs::msg::Point point;
@@ -152,6 +124,54 @@ std::vector<geometry_msgs::msg::Point> LaserProcessing::detectConeCentres(){
     }
 
     return cones;
+}
+
+std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> LaserProcessing::detectRoad(){
+
+    geometry_msgs::msg::Point point;
+    geometry_msgs::msg::Point pointPair;
+    geometry_msgs::msg::Point tempPoint1;
+    std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> roadPairs;
+    unsigned int roadIncrement = 0;
+
+    double dx;
+    double dy;
+    double euDist;
+    float tolerance = 0.3;
+    double roadWidth = 8; //roughly 8m
+
+    std::vector<geometry_msgs::msg::Point> cones = detectConeCentres();
+    std::set<unsigned int> visitedCones;
+    // std::cout<<"Start \n";
+
+    for (size_t i=0; i<cones.size(); i++){
+        if(visitedCones.find(i) != visitedCones.end()){ //check if cone is already part of a pair
+            continue; //go to next cone i, next for loop iteration
+        }
+        point = cones.at(i);
+        for (size_t j=0; j<cones.size(); j++){
+            if(visitedCones.find(j) == visitedCones.end()){
+                pointPair = cones.at(j);
+                dx = point.x - pointPair.x;
+                dy = point.y - pointPair.y;
+                euDist = std::hypot(dx,dy);
+                if (std::abs(roadWidth-euDist) < tolerance){
+                    std::cout<<"Road pair found \n";
+                    std::cout<<"EuDist"<<euDist<<std::endl;
+                    roadPairs.at(roadIncrement).first = point;
+                    roadPairs.at(roadIncrement).second = pointPair;
+                    roadIncrement++;
+                    visitedCones.insert(i);
+                    visitedCones.insert(j);
+                    // std::cout<<"closestPoint X: "<<closestPoint.x<<" and Y: "<<closestPoint.y<<std::endl;
+                    // std::cout<<"tempPoint X: "<<tempPoint1.x<<" and Y: "<<tempPoint1.y<<std::endl;
+                    break;
+                }
+            }
+        }
+    }
+    
+    return roadPairs;
 }
 
 void LaserProcessing::newScan(sensor_msgs::msg::LaserScan laserScan){
