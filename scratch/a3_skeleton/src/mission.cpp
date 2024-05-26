@@ -8,13 +8,12 @@ Mission::Mission(): Node("mission"){
     progress_ = 0;
     goalsSub_ = this->create_subscription<geometry_msgs::msg::PoseArray>("orange/goals", 10, 
                                 std::bind(&Mission::goalsCallback,this,std::placeholders::_1));
-
-    markerPub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("visualization_marker",3); 
-
-    progressPub_ = this->create_publisher<std_msgs::msg::String>("orange/progress",3);
-
+    conesSub_ = this->create_subscription<geometry_msgs::msg::PoseArray>("orange/cones", 10, 
+                                std::bind(&Mission::conesCallback,this,std::placeholders::_1));
     odoSub_ = this->create_subscription<nav_msgs::msg::Odometry>("orange/odom", 10, 
                                 std::bind(&Mission::odomCallback,this,std::placeholders::_1));  
+    markerPub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("visualization_marker",3); 
+    progressPub_ = this->create_publisher<std_msgs::msg::String>("orange/progress",3);
 
     timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&Mission::progress, this));
 
@@ -31,30 +30,28 @@ void Mission::goalsCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray>
     for (auto pose:msg->poses){
         goals_.push_back(pose.position);
     }
-    produceMarkers(*msg);
+    geometry_msgs::msg::Vector3 size;
+    size.x = 0.5; size.y = 0.5; size.z = 0.5;
+    std_msgs::msg::ColorRGBA colour;
+    colour.a = 1.0; colour.r = 1.0; colour.g = 0.5; colour.b = 0.0;
+    produceMarkers(*msg,"goals", 1, size, colour);
 
 }
 
-void Mission::produceMarkers(geometry_msgs::msg::PoseArray msg){
+void Mission::produceMarkers(geometry_msgs::msg::PoseArray msg, std::string ns, int32_t shape, geometry_msgs::msg::Vector3 size, std_msgs::msg::ColorRGBA colour){
     visualization_msgs::msg::MarkerArray marker_array;
     for (const auto& pose : msg.poses)
     {
-
         visualization_msgs::msg::Marker marker;
         marker.header.frame_id = "world";
         marker.header.stamp = this->now();
-        marker.ns = "road";
+        marker.ns = ns;
         marker.id = marker_array.markers.size();
-        marker.type = visualization_msgs::msg::Marker::CUBE;
+        marker.type = shape;
         marker.action = visualization_msgs::msg::Marker::ADD;
         marker.pose = pose;
-        marker.scale.x = 0.5;
-        marker.scale.y = 0.5;
-        marker.scale.z = 0.5;
-        marker.color.a = 1.0;
-        marker.color.r = 1.0;
-        marker.color.g = 0.5;
-        marker.color.b = 0.0;
+        marker.scale = size;
+        marker.color = colour;
         marker_array.markers.push_back(marker);
 
     }
@@ -66,6 +63,15 @@ void Mission::odomCallback(const std::shared_ptr<nav_msgs::msg::Odometry> msg){
     std::unique_lock<std::mutex> lck(odoMtx_);
     odo_ = *msg;
     lck.unlock();  
+}
+
+void Mission::conesCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg){
+    geometry_msgs::msg::Vector3 size;
+    size.x = 0.2; size.y = 0.2; size.z = 0.5;
+    std_msgs::msg::ColorRGBA colour;
+    colour.a = 1.0; colour.r = 1.0; colour.g = 0.5; colour.b = 0.0;
+    produceMarkers(*msg,"cones", 3, size, colour);
+    // std::cout<<"Cones marked";
 }
 
 double Mission::distance(nav_msgs::msg::Odometry odo, geometry_msgs::msg::Point pt){ 

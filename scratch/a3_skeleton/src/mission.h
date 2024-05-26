@@ -1,9 +1,11 @@
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/pose_array.hpp"
+#include "geometry_msgs/msg/vector3.hpp"
 #include "visualization_msgs/msg/marker_array.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/color_rgba.hpp>
 #include <string>
 #include <deque>
 #include <mutex>
@@ -17,11 +19,13 @@ public:
 
     ~Mission();
 
-    void produceMarkers(geometry_msgs::msg::PoseArray msg);
+    void produceMarkers(geometry_msgs::msg::PoseArray msg, std::string ns, int32_t shape, geometry_msgs::msg::Vector3 size, std_msgs::msg::ColorRGBA colour);
 
     void goalsCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg);
 
     void odomCallback(const std::shared_ptr<nav_msgs::msg::Odometry> msg);
+
+    void conesCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray> msg);
 
 private:
     void run();//!< Function that will run continously in the thread
@@ -30,9 +34,11 @@ private:
 
     rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr goalsSub_;//!< Goal Pose subscriber
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odoSub_;//!< Odometry Pose subscriber
-    rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr goalsPub_;//<! Publisher of goals
+    rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr conesSub_;
+
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr markerPub_; //! Visualisation Marker publisher
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr progressPub_;
+
     visualization_msgs::msg::MarkerArray markerArray_; //!< Marker Array
 
     std::thread* thread_; //!< Thread object pointer

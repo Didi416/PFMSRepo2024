@@ -39,7 +39,9 @@ public:
 
   std::vector<geometry_msgs::msg::Point> detectConeCentres();
 
-  std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> detectRoad();
+  geometry_msgs::msg::Point detectClosestCone();
+
+  std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> detectRoad();
 
 private:
   /*! @brief Returns the cartesian position of laer reading at specific index

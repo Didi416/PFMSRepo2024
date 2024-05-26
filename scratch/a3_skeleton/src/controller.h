@@ -50,13 +50,16 @@ public:
     */
     void setGoals(geometry_msgs::msg::PoseArray msg);
 
-    void produceMarkers(geometry_msgs::msg::PoseArray msg);
-
     virtual void reachGoals(void) = 0;
 
     double distanceToGoal();
 
-    void detect(const std::shared_ptr<std_srvs::srv::SetBool::Request> req, std::shared_ptr<std_srvs::srv::SetBool::Response> res);
+    geometry_msgs::msg::Point transformPoint(geometry_msgs::msg::Point points);
+
+    void detectService(const std::shared_ptr<std_srvs::srv::SetBool::Request> req, std::shared_ptr<std_srvs::srv::SetBool::Response> res);
+
+    std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> detectRoad(std::vector<geometry_msgs::msg::Point> points);
+    // geometry_msgs::msg::Point Controller::detectClosestCone(std::vector<geometry_msgs::msg::Point> points);
 
 protected:
     /*! @brief LaserScan Callback
@@ -89,12 +92,17 @@ protected:
 
     rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr conesPub_;
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr markerPub_;
+    rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr goalsPub_;
 
     rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr missionService_;
 
     geometry_msgs::msg::PoseArray detected_cones_;
+    std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> road_;
+    // std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> road_;
     std::deque<pfms::geometry_msgs::Point> pfmsGoals_;
     double distanceToCurrentGoal_;
+    geometry_msgs::msg::Pose roadCentre_;
+    geometry_msgs::msg::PoseArray roadCentres_;
     std::string progress_;
 
     std::unique_ptr<LaserProcessing> laserProcessingPtr_;//!< Pointer to the laser processing object
@@ -107,4 +115,5 @@ protected:
     std::mutex odoMtx_;
 
     bool startMission_;
+    bool advanced_;
 };

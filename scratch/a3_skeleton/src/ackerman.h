@@ -30,12 +30,12 @@ public:
   */
   void reachGoals(void);
 
-  void timerCallback();
-
   /*! @brief - A function that will be run in a separate thread
   * We will simply do some logging here in this function as an example
   */
   void threadFunction();
+
+  void produceMarker(std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> road);
 
 private:
 
