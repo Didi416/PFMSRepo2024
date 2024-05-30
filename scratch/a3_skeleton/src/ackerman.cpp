@@ -135,7 +135,7 @@ void Ackerman::produceMarker(std::pair<geometry_msgs::msg::Point, geometry_msgs:
 void Ackerman::threadFunction(){
     double dx1, dy1, dx2, dy2;
     std::pair<double, double> euDist;
-    float tolerance = 2;
+    float tolerance = 3;
     double estimatedRoadDist = 4;
     bool goalReachable = false;
     while(rclcpp::ok()){

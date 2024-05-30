@@ -49,7 +49,6 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
     geometry_msgs::msg::Pose cone_pose;
     geometry_msgs::msg::Pose goal_pose;
     detected_cones_.poses.clear();
-
     for(auto cone:tempCones){
         cone_pose.position = transformPoint(cone);
         detected_cones_.poses.push_back(cone_pose);
@@ -63,24 +62,51 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
     //     totalCones = tempCones;//initial cones from first scan
     // }
     // else{
-    if(road_.size() != 0){
-        for (size_t i=0;i<tempCones.size(); i++){
-            for(size_t j=0; j<road_.size(); j++){
-                if((std::abs(tempCones.at(i).x - road_.at(j).first.x) < 1 && std::abs(tempCones.at(i).y - road_.at(j).first.y) < 1) || 
-                    (std::abs(tempCones.at(i).x - road_.at(j).second.x) < 1 && std::abs(tempCones.at(i).y - road_.at(j).second.y) < 1)){ //check if cone already in totalCones vector
-                    tempCones.erase(tempCones.begin()+i); //remove cone point from tempCones
-                    // if(visitedCones_.find(j) == visitedCones_.end()){ //check if cone is already visited/marked
-                    //     visitedCones_.insert(j);
-                    // }
-                    i--;
-                    break;
-                }
-            }
-        }
-        // totalCones.insert(totalCones.end(), tempCones.begin(), tempCones.end());
-    }
+    // if(road_.size() != 0){
+    //     for (size_t i=0;i<tempCones.size(); i++){
+    //         for(size_t j=0; j<road_.size(); j++){
+    //             if((std::abs(transformPoint(tempCones.at(i)).x - road_.at(j).first.x) < 1 && std::abs(transformPoint(tempCones.at(i)).y - road_.at(j).first.y) < 1) || 
+    //                 (std::abs(transformPoint(tempCones.at(i)).x - road_.at(j).second.x) < 1 && std::abs(transformPoint(tempCones.at(i)).y - road_.at(j).second.y) < 1)){ //check if cone already in totalCones vector
+    //                 tempCones.erase(tempCones.begin()+i); //remove cone point from tempCones
+    //                 // if(visitedCones_.find(j) == visitedCones_.end()){ //check if cone is already visited/marked
+    //                 //     visitedCones_.insert(j);
+    //                 // }
+    //                 i--;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     // totalCones.insert(totalCones.end(), tempCones.begin(), tempCones.end());
+    // }
 
     detectRoad(tempCones);
+
+    // std::sort(road_.begin(), road_.end(), [this](const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& p1, 
+    //                                           const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& p2) {
+    //     if (comparePoints(p1.first, p2.first)) return true;
+    //     if (comparePoints(p2.first, p1.first)) return false;
+    //     return comparePoints(p1.second, p2.second);
+    // });
+    // auto last = std::unique(road_.begin(), road_.end(), [](const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& p1,
+    //                                                        const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& p2) {
+    //     return p1.first.x == p2.first.x && p1.first.y == p2.first.y && p1.second.x == p2.second.x && p1.second.y == p2.second.y;
+    // });
+    // road_.erase(last, road_.end());
+
+    sortAndRemoveDuplicates();
+
+    // geometry_msgs::msg::Point roadGlobalPose1;
+    // geometry_msgs::msg::Point roadGlobalPose2;
+    // for(size_t i=0; i<road_.size(); i++){
+    //     if((road_.at(i).first.x < -5 )|| (road_.at(i).second.x < -5)){
+    //         road_.erase(road_.begin()+i);
+    //         i--;
+    //         continue;
+    //     }
+    // //     roadGlobalPose1 = transformPoint(road_.at(i).first);
+    // //     roadGlobalPose2 = transformPoint(road_.at(i).second);
+    // //     transformedRoad_.push_back(std::make_pair(roadGlobalPose1, roadGlobalPose2));
+    // }
     
     // std::cout<<"Detected Road \n";
     if(advanced_){
@@ -120,6 +146,43 @@ void Controller::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan
         lck.unlock();
     }
 }
+
+void Controller::sortAndRemoveDuplicates() {
+    // sort the vector based on both elements of the pairs
+    std::sort(road_.begin(), road_.end(), [](const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& a, const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& b) {
+        if ((std::abs(a.first.x - b.first.x) < 1) && (std::abs(a.first.y - b.first.y))) {
+            // std::cout<<"test1 \n";
+            return a.second.x < b.second.x || (std::abs(a.second.x - b.second.x) < 1 && a.second.y < b.second.y)/* || (std::abs(a.second.x - b.second.x) && std::abs(a.second.y - b.second.y) && a.second.z < b.second.z)*/;
+        } else {
+            // std::cout<<"test2 \n";
+            return a.first.x < b.first.x || (std::abs(a.first.x - b.first.x) < 1 && a.first.y < b.first.y)/* || (a.first.x == b.first.x && a.first.y == b.first.y && a.first.z < b.first.z)*/;
+        }
+    });
+
+    // remove duplicates
+    // std::cout<<"test3 \n";
+    road_.erase(std::unique(road_.begin(), road_.end(), [](const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& a, const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& b) {
+        // return (a.first.x == b.first.x && a.first.y == b.first.y && a.first.z == b.first.z && a.second.x == b.second.x && a.second.y == b.second.y && a.second.z == b.second.z) ||
+        //        (a.first.x == b.second.x && a.first.y == b.second.y && a.first.z == b.second.z && a.second.x == b.first.x && a.second.y == b.first.y && a.second.z == b.first.z);
+        return (std::abs(a.first.x - b.first.x) < 1 && std::abs(a.first.y - b.first.y) < 1 && std::abs(a.second.x - b.second.x) < 1 && std::abs(a.second.y - b.second.y) < 1) || 
+                (std::abs(a.first.x - b.second.x) < 1 && std::abs(a.first.y - b.second.y) < 1 && std::abs(a.second.x - b.first.x) < 1 && std::abs(a.second.y - b.first.y) < 1);
+    }), road_.end());
+}
+
+// bool Controller::comparePoints(const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2) {
+//     if (p1.x != p2.x) return p1.x < p2.x;
+//     if (p1.y != p2.y) return p1.y < p2.y;
+//     return p1.z < p2.z;
+// }
+
+// void Controller::normalizePairs(std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>>& pairs) {
+//     for (auto& pair : pairs) {
+//         if (!comparePoints(pair.first, pair.second)) {
+//             std::swap(pair.first, pair.second);
+//         }
+//     }
+// }
+
 
 geometry_msgs::msg::Point Controller::transformPoint(geometry_msgs::msg::Point point){
     std::unique_lock<std::mutex> lck(odoMtx_);
@@ -188,10 +251,10 @@ std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> Con
     // visitedCones_.clear();
     
     for (size_t i=0; i<points.size(); i++){ //Sort into pairs, one cone on either side of the audi, calculated in cars frame
-        if(pairedCones.find(i) != pairedCones.end()){ //check if cone is already part of a pair
-            std::cout<<"Already part of a pair \n";
-            continue; //go to next cone i, next for loop iteration
-        }
+        // if(pairedCones.find(i) != pairedCones.end()){ //check if cone is already part of a pair
+        //     // std::cout<<"Already part of a pair \n";
+        //     continue; //go to next cone i, next for loop iteration
+        // }
         point = points.at(i);
 
         for (size_t j=0; j<points.size(); j++){
@@ -225,7 +288,7 @@ std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> Con
                 else{side.second = "right";}
             }
 
-            if(pairedCones.find(j) != pairedCones.end() || side.first == side.second){ //check for if cones are already paired or if they are one the same side of the road
+            if(/*pairedCones.find(j) != pairedCones.end() || */side.first == side.second){ //check for if cones are already paired or if they are one the same side of the road
                 continue;
             }
             dx = point.x - pointPair.x; //calculate difference in x
@@ -246,7 +309,7 @@ std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> Con
             }
         }
     }
-    // std::cout<<"Point Size: "<<points.size()<<"Road Size: "<<road_.size()<<std::endl;
+    std::cout<<"Point Size: "<<points.size()<<"Road Size: "<<road_.size()<<std::endl;
     return roadPairs;
 }
 

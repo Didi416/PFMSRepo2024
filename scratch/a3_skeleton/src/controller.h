@@ -86,6 +86,11 @@ protected:
 
     void progressCallback(const std::shared_ptr<std_msgs::msg::String> msg);
 
+    bool comparePoints(const geometry_msgs::msg::Point& p1, const geometry_msgs::msg::Point& p2);
+    void normalizePairs(std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>>& pairs);
+
+    void sortAndRemoveDuplicates();
+
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laserSub_;//!< Pointer to the laser scan subscriber
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odoSub_;
     rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr goalsSub_;
@@ -102,6 +107,7 @@ protected:
     geometry_msgs::msg::PoseArray detected_cones_;
     std::set<unsigned int> visitedCones_;
     std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> road_;
+    std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> transformedRoad_;
     
     std::deque<pfms::geometry_msgs::Point> pfmsGoals_;
     double distanceToCurrentGoal_;
