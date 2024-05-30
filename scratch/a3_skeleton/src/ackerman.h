@@ -35,8 +35,6 @@ public:
   */
   void threadFunction();
 
-  void produceMarker(std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> road);
-
 private:
 
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr brakePub_;
@@ -49,7 +47,6 @@ private:
   std_msgs::msg::Float64 steering_; //private data member for steering command
   std_msgs::msg::Float64 throttle_; //private data member for throttle command
   double tolerance_;
-  std::thread* thread_; //!< Thread object pointer
 };
 
 #endif // ACKERMAN_H
