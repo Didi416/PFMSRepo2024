@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 
     //Publish goals 
     rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr goals_pub = 
-        node->create_publisher<geometry_msgs::msg::PoseArray>("goals", 100);
+        node->create_publisher<geometry_msgs::msg::PoseArray>("orange/goals", 100);
     //Publishing markers
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr viz_pub = 
         node->create_publisher<visualization_msgs::msg::MarkerArray>("visualization_marker",1000);

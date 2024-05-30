@@ -29,7 +29,7 @@ void Ackerman::reachGoals(void){
     int state; //state of the platform, either starting movment to goal (set throttle), slowing down, full brake force, and when reached goal
     
     if(pfmsGoals_.size()>0){
-        // std::cout<<"Goals \n";
+        std::cout<<"Goals \n";
         goalReached = false;
         throttle_.data = 0.25;
         brake_.data = 0.0;
@@ -45,8 +45,8 @@ void Ackerman::reachGoals(void){
                     brake_.data = 0.0;
                     steering_.data = 0.0;
                     throttle_.data = 0.0;
-                    goalReached = true;
                     pfmsGoals_.pop_front();
+                    goalReached = true;
                     break;
                 case 1: //start driving, until distance to goal is less than 2m, then switch to apply brakes
                     if (distanceToGoal() < 2){ //distanceToGoal is updated constantly through running chekcOriginToDestination, which updates the variable that distanceToGoal returns
@@ -55,7 +55,7 @@ void Ackerman::reachGoals(void){
                     break;
                 case 2: //apply brakes until close at goal
                     throttle_.data = 0; //set throttle to 0, otherwise platform would be braking and accelerating, cancelling one or the other out
-                    brake_.data = 3800; //less than max braking, to just gradually slow down
+                    brake_.data = 3500; //less than max braking, to just gradually slow down
                     if (distanceToGoal() < tolerance_){ //check for when distance reaches the tolerance value set
                         state = 0; //switch to max braking to come to a stop
                     }
@@ -74,7 +74,7 @@ void Ackerman::reachGoals(void){
         }
     }
     else{
-        std::cout<<"Finished \n";
+        // std::cout<<"Finished \n";
     }
 }
 
@@ -111,6 +111,23 @@ void Ackerman::produceMarker(std::pair<geometry_msgs::msg::Point, geometry_msgs:
     marker.color.g = 1.0;
     marker.color.b = 1.0;
     marker_array.markers.push_back(marker);
+    marker.header.frame_id = "world";
+    marker.header.stamp = this->now();
+    marker.ns = "pairs";
+    marker.id = marker_array.markers.size();
+    marker.type = visualization_msgs::msg::Marker::SPHERE;
+    marker.action = visualization_msgs::msg::Marker::ADD;
+    marker.pose.position.x = pfmsGoals_.front().x;
+    marker.pose.position.y = pfmsGoals_.front().y;
+    marker.pose.position.z = pfmsGoals_.front().z;
+    marker.scale.x = 1.0;
+    marker.scale.y = 1.0;
+    marker.scale.z = 1.0;
+    marker.color.a = 1.0;
+    marker.color.r = 1.0;
+    marker.color.g = 1.0;
+    marker.color.b = 0.0;
+    marker_array.markers.push_back(marker);
 
     markerPub_->publish(marker_array);
 }
@@ -118,7 +135,7 @@ void Ackerman::produceMarker(std::pair<geometry_msgs::msg::Point, geometry_msgs:
 void Ackerman::threadFunction(){
     double dx1, dy1, dx2, dy2;
     std::pair<double, double> euDist;
-    float tolerance = 1;
+    float tolerance = 2;
     double estimatedRoadDist = 4;
     bool goalReachable = false;
     while(rclcpp::ok()){
@@ -133,10 +150,10 @@ void Ackerman::threadFunction(){
                 dy2 = road_.at(j).second.y - pfmsGoals_.front().y;
                 euDist.first = std::hypot(dx1,dy1);
                 euDist.second = std::hypot(dx2,dy2);
-                // std::cout<<"Next goal x: "<<pfmsGoals_.front().x<<", goal y: "<<pfmsGoals_.front().y<<std::endl;
-                // std::cout<<"Cone 1: "<<road_.at(j).first.x<<" and y: "<<road_.at(j).first.y<<std::endl;
-                // std::cout<<"Cone 2: "<<road_.at(j).second.x<<" and y: "<<road_.at(j).second.y<<std::endl;
-                // std::cout<<"Road Side 1: "<<euDist.first<<" and Road Side 2: "<<euDist.second<<std::endl;
+                std::cout<<"Next goal x: "<<pfmsGoals_.front().x<<", goal y: "<<pfmsGoals_.front().y<<std::endl;
+                std::cout<<"Cone 1: "<<road_.at(j).first.x<<" and y: "<<road_.at(j).first.y<<std::endl;
+                std::cout<<"Cone 2: "<<road_.at(j).second.x<<" and y: "<<road_.at(j).second.y<<std::endl;
+                std::cout<<"Road Side 1: "<<euDist.first<<" and Road Side 2: "<<euDist.second<<std::endl;
                 if(std::abs(estimatedRoadDist - euDist.first) < tolerance && std::abs(estimatedRoadDist - euDist.second) < tolerance){
                     std::cout<<"Goal is between road cones \n";
                     goalReachable = true;
@@ -145,7 +162,7 @@ void Ackerman::threadFunction(){
             }
             if(goalReachable){
                 reachGoals();
-                goalReachable = true;
+                goalReachable = false;
             }else{
                 std::cout<<"Goal cannot be reached \n";
                 startMission_ = false;}

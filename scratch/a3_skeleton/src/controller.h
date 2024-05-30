@@ -59,7 +59,8 @@ public:
     void detectService(const std::shared_ptr<std_srvs::srv::SetBool::Request> req, std::shared_ptr<std_srvs::srv::SetBool::Response> res);
 
     std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> detectRoad(std::vector<geometry_msgs::msg::Point> points);
-    // geometry_msgs::msg::Point Controller::detectClosestCone(std::vector<geometry_msgs::msg::Point> points);
+
+    void timerCallback();
 
 protected:
     /*! @brief LaserScan Callback
@@ -96,23 +97,32 @@ protected:
 
     rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr missionService_;
 
+    std::vector<geometry_msgs::msg::Point> totalCones;
+    int prevTotalConeSize_;
     geometry_msgs::msg::PoseArray detected_cones_;
+    std::set<unsigned int> visitedCones_;
     std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> road_;
-    // std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> road_;
+    
     std::deque<pfms::geometry_msgs::Point> pfmsGoals_;
     double distanceToCurrentGoal_;
+
     geometry_msgs::msg::Pose roadCentre_;
-    geometry_msgs::msg::PoseArray roadCentres_;
+    geometry_msgs::msg::PoseArray locatedGoals;
+    std::deque<pfms::geometry_msgs::Point> roadCentres_;
     std::string progress_;
 
     std::unique_ptr<LaserProcessing> laserProcessingPtr_;//!< Pointer to the laser processing object
     std::thread* thread_; //!< Thread object pointer
     rclcpp::TimerBase::SharedPtr timer_; //!< Timer object pointer, will be used to run a function at regular intervals
-    rclcpp::TimerBase::SharedPtr reachGoalsTimer_;
+
 
     geometry_msgs::msg::Pose pose_;
     pfms::nav_msgs::Odometry currentOdo_;
     std::mutex odoMtx_;
+    std::mutex goalMtx_;
+    std::condition_variable goalCV_;
+    bool goalProcessed_;
+    std::shared_ptr<geometry_msgs::msg::PoseArray> goalsMsg_;
 
     bool startMission_;
     bool advanced_;
