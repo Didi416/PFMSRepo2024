@@ -36,6 +36,7 @@ void Ackerman::reachGoals(void){
         brake_.data = 0.0;
         state = 1;
         while (!goalReached){ //start driving to goal until goalReached returns true
+            if(!startMission_){break;}
             //compute steering using Audi library and store the value in steering_ (private data member)
             audi.computeSteering(getOdometry(), pfmsGoals_.front(), steering_.data, distanceToCurrentGoal);
             // std::cout<<"State: "<<state<<", CMD: "<<steering_.data<<", "<<brake_.data<<", "<<throttle_.data<<std::endl;
@@ -78,6 +79,7 @@ void Ackerman::reachGoals(void){
 void Ackerman::threadFunction(){
     while(rclcpp::ok()){
         if(startMission_){
+            std::cout<<"Next goal x: "<<pfmsGoals_.front().x<<", goal y: "<<pfmsGoals_.front().y<<std::endl;
             reachGoals();
         }
         else{

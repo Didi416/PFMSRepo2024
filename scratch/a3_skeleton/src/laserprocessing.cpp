@@ -34,6 +34,20 @@ unsigned int LaserProcessing::countObjectReadings()
     return objectReadings_;
 }
 
+bool LaserProcessing::detectLargeObstacle(){
+    countObjectReadings();
+    unsigned int count = 0;
+
+    for(unsigned int i=0; i<objectReadings_; i++){
+        if (laserScan_.ranges.at(objectReadingIndex_.at(i)) < 10){
+            count++;
+        }
+    }
+
+    if(count>50) {return true;}
+    else {return false;}
+}
+
 unsigned int LaserProcessing::countSegments()
 {
     unsigned int count = 0;
@@ -119,58 +133,6 @@ std::vector<geometry_msgs::msg::Point> LaserProcessing::detectConeCentres(){
     // std::cout<<"Cone size: "<<cones.size()<<std::endl;
     return cones;
 }
-
-// geometry_msgs::msg::Point LaserProcessing::detectClosestCone(){
-//     geometry_msgs::msg::Point point;
-//     geometry_msgs::msg::Point tempPoint;
-//     // float avgX;
-//     // float avgY;
-//     float avgDist;
-//     std::vector<geometry_msgs::msg::Point> cones = detectConeCentres();
-//     float closestCone = laserScan_.range_max;
-//     for (size_t i=0; i<cones.size(); i++){
-//         tempPoint = cones.at(i);
-//         avgDist = std::hypot(tempPoint.x, tempPoint.y);
-//         if (avgDist < closestCone){
-//             point.x = tempPoint.x;
-//             point.y = tempPoint.y;
-//             point.z = 0.0;
-//             closestCone = avgDist;
-//         }
-//     }
-//     return point;
-// }
-
-// std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> LaserProcessing::detectRoad(){
-//     std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> road;
-//     geometry_msgs::msg::Point point;
-//     geometry_msgs::msg::Point tempPoint1;
-//     // geometry_msgs::msg::Point closestPointsPair;
-//     double dx;
-//     double dy;
-//     double euDist;
-//     float tolerance = 3;
-//     double roadWidth = 8; //roughly 8m
-//     geometry_msgs::msg::Point closestPoint = detectClosestCone();
-//     std::vector<geometry_msgs::msg::Point> cones = detectConeCentres();
-//     // std::cout<<"Start \n";
-//     for (size_t i=0; i<cones.size(); i++){
-//         tempPoint1 = cones.at(i);
-//         dx = closestPoint.x - tempPoint1.x;
-//         dy = closestPoint.y - tempPoint1.y;
-//         euDist = std::hypot(dx,dy);
-//         if (std::abs(roadWidth-euDist) < tolerance){
-//             // std::cout<<"Road found \n";
-//             // std::cout<<"EuDist"<<euDist<<std::endl;
-//             // std::cout<<"closestPoint X: "<<closestPoint.x<<" and Y: "<<closestPoint.y<<std::endl;
-//             // std::cout<<"tempPoint X: "<<tempPoint1.x<<" and Y: "<<tempPoint1.y<<std::endl;
-//             road.first = point;
-//             road.second = tempPoint1;
-//             break;
-//         }
-//     }
-//     return road;
-// }
 
 void LaserProcessing::newScan(sensor_msgs::msg::LaserScan laserScan){
     std::unique_lock<std::mutex> lck(mtx);

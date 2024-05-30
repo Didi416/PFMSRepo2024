@@ -62,7 +62,14 @@ install(
 )
 
 if(BUILD_TESTING)
+  ament_add_ros_isolated_gtest(test_goalConesTest test/goalInsideConesTest.cpp)
+  target_link_libraries(test_goalConesTest laserprocessing)
+  ament_target_dependencies(test_goalConesTest rclcpp sensor_msgs nav_msgs rosbag2_cpp)
 
+  ament_add_ros_isolated_gtest(test_obstacleDetection test/obstacleDetectionTest.cpp)
+  target_link_libraries(test_obstacleDetection laserprocessing)
+  ament_target_dependencies(test_obstacleDetection rclcpp sensor_msgs nav_msgs rosbag2_cpp)
+  
   ament_add_ros_isolated_gtest(test_laserprocessing test/utest.cpp)
   target_link_libraries(test_laserprocessing laserprocessing)
   ament_target_dependencies(test_laserprocessing rclcpp sensor_msgs nav_msgs rosbag2_cpp)

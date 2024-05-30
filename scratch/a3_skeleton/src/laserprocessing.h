@@ -31,6 +31,7 @@ public:
 
   unsigned int countSegments();
 
+  bool detectLargeObstacle();
 
   /*! @brief Accepts a new laserScan, threadsafe function
    *  @param[in]    laserScan  - laserScan supplied
@@ -39,11 +40,8 @@ public:
 
   std::vector<geometry_msgs::msg::Point> detectConeCentres();
 
-  geometry_msgs::msg::Point detectClosestCone();
-
-  std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point> detectRoad();
-
 private:
+
   /*! @brief Returns the cartesian position of laer reading at specific index
    * converted from polar coordinats stored in the #laserScan_
    *  @param[in] index - the reading needing conversion

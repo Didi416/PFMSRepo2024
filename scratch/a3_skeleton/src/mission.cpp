@@ -77,6 +77,12 @@ void Mission::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan> m
     geometry_msgs::msg::Pose cone_pose;
     geometry_msgs::msg::PoseArray detected_cones;
     detected_cones.poses.clear();
+    //test for obstructions that aren't cones (firetruck)
+    if(laserProcessingPtr_->detectLargeObstacle()){
+        RCLCPP_INFO_STREAM(this->get_logger(), "Large object detected, stopping mission");
+        startMission_.data = false;
+        flagPub_->publish(startMission_);
+    }
     for(auto cone:tempCones){
         cone_pose.position = transformPoint(cone);
         detected_cones.poses.push_back(cone_pose);
@@ -85,15 +91,19 @@ void Mission::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan> m
     conesPub_->publish(detected_cones);
     detectRoad(tempCones);
     sortAndRemoveDuplicates();
+
+    //__________________________ADVANCED______________________________
     if(advanced_){
         std::unique_lock<std::mutex> lck(goalMtx_);
+        bool paired = false;
         if(goalCV_.wait_for(lck, std::chrono::milliseconds(50), [this]{ return goalProcessed_;})){
             bool setGoal = true;
+            // std::cout<<"Road Size: "<<road_.size()<<std::endl;
             for (size_t i=0;i<road_.size(); i++){
                 roadCentre_.position.x = (road_.at(i).first.x + road_.at(i).second.x)/2;
                 roadCentre_.position.y = (road_.at(i).first.y + road_.at(i).second.y)/2;
-                    for(size_t k=0; k<roadCentres_.size(); k++){
-                        if(std::abs(roadCentre_.position.x - roadCentres_.at(k).x) < 2.5 && std::abs(roadCentre_.position.y - roadCentres_.at(k).y) < 2.5){
+                    for(size_t j=0; j<roadCentres_.size(); j++){
+                        if(std::abs(roadCentre_.position.x - roadCentres_.at(j).x) < 5 && std::abs(roadCentre_.position.y - roadCentres_.at(j).y) < 5){
                             setGoal = false;
                             break;
                         }
@@ -101,7 +111,7 @@ void Mission::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan> m
                 if(setGoal){
                     locatedGoals.poses.push_back(roadCentre_);
                     roadCentres_.push_back({roadCentre_.position.x, roadCentre_.position.y, roadCentre_.position.z});
-                    // std::cout<<"Located goal x: "<<roadCentre_.position.x<<", goal y: "<<roadCentre_.position.y<<std::endl;
+                    std::cout<<"Located goal x: "<<roadCentre_.position.x<<", goal y: "<<roadCentre_.position.y<<std::endl;
                 }
                 else{setGoal = true;}
             }
@@ -166,7 +176,8 @@ void Mission::detectRoad(std::vector<geometry_msgs::msg::Point> points){
         for (size_t j=0; j<points.size(); j++){
             pointPair = points.at(j);
 
-            if(std::abs(point.y) < 1){
+            if(std::abs(point.y) < 0.6){
+                // std::cout<<"Very Close \n";
                 if(pointPair.y > 1){
                     side.second = "left";
                     side.first = "right";
@@ -180,7 +191,7 @@ void Mission::detectRoad(std::vector<geometry_msgs::msg::Point> points){
             else if(point.y > 0){side.first = "left";}
             else{side.first = "right";}
             if(!paired){
-                if(std::abs(pointPair.y) < 1){
+                if(std::abs(pointPair.y) < 0.6){
                     if(point.y > 1){
                         side.first = "left";
                         side.second = "right";
@@ -201,8 +212,8 @@ void Mission::detectRoad(std::vector<geometry_msgs::msg::Point> points){
             dx = point.x - pointPair.x; //calculate difference in x
             dy = point.y - pointPair.y; //calculate difference in y
             euDist = std::hypot(dx,dy);
-            if (std::abs(roadWidth-euDist) < tolerance && std::hypot(point.x, point.y)<20 && std::hypot(pointPair.x, pointPair.y)<20){
-                road_.push_back(std::make_pair(transformPoint(point), transformPoint(pointPair))); //
+            if (std::abs(roadWidth-euDist) < tolerance && std::hypot(point.x, point.y)<13 && std::hypot(pointPair.x, pointPair.y)<13){
+                road_.push_back(std::make_pair(transformPoint(point), transformPoint(pointPair)));
                 break;
             }
         }

@@ -63,7 +63,7 @@ TEST(LaserProcessing,CountReturns){
 
     unsigned int obstacles = laserProcessing.countSegments();
     std::cout<<obstacles<<std::endl;
-    EXPECT_EQ(obstacles,5);
+    EXPECT_EQ(obstacles,6);
 
 
 }

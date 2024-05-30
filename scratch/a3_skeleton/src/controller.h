@@ -9,7 +9,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "geometry_msgs/msg/pose_array.hpp"
-#include "visualization_msgs/msg/marker_array.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "pfms_types.h"
 #include "tf2/utils.h"
