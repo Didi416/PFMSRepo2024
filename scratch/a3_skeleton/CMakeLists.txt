@@ -66,6 +66,10 @@ if(BUILD_TESTING)
   target_link_libraries(test_goalConesTest laserprocessing)
   ament_target_dependencies(test_goalConesTest rclcpp sensor_msgs nav_msgs rosbag2_cpp)
 
+  ament_add_ros_isolated_gtest(test_advGoalConesTest test/goalInsideConesTestADV.cpp)
+  target_link_libraries(test_advGoalConesTest laserprocessing)
+  ament_target_dependencies(test_advGoalConesTest rclcpp sensor_msgs nav_msgs rosbag2_cpp)
+
   ament_add_ros_isolated_gtest(test_obstacleDetection test/obstacleDetectionTest.cpp)
   target_link_libraries(test_obstacleDetection laserprocessing)
   ament_target_dependencies(test_obstacleDetection rclcpp sensor_msgs nav_msgs rosbag2_cpp)

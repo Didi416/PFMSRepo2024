@@ -137,5 +137,9 @@ std_srvs.srv.SetBool_Response(success=True, message='Mission Running, Progress: 
 You will now see the platform start driving towards the first goal (goals marked in smaller orange cubes), and upon passing it, 
 adjusts its course for the next goal it computes.
 
+To reset simulation, run the following command:
+@code
+ros2 service call /reset_world std_srvs/srv/Empty
+@endcode
 
 */

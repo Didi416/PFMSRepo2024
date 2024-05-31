@@ -1,0 +1,145 @@
+/*!
+@mainpage  PFMS Assignment 3.2 - Polymorphism/Inheritance/Classes/ROS/Nodes/Topics/Services/Rosbags/Unit Tests
+
+@section sec Introduction
+
+Project 2, encapsulated in ROS package 'a3_skeleton', involves the sensing and control of an Audi R8 (with Ackerman steering capabilities) to drive along 
+a path marked out by cones on either side, track-racing inspired scenario. Within this package, there are two nodes which communicate over topics and 
+services to achieve the objective. The mission node subscribes to the car's laser scan topic, as well as the car's odometry, to calculate the position of 
+the goals in relation o the car's current position and the position of the cones (processed through laser scane). It then publishes the goals to a topic for 
+the controller node to subscribe. The controller base class for the ackerman node subscribes to the relevant topics to determine the goals that the Audi 
+needs to travel to and then applies logic control to move the platform, publishing to the ackerman's control/command topics (brake/throttle/steering).
+
+The Ackerman platform is an autonomous vehicle equipped with a 180 degree laser scanner on it's front (1.5m from the centre of the car). This laser is 
+used to detect cones in front of the car and determine where the track is located, validating goals given in the global frame are indeed on the track.
+Information on the Ackerman's odometry, control commands and sensor data are available via ROS topics.
+
+@section sec2 Node Topics
+
+@subsection sub1 Ackerman/Controller Node
+
+The Ackerman node, responsible for controlling the movements and navigation of the platform, subscribes to the following topics:
+
+- /orange/odom: data type nav_msgs/msg/Odometry, retrieves platform position in global frame, current position and orientation
+- /orange/goals: data type geometry_msgs/msg/PoseArray, retrieves new goals published by either a3_support package or Mission node
+- /orange/flag_mission: data type std_msgs::msg::Bool, retrieved boolean value to either stop (false) or start/resume (true) the mission
+
+It publishes to the following:
+
+- /orange/brake_cmd: data type std_msgs::msg::Float64, publishes brake control of the platform
+- /orange/steering_cmd: data type std_msgs::msg::Float64, publishes steering control of the platform
+- /orange/throttle_cmd: data type std_msgs::msg::Float64, publishes throttle control of the platform
+
+@subsection sub2 Mission Node
+
+The Mission node, responsible for determining whether to start/resume or stop mission, 
+determining cone locations and track, validating goal positions are within track limits, tracking progress of the mission 
+and visualising markers in the simulation, subscribes to the following topics:
+
+- /orange/laserscan: data type sensor_msgs/msg/LaserScan, retrieves new scan from platform to perform calculations and detect cones and track
+- /orange/goals: data type geometry_msgs/msg/PoseArray, retrieves new goals published by either a3_support package or Mission node (for visualisation)
+- /orange/cones: data type geometry_msgs/msg/PoseArray, retrieves locations of cones from laser scan (for visualisation)
+- /orange/odom: data type nav_msgs/msg/Odometry, retrieves platform position in global frame, current position and orientation
+
+It publishes to the following:
+
+- /orange/visualization_marker: data type visualization_msgs/msg/MarkerArray, publishes visualisation markers for cones and goals (road centre)
+- /orange/flag_mission: data type std_msgs/msg/Bool, publishes boolean value to stop/start mission
+- /orange/cones: data type geometry_msgs/msg/PoseArray, publishes cones locations
+- /orange/goals: data type geometry_msgs/msg/PoseArray, publishes new goals for control of platform or visualisation
+
+It is also a service node, responding to a command line with request to either stop or start/resume the mission:
+
+- /orange/mission: data type std_srvs/srv/SetBool, recieves request to stop/start mission and responds with if cones are detected and progress of mission.
+Also updates flag_mission topic for communication with controller node.
+
+@section obj Description of Mission Objectives:
+
+Specifications require the Ackerman/Mission nodes to be idle until activated via a service call, commencing a mission from the current location when 
+the service call is true and stopping when it's false. The mission node uses goals from a3_support package to plan a mission, detects cones via laser, and 
+determines if the goal is within them, stopping the car and abandoning the mission if not. It also detects larger obstacles in front of the car using laser 
+and stops and updates /visualisation_marker with cone and goal positions. The Ackerman node computes and executes control for the ackerman to reach the goal. 
+For ADVANCED, the package builds upon these requirements, finding the road centre locations and goals using laser scanner data when enabled via 
+a command-line parameter, and detecting and using additional goals from laser data using cones. Unit tests are required to verify the detection of goals 
+within cones, obstacles in front of the car, and additional goals using sample laser scans and odometry.
+
+@section run How to Run Package:
+
+Ensure that you have both th a3_skeleton package as well as the a3_support package installed and ready.
+
+To start the simulation, students need to run a command: 
+@code
+ros2 launch gazebo_tf a3_audi.launch.py
+@endcode
+
+This will launch rviz and spawn in an Audi R8 (Ackerman) to be controlled. Append "gui:=true" to the command to launch the gazebo world as well. 
+Through the rviz simulation, you will be able to see the laser scan picking up the cones closest to the Audi.  
+
+Once simulation is running, open another terminal and start the Ackerman node:
+@code
+ros2 run a3_skeleton ackerman
+@endcode
+
+If running BASIC objective, open another terminal, and start the Mission node, without advanced parameter:
+@code
+ros2 run a3_skeleton mission
+@endcode
+
+The mission requires goals which can be sourced from the a3_support package and remapped to the /orange/goals topic:
+@code
+ros2 run a3_support goals_publisher --ros-args --remap goals:=/orange/goals -p filename:=$HOME/ros2_ws/install/a3_support/share/a3_support/data/ACKERMAN.TXT
+@endcode
+You may have to run this command a couple times for the subscribers to pick up on the message. You will know that the goals have been recieves when you see
+"Goals Callback" output to the Ackerman node terminal (through RCLCPP_INFO_STREAM), and "Mission Goals Callback" in the Mission node terminal.
+
+The simulation should now be sitting idle, and you should be able to see the orange cone markers and green goal cubes. 
+Activate mission through service call (new terminal):
+@code
+ros2 service call /orange/mission std_srvs/srv/SetBool "{data: true}"
+@endcode
+
+You will see in terminal a message similar to below (depending on progress and data value):
+@code
+requester: making request: std_srvs.srv.SetBool_Request(data=True)
+
+response:
+std_srvs.srv.SetBool_Response(success=True, message='Mission Running, Progress: ')
+@endcode
+
+You will now see the platform start driving towards the first goal (goals marked in green cubes), and upon passing it, adjusts its course for the next goal.
+
+The mission will complete after 13 goals have been reached and Ackerman stops completely. Ctrl+C to kill the nodes. 
+
+To activate ADVANCED section, where the mission node computes goals as roadCentres, without needing the a3_support package, run the following for activating 
+Mission node:
+
+@code
+ros2 run a3_skeleton mission --ros-args -p _advanced:=true
+@endcode
+
+Sometimes, the mission node computes an incorrect first goal, most likely due odometry not being set yet so default is 0, meaning transform doesn't occur.
+In this case, kill both ackerman and mission node terminals and rerun until first goal is correct (seen through RCLCPP_INFO_STREAM).
+
+The simulation should now be sitting idle, and you should be able to see the orange cone markers and green goal cubes. 
+Activate mission through service call (new terminal), same as BASIC:
+@code
+ros2 service call /orange/mission std_srvs/srv/SetBool "{data: true}"
+@endcode
+
+You will see in terminal a message similar to below (depending on progress and data value):
+@code
+requester: making request: std_srvs.srv.SetBool_Request(data=True)
+
+response:
+std_srvs.srv.SetBool_Response(success=True, message='Mission Running, Progress: ')
+@endcode
+
+You will now see the platform start driving towards the first goal (goals marked in smaller orange cubes), and upon passing it, 
+adjusts its course for the next goal it computes.
+
+To reset simulation, run the following command:
+@code
+ros2 service call /reset_world std_srvs/srv/Empty
+@endcode
+
+*/

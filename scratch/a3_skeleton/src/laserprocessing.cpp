@@ -194,7 +194,7 @@ std::vector<std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>> Las
             //check if pair is within the tolerance of roadwidth, and both cones are less than 13m from the car, and that the 
             //cones are roughly the same x distance from the car
             if (std::abs(roadWidth-euDist) < tolerance && std::hypot(point.x, point.y)<13 && std::hypot(pointPair.x, pointPair.y)<13 && 
-                                                                                                        std::abs(point.x - pointPair.x) < 8){
+                                                                                                        std::abs(point.x - pointPair.x) < 9){
                 roadPairs.push_back(std::make_pair((point), (pointPair))); //push back as a pair of cones
                 break; //go to next cone pair
             }

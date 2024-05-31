@@ -49,6 +49,8 @@ void Mission::goalsCallback(const std::shared_ptr<geometry_msgs::msg::PoseArray>
     std::unique_lock<std::mutex> lck(goalMtx_); //lock access to data
     for (auto pose:msg->poses){
         goals_.push_back(pose.position); //add goals to mission goals vector
+        initialDistToGoal_ = distance(odo_,pose.position); //calculate new initial distance to goal (for progress)
+        totalMissionDistance_ += initialDistToGoal_; //add initial distance to new goal to total distance variable
     }
     goalProcessed_ = true; //set boolean to processed so laser scan can calculate any new goals
     //clear vectors for new goals
@@ -142,10 +144,10 @@ void Mission::laserCallback(const std::shared_ptr<sensor_msgs::msg::LaserScan> m
 }
 
 void Mission::sortAndRemoveDuplicates() {
-    // sort the vector so that swapped identical pairs are considered duplicates
+    // sort the vector for duplicates
     std::sort(road_.begin(), road_.end(), [](const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& a, const std::pair<geometry_msgs::msg::Point, geometry_msgs::msg::Point>& b) {
-        if ((std::abs(a.first.x - b.first.x) < 1) && (std::abs(a.first.y - b.first.y) < 1)) { //check if first points are equal
-            return a.second.x < b.second.x || (std::abs(a.second.x - b.second.x) < 1 && a.second.y < b.second.y); //check if y values are close to each other
+        if ((std::abs(a.first.x - b.first.x) < 1) && (std::abs(a.first.y - b.first.y) < 1)) { 
+            return a.second.x < b.second.x || (std::abs(a.second.x - b.second.x) < 1 && a.second.y < b.second.y); 
         } else {
             return a.first.x < b.first.x || (std::abs(a.first.x - b.first.x) < 1 && a.first.y < b.first.y);
         }
@@ -296,15 +298,13 @@ void Mission::run(){ //continuously running thread function
                 goals_.pop_front(); //remove goal from current mission goal vector
                 if(goals_.size() > 0){ //check if there are still goals to be travelled to
                     goal = goals_.front(); //reassign goal value
-                    initialDistToGoal_ = distance(odo,goal); //calculate new initial distance to goal (for progress)
-                    totalMissionDistance_ += initialDistToGoal_; //add initial distance to new goal to total distance variable
                 }
                 else if(goals_.size() == 0){ //if no more goals to travel to, set running to false
                     running_ = false;
                 }
             }
             //update progress percentage
-            progress_ = (unsigned int)(100.0*((totalMissionDistance_ - dist)/totalMissionDistance_));
+            progress_ = (unsigned int)(100*((totalMissionDistance_ - dist)/totalMissionDistance_));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         if(!rclcpp::ok){
@@ -319,10 +319,10 @@ void Mission::detectService(const std::shared_ptr<std_srvs::srv::SetBool::Reques
     flagPub_->publish(startMission_); //publish flag to topic
     //depending on true or false data value, respond with message accordingly, always sending progress value
     if(req->data){
-        res->message = "Mission Running, Progress: " + progress_;
+        res->message = "Mission Running, Progress: " + std::to_string(progress_);
     }
     else{
-        res->message = "Stop Mission, Progress: " + progress_;
+        res->message = "Stop Mission, Progress: " + std::to_string(progress_);
     }
     if(laserProcessingPtr_->detectConeCentres().size() > 0){ //check if cone is visible from current location
         res->success = true; //respond true if there is a cone
